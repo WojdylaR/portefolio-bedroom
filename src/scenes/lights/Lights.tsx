@@ -1,11 +1,13 @@
-import PointLight from './PointLight'
+import PointLightLamp from './PointLightLamp'
 import AmbiantLight from './AmbianthLight'
+import PointLightDoor from './PointLightDoor'
 
 export default function Lights () {
 
     return <>
         <AmbiantLight />
 
-        <PointLight />
+        <PointLightLamp />
+        <PointLightDoor />
     </>
 }

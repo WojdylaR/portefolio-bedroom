@@ -1,10 +1,12 @@
 import './App.css'
 import { Canvas } from '@react-three/fiber'
 import Bedroom from './scenes/bedroom/Bedroom'
-import { OrbitControls } from '@react-three/drei'
-import { Perf } from 'r3f-perf'
+import { Center, OrbitControls } from '@react-three/drei'
+// import { Perf } from 'r3f-perf'
 import Lights from './scenes/lights/Lights'
 import Camera from './camera/Camera'
+import { Leva } from 'leva'
+// import PostProcessing from './scenes/postproccessing/PostProcessing'
 
 function App() {
 
@@ -19,17 +21,22 @@ function App() {
           position: [ 8, 8, 6 ]
         }}
       >
-        <color args={ ['#000'] } attach={ 'background' } />
+        <color args={ ['#0e0e0e'] } attach={ 'background' } />
 
-        
 
-        
-        <Perf position="top-left" />
+        <Center>
+        {/* <PostProcessing /> */}
+
+        <Leva hidden />
+      
+        {/* <Perf position="top-left" /> */}
         <Lights />
         <OrbitControls makeDefault />
         <Camera />
 
-         <Bedroom />
+
+          <Bedroom />
+         </Center>
 
       </Canvas>
     </>

@@ -7,11 +7,12 @@ export default function BedroomModel() {
   
 
   const spaceshipTexture = useTexture('./spaceship.jpeg')
+  const galaxyTexture = useTexture('./galaxy.jpg')
 
 
   return (
     <group >
-      <mesh
+       <mesh
         name="Untitled"
         castShadow
         receiveShadow
@@ -43,8 +44,40 @@ export default function BedroomModel() {
         material={materials['palette.003']}
         rotation={[Math.PI / 2, 0, 0]}
       />
+      <mesh
+        name="Untitled004"
+        castShadow
+        receiveShadow
+        geometry={nodes.Untitled004.geometry}
+        material={materials['palette.005']}
+        rotation={[Math.PI / 2, 0, 0]}
+      />
+      <mesh
+        name="Untitled005"
+        castShadow
+        receiveShadow
+        geometry={nodes.Untitled005.geometry}
+        material={materials['palette.007']}
+        rotation={[Math.PI / 2, 0, 0]}
+      />
+      <mesh
+        name="Untitled006"
+        receiveShadow
+        geometry={nodes.Untitled006.geometry}
+        material={materials['palette.009']}
+        rotation={[Math.PI / 2, 0, 0]}
+      />
+      <mesh
+        name="Untitled007"
+        castShadow
+        receiveShadow
+        geometry={nodes.Untitled007.geometry}
+        material={materials['palette.011']}
+        rotation={[Math.PI / 2, 0, 0]}
+      />
+      
 
-      <Paint geometry={nodes.right_paint.geometry} texture={spaceshipTexture} />
+      <Paint geometry={nodes.right_paint.geometry} texture={galaxyTexture} />
       <Paint geometry={nodes.left_paint.geometry} texture={spaceshipTexture} />
     </group>
   )
