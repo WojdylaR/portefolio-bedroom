@@ -22,6 +22,8 @@ function App() {
         <color args={ ['#000'] } attach={ 'background' } />
 
         
+
+        
         <Perf position="top-left" />
         <Lights />
         <OrbitControls makeDefault />
