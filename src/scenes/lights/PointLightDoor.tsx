@@ -17,13 +17,13 @@ export default function PointLightDoor () {
 
     return <pointLight
             intensity={ intensity }
-            castShadow
+            // castShadow
             color={ color }
-            shadow-mapSize-width={1024}
-            shadow-mapSize-height={1024}
-            shadow-camera-near={0.1}
-            shadow-camera-far={50}
-            shadow-bias={-0.0005}
+            // shadow-mapSize-width={1024}
+            // shadow-mapSize-height={1024}
+            // shadow-camera-near={0.1}
+            // shadow-camera-far={50}
+            // shadow-bias={-0.0005}
             position={[position.x, position. y, position.z]}
         />
 }

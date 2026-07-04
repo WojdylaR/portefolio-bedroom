@@ -5,8 +5,8 @@ import { Center, OrbitControls } from '@react-three/drei'
 // import { Perf } from 'r3f-perf'
 import Lights from './scenes/lights/Lights'
 import Camera from './camera/Camera'
-import { Leva } from 'leva'
-// import PostProcessing from './scenes/postproccessing/PostProcessing'
+// import { Leva } from 'leva'
+import PostProcessing from './scenes/postproccessing/PostProcessing'
 
 function App() {
 
@@ -20,19 +20,22 @@ function App() {
           far: 200,
           position: [ 8, 8, 6 ]
         }}
-      >
+      >b
         <color args={ ['#0e0e0e'] } attach={ 'background' } />
 
+        
+        {/* <Leva  hidden/> */}
+        
+        {/* <Perf position="top-left" /> */}
+
+        <PostProcessing />
+        <OrbitControls makeDefault />
 
         <Center>
-        {/* <PostProcessing /> */}
 
-        <Leva hidden />
-      
-        {/* <Perf position="top-left" /> */}
-        <Lights />
-        <OrbitControls makeDefault />
-        <Camera />
+        
+          <Lights />
+          <Camera />
 
 
           <Bedroom />
