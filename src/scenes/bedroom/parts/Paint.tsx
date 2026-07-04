@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { Box3, Object3D, Vector3, type Object3DEventMap } from 'three'
 import * as THREE from 'three'
 
@@ -11,20 +11,21 @@ export default function Paint ( {geometry, texture}: {geometry: THREE.BufferGeom
 
     const paintRef = useRef<Object3D<Object3DEventMap>>(null)
 
-    useEffect(() => {
+    useLayoutEffect(() => {
 
-    const box3 = new Box3()
-    
-    if(paintRef.current) {
-        box3.setFromObject(paintRef.current)
-        let tempPosition = new Vector3(0)
-        let tempSize = new Vector3(0)
+        const box3 = new Box3()
+        
+        if(paintRef.current) {
+            paintRef.current.updateWorldMatrix(true, true)
+            box3.setFromObject(paintRef.current)
+            let tempPosition = new Vector3(0)
+            let tempSize = new Vector3(0)
 
-        box3.getCenter(tempPosition)
-        setPosition(tempPosition)
-        box3.getSize(tempSize)
-        setSize(tempSize)
-    }
+            box3.getCenter(tempPosition)
+            setPosition(tempPosition)
+            box3.getSize(tempSize)
+            setSize(tempSize)
+        }
 
     }, [])
 
@@ -35,7 +36,6 @@ export default function Paint ( {geometry, texture}: {geometry: THREE.BufferGeom
                 castShadow
                 receiveShadow
                 geometry={geometry}
-                
                 rotation={[Math.PI / 2, 0, 0]}
             />
 
