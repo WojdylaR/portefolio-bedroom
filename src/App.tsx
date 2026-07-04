@@ -5,7 +5,7 @@ import { Center, OrbitControls } from '@react-three/drei'
 // import { Perf } from 'r3f-perf'
 import Lights from './scenes/lights/Lights'
 import Camera from './camera/Camera'
-// import { Leva } from 'leva'
+import { Leva } from 'leva'
 import PostProcessing from './scenes/postproccessing/PostProcessing'
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
         <color args={ ['#0e0e0e'] } attach={ 'background' } />
 
         
-        {/* <Leva  hidden/> */}
+        <Leva  hidden/>
         
         {/* <Perf position="top-left" /> */}
 
