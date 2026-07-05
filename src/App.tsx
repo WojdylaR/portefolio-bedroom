@@ -4,24 +4,22 @@ import Bedroom from './scenes/bedroom/Bedroom'
 import { Center, OrbitControls } from '@react-three/drei'
 // import { Perf } from 'r3f-perf'
 import Lights from './scenes/lights/Lights'
-import Camera from './camera/Camera'
+import CameraRig from './camera/CameraRig'
 import { Leva } from 'leva'
 import PostProcessing from './scenes/postproccessing/PostProcessing'
+import useScene from './state/store/useScene'
+import Interface from './ui/Interface/Interface'
 
 function App() {
+  
+  const isAnimating = useScene(state => state.isAnimating)
 
   return (
     <>
       <Canvas
         shadows
-        camera={{
-          fov: 45,
-          near: 0.1,
-          far: 200,
-          position: [ 8, 8, 6 ]
-        }}
-      >b
-        <color args={ ['#0e0e0e'] } attach={ 'background' } />
+      >
+        <color args={ ['#4e504d'] } attach={ 'background' } />
 
         
         <Leva  hidden/>
@@ -29,19 +27,20 @@ function App() {
         {/* <Perf position="top-left" /> */}
 
         <PostProcessing />
-        <OrbitControls makeDefault />
+        <OrbitControls makeDefault enabled={isAnimating} enablePan={false}/>
 
         <Center>
 
         
           <Lights />
-          <Camera />
+          <CameraRig />
 
 
           <Bedroom />
          </Center>
 
       </Canvas>
+      <Interface />
     </>
   )
 }

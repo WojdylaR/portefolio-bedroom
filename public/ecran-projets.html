@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projets — Ronan Wojdyla</title>
+<style>
+  /* Palette claire blanc/bleuté — écran lumineux au milieu de la scène */
+  :root {
+    --bg: #eef2f8;
+    --panel: #e2e9f4;
+    --panel-open: #f7faff;
+    --warm: #4a7dd6;
+    --cool: #7aa3e8;
+    --text: #2b3a52;
+    --muted: #7d8ba3;
+    --ease: cubic-bezier(0.33, 1, 0.68, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: ui-monospace, "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+    overflow: hidden;
+  }
+
+  .shutters {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .shutter {
+    flex: 1;
+    min-width: 56px;
+    position: relative;
+    background: var(--panel);
+    border-right: 1px solid #c9d5e8;
+    cursor: pointer;
+    overflow: hidden;
+    transition: flex-grow 0.55s var(--ease), background-color 0.55s var(--ease);
+  }
+  .shutter:last-child { border-right: none; }
+
+  .shutter.open {
+    flex-grow: 7;
+    background: var(--panel-open);
+    cursor: default;
+  }
+
+  /* Étiquette verticale (état fermé) */
+  .label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 24px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: opacity 0.3s var(--ease);
+    user-select: none;
+  }
+  .label::before {
+    content: "";
+    width: 2px;
+    height: 28px;
+    margin-bottom: 14px;
+    background: var(--accent, var(--warm));
+  }
+  .shutter.open .label { opacity: 0; }
+  .shutter:not(.open):hover .label { color: var(--text); }
+
+  /* Contenu (état ouvert) — largeur fixe pour éviter le reflow pendant la transition */
+  .content {
+    position: absolute;
+    inset: 0;
+    width: 640px;
+    max-width: 82vw;
+    padding: 40px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    opacity: 0;
+    transform: translateX(14px);
+    transition: opacity 0.35s var(--ease), transform 0.45s var(--ease);
+    pointer-events: none;
+  }
+  .shutter.open .content {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.18s;
+    pointer-events: auto;
+  }
+
+  .content .tag {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent, var(--warm));
+  }
+  .content h2 {
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 600;
+    line-height: 1.1;
+  }
+  .content p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 46ch;
+  }
+  .content .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+  }
+  .content .stack span {
+    font-size: 11px;
+    padding: 4px 10px;
+    border: 1px solid #c3d0e6;
+    border-radius: 3px;
+    color: var(--muted);
+  }
+  .content a.visit {
+    align-self: flex-start;
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--accent, var(--warm));
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+  }
+  .content a.visit:hover { color: var(--text); }
+
+  /* Accents alternés chaud / froid, comme l'éclairage de la chambre */
+  .shutter:nth-child(odd)  { --accent: var(--warm); }
+  .shutter:nth-child(even) { --accent: var(--cool); }
+
+  .shutter:focus-visible {
+    outline: 2px solid var(--accent, var(--warm));
+    outline-offset: -2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .shutter, .content, .label { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<main class="shutters" id="shutters">
+
+  <section class="shutter open" tabindex="0">
+    <div class="label">Chambre voxel</div>
+    <div class="content">
+      <span class="tag">Scène interactive — R3F</span>
+      <h2>Chambre voxel</h2>
+      <p>Scène 3D temps réel : pipeline MagicaVoxel → Blender → React Three Fiber, caméra orthographique animée, éclairage deux points chaud/froid.</p>
+      <div class="stack">
+        <span>React Three Fiber</span><span>GSAP</span><span>Zustand</span><span>MagicaVoxel</span>
+      </div>
+      <a class="visit" href="#" target="_blank" rel="noopener">Voir le projet →</a>
+    </div>
+  </section>
+
+  <section class="shutter" tabindex="0">
+    <div class="label">Configurateur</div>
+    <div class="content">
+      <span class="tag">Produit 3D — Shaders</span>
+      <h2>Configurateur produit</h2>
+      <p>Configurateur temps réel avec changement de matériaux et shaders personnalisés. Pensé pour l'e-commerce et le luxe digital.</p>
+      <div class="stack">
+        <span>Three.js</span><span>GLSL</span><span>React</span>
+      </div>
+      <a class="visit" href="#" target="_blank" rel="noopener">Voir le projet →</a>
+    </div>
+  </section>
+
+  <section class="shutter" tabindex="0">
+    <div class="label">Galerie shaders</div>
+    <div class="content">
+      <span class="tag">Expérimentations — GLSL</span>
+      <h2>Galerie shaders</h2>
+      <p>Galerie d'art virtuelle dédiée aux expérimentations shaders. En construction — accessible bientôt depuis la porte de la chambre.</p>
+      <div class="stack">
+        <span>GLSL</span><span>R3F</span><span>Post-processing</span>
+      </div>
+      <a class="visit" href="#" target="_blank" rel="noopener">Voir le projet →</a>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Un seul écouteur (délégation) — coût quasi nul pour la page hôte
+  const root = document.getElementById('shutters');
+  function openShutter(el) {
+    if (!el || el.classList.contains('open')) return;
+    root.querySelector('.open')?.classList.remove('open');
+    el.classList.add('open');
+  }
+  root.addEventListener('click', e => openShutter(e.target.closest('.shutter')));
+  root.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openShutter(e.target.closest('.shutter'));
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -7,7 +7,7 @@ export default function PostProcessing () {
     return <>
     <EffectComposer enableNormalPass >
         <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
-        <Bloom luminanceThreshold={1.1} intensity={ 1 } mipmapBlur/>
+        <Bloom luminanceThreshold={1.1} intensity={ 1.5} mipmapBlur/>
     </EffectComposer>
     </>
 }

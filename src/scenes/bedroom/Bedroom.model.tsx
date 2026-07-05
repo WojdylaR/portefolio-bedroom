@@ -1,16 +1,16 @@
 import { useGLTF, useTexture } from '@react-three/drei'
 import Paint from './parts/Paint'
 import { useControls } from 'leva'
+import Screen from './parts/Screen'
+
+
 export default function BedroomModel() {
 
   const { nodes, materials } : {nodes: any, materials: any} = useGLTF('/bedroom.glb')
 
-  
-
   const spaceshipTexture = useTexture('./spaceship.jpeg')
   const galaxyTexture = useTexture('./galaxy.jpg')
 
-  console.log(nodes)
 
   const { intensity } = useControls('orangeGlow' , {
 
@@ -25,14 +25,37 @@ export default function BedroomModel() {
 
   return (
     <group >
-       <mesh
+      <mesh
+        name="desktop"
+        castShadow
+        receiveShadow
+        geometry={nodes.desktop.geometry}
+        material={materials['palette.025']}
+        rotation={[Math.PI / 2, 0, 0]}
+      />
+      <mesh
         name="room"
         castShadow
         receiveShadow
         geometry={nodes.room.geometry}
-        material={materials.palette}
+        material={materials['palette.026']}
         rotation={[Math.PI / 2, 0, 0]}
       />
+      <mesh
+        name="bed"
+        castShadow
+        receiveShadow
+        geometry={nodes.bed.geometry}
+        material={materials['palette.031']}
+        rotation={[Math.PI / 2, 0, 0]}
+      />
+      
+
+      
+  
+      <Screen  geometry={nodes.screen.geometry}/>
+      
+      
       <mesh
         name="whiteLight"
         castShadow
@@ -44,29 +67,12 @@ export default function BedroomModel() {
         <meshStandardMaterial color={ [10, 10, 10] } toneMapped={false}/>
       </mesh>
       <mesh
-        name="oragneLight"
-        geometry={nodes.oragneLight.geometry}
+        name="orangeLight"
+        geometry={nodes.orangeLight.geometry}
         rotation={[Math.PI / 2, 0, 0]}
       >
         <meshStandardMaterial color={ [1.0 * intensity , 0.616 * intensity, 0.361 * intensity] } toneMapped={false}/>
       </mesh>
-      <mesh
-        name="desktop"
-        castShadow
-        receiveShadow
-        geometry={nodes.desktop.geometry}
-        material={materials['palette.005']}
-        rotation={[Math.PI / 2, 0, 0]}
-      />
-      <mesh
-        name="bed"
-        castShadow
-        receiveShadow
-        geometry={nodes.bed.geometry}
-        material={materials['palette.006']}
-        rotation={[Math.PI / 2, 0, 0]}
-      />
-      
 
       <Paint geometry={nodes.right_paint.geometry} texture={galaxyTexture} />
       <Paint geometry={nodes.left_paint.geometry} texture={spaceshipTexture} />
@@ -74,4 +80,4 @@ export default function BedroomModel() {
   )
 }
 
-useGLTF.preload('/bedroom.glb')
+
