@@ -7,9 +7,12 @@ export interface IScene {
     isFirstFocus: boolean
     focus: 'idle' |  'screen'
     isAnimating: boolean
+    isControls: boolean
+
     focusScreen: () => void
     focusReset: () => void
-    enableAnimating: (value: boolean) => void
+    setIsControls: (value: boolean) => void
+    setIsAnimating: (value: boolean) => void
 }
 
 export default create<IScene>()(subscribeWithSelector((set) => {
@@ -18,7 +21,8 @@ export default create<IScene>()(subscribeWithSelector((set) => {
         
         isFirstFocus: true,
         focus: 'idle',
-        isAnimating: true,
+        isAnimating: false,
+        isControls: true,
 
         focusScreen: () => {
             set(() => {
@@ -32,7 +36,13 @@ export default create<IScene>()(subscribeWithSelector((set) => {
             })
         },
 
-        enableAnimating: (value: boolean) => {
+        setIsControls: (value: boolean) => {
+            set(() => {
+                return {isControls: value}
+            })
+        },
+
+        setIsAnimating: (value: boolean) => {
             set(() => {
                 return {isAnimating: value}
             })

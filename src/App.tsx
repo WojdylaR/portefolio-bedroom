@@ -9,10 +9,16 @@ import { Leva } from 'leva'
 import PostProcessing from './scenes/postproccessing/PostProcessing'
 import useScene from './state/store/useScene'
 import Interface from './ui/Interface/Interface'
+import { useRef } from 'react'
 
 function App() {
   
   const isAnimating = useScene(state => state.isAnimating)
+  const isControls = useScene(state => state.isControls)
+
+  
+  const orbitControlRef = useRef(null)
+
 
   return (
     <>
@@ -27,13 +33,13 @@ function App() {
         {/* <Perf position="top-left" /> */}
 
         <PostProcessing />
-        <OrbitControls makeDefault enabled={isAnimating} enablePan={false}/>
+        <OrbitControls ref={ orbitControlRef } makeDefault enabled={!isAnimating && isControls} enablePan={true}/>
 
         <Center>
 
         
           <Lights />
-          <CameraRig />
+          <CameraRig orbitControlRef={orbitControlRef}/>
 
 
           <Bedroom />

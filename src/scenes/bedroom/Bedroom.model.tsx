@@ -12,11 +12,20 @@ export default function BedroomModel() {
   const galaxyTexture = useTexture('./galaxy.jpg')
 
 
-  const { intensity } = useControls('orangeGlow' , {
+  const { orangeGlow } = useControls('orangeGlow' , {
 
-    intensity: {
-      value: 10,
-      step: 1,
+    orangeGlow: {
+      value: 3.5,
+      step: 0.1,
+      min: 0,
+      max: 100
+    }
+  })
+  const { whiteGlow } = useControls('whiteGlow' , {
+
+    whiteGlow: {
+      value: 8,
+      step: 0.1,
       min: 0,
       max: 100
     }
@@ -50,9 +59,6 @@ export default function BedroomModel() {
         rotation={[Math.PI / 2, 0, 0]}
       />
       
-
-      
-  
       <Screen  geometry={nodes.screen.geometry}/>
       
       
@@ -64,14 +70,14 @@ export default function BedroomModel() {
         material={materials['palette.001']}
         rotation={[Math.PI / 2, 0, 0]}
       >
-        <meshStandardMaterial color={ [10, 10, 10] } toneMapped={false}/>
+        <meshStandardMaterial emissive={ '#9db8e0'  } emissiveIntensity={ whiteGlow } toneMapped={false}/>
       </mesh>
       <mesh
         name="orangeLight"
         geometry={nodes.orangeLight.geometry}
         rotation={[Math.PI / 2, 0, 0]}
       >
-        <meshStandardMaterial color={ [1.0 * intensity , 0.616 * intensity, 0.361 * intensity] } toneMapped={false}/>
+        <meshStandardMaterial emissive={ '#da8045'  } emissiveIntensity={ orangeGlow } toneMapped={false}/>
       </mesh>
 
       <Paint geometry={nodes.right_paint.geometry} texture={galaxyTexture} />

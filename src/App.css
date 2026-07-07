@@ -27,9 +27,11 @@
 
 
 .htmlScreen iframe {
-    width: 780px;
-    height: 720px;
+  position: relative;
+    width: 800px;
+    left: 9px;
+    height: 788px;
     border: none;
-    border-radius: 20px;
+    border-radius: 4px;
     background-color: black;
 }

@@ -55,7 +55,9 @@ export default function Screen ( {geometry}: {geometry: THREE.BufferGeometry}) {
                     distanceFactor={ 0.5 }
                 
                 >
-                    <iframe src='./ecran-projets.html'/>
+                    <iframe src='./ecran-projets.html' 
+                    
+                    />
                 </Html>
             </mesh>
         </>
