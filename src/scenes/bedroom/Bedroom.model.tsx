@@ -26,7 +26,7 @@ export default function BedroomModel() {
   const { orangeGlow } = useControls('orangeGlow' , {
 
     orangeGlow: {
-      value: 13.5,
+      value: 20,
       step: 0.1,
       min: 0,
       max: 100
@@ -35,7 +35,7 @@ export default function BedroomModel() {
   const { whiteGlow } = useControls('whiteGlow' , {
 
     whiteGlow: {
-      value: 8,
+      value: 20,
       step: 0.1,
       min: 0,
       max: 100

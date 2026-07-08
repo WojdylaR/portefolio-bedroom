@@ -5,9 +5,9 @@ export default function PointLightLamp () {
     const { color, intensity, position } = useControls('pointLight', {
         color: '#da8045 ',
         intensity: {
-            value: 7,
+            value: 50,
             min: 0,
-            max: 100
+            max: 200
         },
         position: {
             value: { x: 0.5, y: 3, z: 0. },
