@@ -6,16 +6,27 @@ import Screen from './parts/Screen'
 
 export default function BedroomModel() {
 
-  const { nodes, materials } : {nodes: any, materials: any} = useGLTF('/bedroom.glb')
+  const { nodes, materials } : {nodes: any, materials: any} = useGLTF('/bedroom/bedroomTest.glb')
 
   const spaceshipTexture = useTexture('./spaceship.jpeg')
   const galaxyTexture = useTexture('./galaxy.jpg')
+
+  const roomTexture = useTexture('./bedroom/roomBaked.png')
+  roomTexture.flipY = false
+
+
+  const LastTest = useTexture('./bedroom/LastTest.png')
+  LastTest.flipY = false
+
+
+  const bedBaked = useTexture('./bedroom/bedBaked.png')
+  bedBaked.flipY = false
 
 
   const { orangeGlow } = useControls('orangeGlow' , {
 
     orangeGlow: {
-      value: 3.5,
+      value: 13.5,
       step: 0.1,
       min: 0,
       max: 100
@@ -34,38 +45,43 @@ export default function BedroomModel() {
 
   return (
     <group >
+
+      <mesh
+        name="screen"
+        geometry={nodes.screen.geometry}
+        material={nodes.screen.material}
+        rotation={[Math.PI / 2, 0, 0]}
+      />
       <mesh
         name="desktop"
-        castShadow
-        receiveShadow
         geometry={nodes.desktop.geometry}
-        material={materials['palette.025']}
+        material={nodes.desktop.material}
         rotation={[Math.PI / 2, 0, 0]}
-      />
+      >
+        <meshStandardMaterial map={LastTest} />
+        </mesh> 
       <mesh
         name="room"
-        castShadow
-        receiveShadow
         geometry={nodes.room.geometry}
-        material={materials['palette.026']}
         rotation={[Math.PI / 2, 0, 0]}
-      />
+      >
+        <meshStandardMaterial map={roomTexture} />
+        </mesh> 
       <mesh
         name="bed"
-        castShadow
-        receiveShadow
         geometry={nodes.bed.geometry}
-        material={materials['palette.031']}
+        material={nodes.bed.material}
         rotation={[Math.PI / 2, 0, 0]}
-      />
+      >
+        <meshStandardMaterial map={bedBaked} />
+        </mesh> 
+
       
       <Screen  geometry={nodes.screen.geometry}/>
       
       
       <mesh
         name="whiteLight"
-        castShadow
-        receiveShadow
         geometry={nodes.whiteLight.geometry}
         material={materials['palette.001']}
         rotation={[Math.PI / 2, 0, 0]}
@@ -77,7 +93,7 @@ export default function BedroomModel() {
         geometry={nodes.orangeLight.geometry}
         rotation={[Math.PI / 2, 0, 0]}
       >
-        <meshStandardMaterial emissive={ '#da8045'  } emissiveIntensity={ orangeGlow } toneMapped={false}/>
+        <meshStandardMaterial color={' #97562a'} emissive={ '#97562a'  } emissiveIntensity={ orangeGlow } toneMapped={false}/>
       </mesh>
 
       <Paint geometry={nodes.right_paint.geometry} texture={galaxyTexture} />

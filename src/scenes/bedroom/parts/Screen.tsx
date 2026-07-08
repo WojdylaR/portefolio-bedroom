@@ -1,5 +1,5 @@
 
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
 import { Vector3, Matrix4 } from 'three'
 import * as THREE from 'three'
 import { Html } from '@react-three/drei'
@@ -11,6 +11,8 @@ export default function Screen ( {geometry}: {geometry: THREE.BufferGeometry}) {
     const focusReset = useScene(state => state.focusReset)
 
     const focus = useScene(state => state.focus)
+
+    const refScreen = useRef<THREE.Mesh>(null!)
 
 
     const { position, size } = useMemo(() => {
@@ -32,7 +34,7 @@ export default function Screen ( {geometry}: {geometry: THREE.BufferGeometry}) {
                 receiveShadow
                 geometry={geometry}
                 rotation={[Math.PI / 2, 0, 0]}
-
+                ref={refScreen}
 
                 onPointerEnter={() => document.body.style.cursor = 'pointer'}
                 onPointerLeave={() => document.body.style.cursor = 'default'} 
@@ -44,21 +46,22 @@ export default function Screen ( {geometry}: {geometry: THREE.BufferGeometry}) {
                 </mesh>
             <mesh
                 scale={[size.x, size.y, 1]}
-                position={[position.x  + 0.02, position.y, position.z - 0.1 ]}
+                position={[position.x  + 0.02, position.y, position.z - 0.11 ]}
                 rotation={ [0, Math.PI, 0]}
             
             >
-                <Html
+                {focus === 'screen' ? <Html
                     transform
-                    occlude={focus === 'idle'}
+                    occlude={[refScreen]}
                     wrapperClass='htmlScreen'
                     distanceFactor={ 0.5 }
-                
                 >
-                    <iframe src='./ecran-projets.html' 
-                    
-                    />
-                </Html>
+                    <iframe src='./ecran-projets.html' />
+                </Html>  : <>
+                    <planeGeometry />
+                    <meshStandardMaterial emissive={ '#ffffff'  } emissiveIntensity={ 0.88 } toneMapped={false}/>
+                </>
+            }
             </mesh>
         </>
     )

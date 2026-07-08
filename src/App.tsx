@@ -25,7 +25,7 @@ function App() {
       <Canvas
         shadows
       >
-        <color args={ ['#4e504d'] } attach={ 'background' } />
+        <color args={ ['#1e1e1e'] } attach={ 'background' } />
 
         
         <Leva  hidden/>

@@ -7,7 +7,7 @@ export default function PointLightLamp () {
         intensity: {
             value: 7,
             min: 0,
-            max: 15
+            max: 100
         },
         position: {
             value: { x: 0.5, y: 3, z: 0. },

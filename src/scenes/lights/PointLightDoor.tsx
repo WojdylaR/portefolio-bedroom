@@ -7,7 +7,7 @@ export default function PointLightDoor () {
         intensity: {
             value: 10,
             min: 0,
-            max: 15
+            max: 100
         },
         position: {
             value: { x: 5.2, y: 3.9, z: -3.5 },
