@@ -8,7 +8,7 @@ import { IDLE_VIEW, SCREE_VIEW, type CameraView } from './Camera.type'
 import { Vector3 } from "three";
 import type { OrbitControls } from "three/examples/jsm/Addons.js";
 
-const FILL = 0.8
+const FILL = 0.95
 const SCREEN_W = 1.3
 const SCREEN_H = 0.8
 
