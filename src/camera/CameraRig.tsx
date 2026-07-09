@@ -1,5 +1,6 @@
 import useScene from "../state/store/useScene";
-import { useEffect, useRef, type RefObject } from "react";
+import { useEffect, useMemo, useRef, type RefObject } from "react";
+import { useThree } from "@react-three/fiber";
 import gsap from "gsap";
 import { OrthographicCamera as OrthographicCameraImpl } from 'three'
 import { OrthographicCamera } from "@react-three/drei";
@@ -7,18 +8,28 @@ import { IDLE_VIEW, SCREE_VIEW, type CameraView } from './Camera.type'
 import { Vector3 } from "three";
 import type { OrbitControls } from "three/examples/jsm/Addons.js";
 
-export default function CameraRig({ orbitControlRef } : { orbitControlRef: RefObject<OrbitControls | null>}) {
+const FILL = 0.8
+const SCREEN_W = 1.3
+const SCREEN_H = 0.8
 
+export default function CameraRig({ orbitControlRef }: { orbitControlRef: RefObject<OrbitControls | null> }) {
+
+    const size = useThree(state => state.size)
     const focus = useScene(state => state.focus)
     const isFirstFocus = useScene(state => state.isFirstFocus)
     const setIsControls = useScene(state => state.setIsControls)
     const setIsAnimating = useScene(state => state.setIsAnimating)
     const ref = useRef<OrthographicCameraImpl>(null)
-    const lookAtRef = useRef(new Vector3(...IDLE_VIEW.target)) 
+    const lookAtRef = useRef(new Vector3(...IDLE_VIEW.target))
     const savedViewRef = useRef({
         position: new Vector3(...IDLE_VIEW.position),
         target: new Vector3(...IDLE_VIEW.target)
     })
+
+    const screenZoom = useMemo(() => Math.min(
+        (size.width * FILL) / SCREEN_W,
+        (size.height * FILL) / SCREEN_H,
+    ), [size])
 
     function animateToView(view: CameraView) {
 
@@ -26,11 +37,6 @@ export default function CameraRig({ orbitControlRef } : { orbitControlRef: RefOb
 
         if (!view.orbitEnabled && orbitControlRef.current) {
             lookAtRef.current.copy(orbitControlRef.current.target)
-            savedViewRef.current.position.copy(ref.current.position)
-            savedViewRef.current.target.copy(orbitControlRef.current.target)
-        }
-
-        if (!view.orbitEnabled && orbitControlRef.current) {
             savedViewRef.current.position.copy(ref.current.position)
             savedViewRef.current.target.copy(orbitControlRef.current.target)
         }
@@ -85,10 +91,9 @@ export default function CameraRig({ orbitControlRef } : { orbitControlRef: RefOb
         })
     }
 
-
     useEffect(() => {
         if (focus === 'screen') {
-            animateToView(SCREE_VIEW)
+            animateToView({ ...SCREE_VIEW, zoom: screenZoom })
         } else {
             animateToView({
                 ...IDLE_VIEW,
@@ -96,13 +101,12 @@ export default function CameraRig({ orbitControlRef } : { orbitControlRef: RefOb
                 target: [savedViewRef.current.target.x, savedViewRef.current.target.y, savedViewRef.current.target.z],
             })
         }
-    }, [focus])
+    }, [focus, screenZoom])
 
     return <OrthographicCamera
         ref={ref}
         {...IDLE_VIEW}
-     
         makeDefault
-        far={200}  
+        far={200}
     />
 }
