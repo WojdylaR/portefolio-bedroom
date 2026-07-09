@@ -3,13 +3,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(154, 154, 154, 0.5);
-  border-radius: 10px;
+  pointer-events: none;
 
-  
-
-  &.paysage {
+  .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(154, 154, 154, 0.5);
+    border-radius: 10px;
+    pointer-events: auto;
   }
+
 
 
     .button {
@@ -28,18 +32,24 @@
 }
 @media (orientation: landscape) {
     .interface { 
-    top: 40%;
-    left: 10px;
-    flex-direction: column;
-     }
+      height: 100%;
+      left: 10px;
+      top: 0;
+      .buttons {
+        flex-direction: column;
+      }
+    }
 }
 
 @media (orientation: portrait) {
 
     .interface { 
-      flex-direction: row;
       bottom: 20px;
-      left: 40%
+      width: 100%;
+
+      .buttons {
+        flex-direction: row;
+      }
      }
 }
 

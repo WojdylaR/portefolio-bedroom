@@ -12,7 +12,7 @@ const FILL = 0.8
 const SCREEN_W = 1.3
 const SCREEN_H = 0.8
 
-const ROOM_W = 10
+const ROOM_W = 12
 const ROOM_H = 8
 
 
