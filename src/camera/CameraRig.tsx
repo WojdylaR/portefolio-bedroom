@@ -12,6 +12,10 @@ const FILL = 0.8
 const SCREEN_W = 1.3
 const SCREEN_H = 0.8
 
+const ROOM_W = 10
+const ROOM_H = 8
+
+
 export default function CameraRig({ orbitControlRef }: { orbitControlRef: RefObject<OrbitControls | null> }) {
 
     const size = useThree(state => state.size)
@@ -31,7 +35,13 @@ export default function CameraRig({ orbitControlRef }: { orbitControlRef: RefObj
         (size.height * FILL) / SCREEN_H,
     ), [size])
 
-    function animateToView(view: CameraView) {
+    
+    const idleZoom = useMemo(() => Math.min(
+        (size.width * 0.9) / ROOM_W,
+        (size.height * 0.9) / ROOM_H,
+    ), [size])
+
+    function animateToView(view: CameraView, zoom: number) {
 
         if (!ref.current || isFirstFocus) return
 
@@ -80,7 +90,7 @@ export default function CameraRig({ orbitControlRef }: { orbitControlRef: RefObj
         })
 
         gsap.to(ref.current, {
-            zoom: view.zoom,
+            zoom: zoom,
             near: view.near,
             duration: view.animationDuration,
             ease: 'power2.inOut',
@@ -93,15 +103,25 @@ export default function CameraRig({ orbitControlRef }: { orbitControlRef: RefObj
 
     useEffect(() => {
         if (focus === 'screen') {
-            animateToView({ ...SCREE_VIEW, zoom: screenZoom })
+            animateToView(SCREE_VIEW, screenZoom)
         } else {
             animateToView({
                 ...IDLE_VIEW,
                 position: [savedViewRef.current.position.x, savedViewRef.current.position.y, savedViewRef.current.position.z],
-                target: [savedViewRef.current.target.x, savedViewRef.current.target.y, savedViewRef.current.target.z],
-            })
+                target: [savedViewRef.current.target.x, savedViewRef.current.target.y, savedViewRef.current.target.z]
+            }, idleZoom)
         }
-    }, [focus, screenZoom])
+    }, [focus])
+
+    useEffect(() => {
+        if (!ref.current) return
+        gsap.to(ref.current, {
+            zoom: focus === 'screen' ? screenZoom : idleZoom,
+            duration: 0.1,
+            ease: 'power2.out',
+            onUpdate: () => ref.current?.updateProjectionMatrix(),
+        })
+    }, [screenZoom, idleZoom])
 
     return <OrthographicCamera
         ref={ref}
