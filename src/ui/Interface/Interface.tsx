@@ -20,6 +20,9 @@ export default function Interface () {
                 </div>
             </>
             }
+            <a href='https://www.linkedin.com/in/ronan-wojdyla-07aa3920a/' className="button">
+                    <img src='./linkedinButton.png'/>
+                </a>
         </div>
     )
 }

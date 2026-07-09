@@ -5,7 +5,7 @@ export default function AmbiantLight () {
     const { color, intensity } = useControls('ambiantLight', {
             color: '#c4a793',
             intensity: {
-                value: 3.8,
+                value: 2,
                 min: 0,
                 max: 15
             }

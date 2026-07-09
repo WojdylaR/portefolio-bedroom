@@ -26,7 +26,7 @@ export default function BedroomModel() {
   const { orangeGlow } = useControls('orangeGlow' , {
 
     orangeGlow: {
-      value: 20,
+      value: 7,
       step: 0.1,
       min: 0,
       max: 100
@@ -93,7 +93,7 @@ export default function BedroomModel() {
         geometry={nodes.orangeLight.geometry}
         rotation={[Math.PI / 2, 0, 0]}
       >
-        <meshStandardMaterial color={' #97562a'} emissive={ '#97562a'  } emissiveIntensity={ orangeGlow } toneMapped={false}/>
+        <meshStandardMaterial color={' #ff7112'} emissive={ '#ff7112'  } emissiveIntensity={ orangeGlow } toneMapped={false}/>
       </mesh>
 
       <Paint geometry={nodes.right_paint.geometry} texture={galaxyTexture} />
