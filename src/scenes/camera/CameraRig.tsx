@@ -1,4 +1,4 @@
-import useScene from "../state/store/useScene";
+import useScene from "../../state/store/useScene";
 import { useEffect, useMemo, useRef, type RefObject } from "react";
 import { useThree } from "@react-three/fiber";
 import gsap from "gsap";
@@ -7,8 +7,9 @@ import { OrthographicCamera } from "@react-three/drei";
 import { IDLE_VIEW, SCREE_VIEW, type CameraView } from './Camera.type'
 import { Vector3 } from "three";
 import type { OrbitControls } from "three/examples/jsm/Addons.js";
+import { TRANSITION } from "../../config/animation";
 
-const FILL = 0.95
+const FILL = 0.92
 const SCREEN_W = 1.3
 const SCREEN_H = 0.8
 
@@ -29,6 +30,9 @@ export default function CameraRig({ orbitControlRef }: { orbitControlRef: RefObj
         position: new Vector3(...IDLE_VIEW.position),
         target: new Vector3(...IDLE_VIEW.target)
     })
+
+    const state = useScene(state => state.state)
+    const hasIntroPlayed = useRef(false)
 
     const screenZoom = useMemo(() => Math.min(
         (size.width * FILL) / SCREEN_W,
@@ -102,6 +106,33 @@ export default function CameraRig({ orbitControlRef }: { orbitControlRef: RefObj
     }
 
     useEffect(() => {
+        if (state !== 'loaded' || hasIntroPlayed.current || !ref.current) return
+        hasIntroPlayed.current = true
+
+        setIsAnimating(true)
+        setIsControls(false)
+
+        ref.current.zoom = idleZoom * 0.04
+        ref.current.updateProjectionMatrix()
+
+        gsap.to(ref.current, {
+            zoom: idleZoom,
+            duration:  TRANSITION.fadeDuration,
+            delay: TRANSITION.fadeDelay,
+            ease: 'power2.out',
+            onUpdate: () => ref.current?.updateProjectionMatrix(),
+            onComplete: () => {
+                setIsAnimating(false)
+                setIsControls(true)
+                if (orbitControlRef.current) {
+                    orbitControlRef.current.target.copy(lookAtRef.current)
+                    orbitControlRef.current.update()
+                }
+            },
+        })
+    }, [state])
+
+    useEffect(() => {
         if (focus === 'screen') {
             animateToView(SCREE_VIEW, screenZoom)
         } else {
@@ -114,7 +145,7 @@ export default function CameraRig({ orbitControlRef }: { orbitControlRef: RefObj
     }, [focus])
 
     useEffect(() => {
-        if (!ref.current) return
+        if (!ref.current  || !hasIntroPlayed.current) return
         gsap.to(ref.current, {
             zoom: focus === 'screen' ? screenZoom : idleZoom,
             duration: 0.1,

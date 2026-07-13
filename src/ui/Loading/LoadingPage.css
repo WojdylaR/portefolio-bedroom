@@ -1,0 +1,55 @@
+.loading-page {
+    opacity: 1;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+
+    
+
+    .logo {
+        width: 70vw;
+        height: auto;
+    }
+
+    
+
+    .text {
+        font-family: "Geist Pixel", sans-serif;
+        color: white;
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    .loading-bar-container {
+        width: 50%;
+        margin-top: 25px ;
+        height: 25px;
+        border: 2px solid white;
+        border-radius: 4px;
+
+        .loading-bar {
+            height: 100%;
+            background-color: white;
+        }
+    }
+
+    @media (orientation: landscape) {
+    .logo {
+        height: 50vh;
+        width: auto;
+        }
+
+        .loading-bar-container {
+            width: 25%
+        }
+    }
+    
+}

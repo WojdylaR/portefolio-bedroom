@@ -3,12 +3,14 @@ import { subscribeWithSelector } from 'zustand/middleware'
 
 export interface IScene {
 
+    state: 'loading' | 'loaded'
 
     isFirstFocus: boolean
     focus: 'idle' |  'screen'
     isAnimating: boolean
     isControls: boolean
 
+    setLoaded: () => void
     focusScreen: () => void
     focusReset: () => void
     setIsControls: (value: boolean) => void
@@ -18,11 +20,18 @@ export interface IScene {
 export default create<IScene>()(subscribeWithSelector((set) => {
 
     return {
-        
+
+        state: 'loading',
         isFirstFocus: true,
         focus: 'idle',
         isAnimating: false,
         isControls: true,
+
+        setLoaded: () => {
+            set(() => {
+                return {state: 'loaded'}
+            })
+        },
 
         focusScreen: () => {
             set(() => {
