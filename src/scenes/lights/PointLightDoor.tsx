@@ -5,7 +5,7 @@ export default function PointLightDoor () {
     const { color, intensity, position } = useControls('pointLightDoor', {
         color: '#a8c5ff',
         intensity: {
-            value: 150,
+            value: 100,
             min: 0,
             max: 200
         },

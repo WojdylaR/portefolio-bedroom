@@ -6,21 +6,14 @@ import Screen from './parts/Screen'
 
 export default function BedroomModel() {
 
-  const { nodes, materials } : {nodes: any, materials: any} = useGLTF('/bedroom/bedroomTest.glb')
+  const { nodes, materials } : {nodes: any, materials: any} = useGLTF('/bedroom/bedroom.glb')
 
   const spaceshipTexture = useTexture('./spaceship.jpeg')
   const galaxyTexture = useTexture('./galaxy.jpg')
 
-  const roomTexture = useTexture('./bedroom/roomBaked.png')
-  roomTexture.flipY = false
-
-
-  const LastTest = useTexture('./bedroom/LastTest.png')
-  LastTest.flipY = false
-
-
-  const bedBaked = useTexture('./bedroom/bedBaked.png')
-  bedBaked.flipY = false
+  const bakedRoom = useTexture('./bedroom/baked4096LessAO.png')
+  bakedRoom.flipY = false
+  bakedRoom.anisotropy = 16
 
 
   const { orangeGlow } = useControls('orangeGlow' , {
@@ -47,34 +40,15 @@ export default function BedroomModel() {
     <group >
 
       <mesh
-        name="screen"
-        geometry={nodes.screen.geometry}
-        material={nodes.screen.material}
-        rotation={[Math.PI / 2, 0, 0]}
-      />
-      <mesh
-        name="desktop"
-        geometry={nodes.desktop.geometry}
-        material={nodes.desktop.material}
-        rotation={[Math.PI / 2, 0, 0]}
-      >
-        <meshStandardMaterial map={LastTest} />
-        </mesh> 
-      <mesh
         name="room"
+        castShadow
+        receiveShadow
         geometry={nodes.room.geometry}
+        material={nodes.room.material}
         rotation={[Math.PI / 2, 0, 0]}
       >
-        <meshStandardMaterial map={roomTexture} />
-        </mesh> 
-      <mesh
-        name="bed"
-        geometry={nodes.bed.geometry}
-        material={nodes.bed.material}
-        rotation={[Math.PI / 2, 0, 0]}
-      >
-        <meshStandardMaterial map={bedBaked} />
-        </mesh> 
+        <meshStandardMaterial map={bakedRoom} />
+        </mesh>
 
       
       <Screen  geometry={nodes.screen.geometry}/>

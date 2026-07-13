@@ -17,7 +17,7 @@ const ROOM_W = 12
 const ROOM_H = 8
 
 
-export default function CameraRig({ orbitControlRef }: { orbitControlRef: RefObject<OrbitControls | null> }) {
+export default function CameraRig({ orbitControlRef } : { orbitControlRef: RefObject<OrbitControls | null> }) {
 
     const size = useThree(state => state.size)
     const focus = useScene(state => state.focus)
@@ -118,7 +118,7 @@ export default function CameraRig({ orbitControlRef }: { orbitControlRef: RefObj
         gsap.to(ref.current, {
             zoom: idleZoom,
             duration:  TRANSITION.fadeDuration,
-            delay: TRANSITION.fadeDelay,
+            delay: TRANSITION.fadeDuration * 0.5  ,
             ease: 'power2.out',
             onUpdate: () => ref.current?.updateProjectionMatrix(),
             onComplete: () => {
