@@ -2,7 +2,7 @@
   import { Canvas } from '@react-three/fiber'
   import Bedroom from './scenes/bedroom/Bedroom'
   import { Center, OrbitControls } from '@react-three/drei'
-  // import { Perf } from 'r3f-perf'
+  // import { Perf } from 'r3f-perf' 
   import Lights from './scenes/lights/Lights'
   import CameraRig from './scenes/camera/CameraRig'
   import { Leva } from 'leva'

@@ -8,7 +8,7 @@ export default function BedroomModel() {
 
   const { nodes, materials } : {nodes: any, materials: any} = useGLTF('/bedroom/bedroom.glb')
 
-  const spaceshipTexture = useTexture('./spaceship.jpeg')
+  const planetTexture = useTexture('./planet.png')
   const galaxyTexture = useTexture('./galaxy.jpg')
 
   const bakedRoom = useTexture('./bedroom/baked4096LessAO.png')
@@ -71,7 +71,7 @@ export default function BedroomModel() {
       </mesh>
 
       <Paint geometry={nodes.right_paint.geometry} texture={galaxyTexture} />
-      <Paint geometry={nodes.left_paint.geometry} texture={spaceshipTexture} />
+      <Paint geometry={nodes.left_paint.geometry} texture={planetTexture} />
     </group>
   )
 }
