@@ -13,6 +13,7 @@
 import LoadingPage from './ui/Loading/LoadingPage'
 import LoadTracker from './scenes/utils/LoadTracker'
 import { SCENE } from './config/scene'
+import { Analytics } from "@vercel/analytics/react"
 
   function App() {
     
@@ -24,7 +25,8 @@ import { SCENE } from './config/scene'
     return (
       
         <>
-        <LoadingPage />
+          <Analytics />
+          <LoadingPage />
           <Canvas
             shadows
           >
