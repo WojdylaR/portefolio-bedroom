@@ -34,7 +34,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.bolts_L.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#8a8a90" roughness={0.4} metalness={1} />
       </mesh>
       <mesh
         name="bolts_R"
@@ -42,7 +42,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.bolts_R.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#8a8a90" roughness={0.4} metalness={1} />
       </mesh>
       <mesh
         name="cup_L"
@@ -50,7 +50,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.cup_L.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#451919" roughness={0.4} metalness={0.1} />
       </mesh>
       <mesh
         name="cup_R"
@@ -58,7 +58,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.cup_R.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#451919" roughness={0.4} metalness={0.1} />
       </mesh>
       <mesh
         name="cushion_L"
@@ -66,7 +66,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.cushion_L.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#451919" roughness={0.4} metalness={0.1} />
       </mesh>
       <mesh
         name="cushion_R"
@@ -74,7 +74,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.cushion_R.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#451919" roughness={0.4} metalness={0.1} />
       </mesh>
       <mesh
         name="frame_L"
@@ -82,7 +82,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.frame_L.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#c0c0c4" roughness={0.45} metalness={1} />
       </mesh>
       <mesh
         name="frame_R"
@@ -90,7 +90,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.frame_R.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#c0c0c4" roughness={0.45} metalness={1} />
       </mesh>
       <mesh
         name="grille_L"
@@ -98,7 +98,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.grille_L.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#0f0f11" roughness={0.95} metalness={0} />
       </mesh>
       <mesh
         name="grille_R"
@@ -106,7 +106,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.grille_R.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#0f0f11" roughness={0.95} metalness={0} />
       </mesh>
       <mesh
         name="headband_pad"
@@ -114,7 +114,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.headband_pad.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#451919" roughness={0.4} metalness={0.1} />
       </mesh>
       <mesh
         name="stitching"
@@ -122,7 +122,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.stitching.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#8a8a90" roughness={0.4} metalness={1} />
       </mesh>
       <mesh
         name="trim_L"
@@ -130,7 +130,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.trim_L.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#1e1e1e" roughness={0.25} metalness={0} />
       </mesh>
       <mesh
         name="trim_R"
@@ -138,7 +138,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.trim_R.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#1e1e1e" roughness={0.25} metalness={0} />
       </mesh>
     </group>
   )

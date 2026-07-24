@@ -1,13 +1,15 @@
+import "./HeadphoneConfiguratorApp.css"
 import { Center, Environment, OrbitControls } from "@react-three/drei";
 import { Canvas } from '@react-three/fiber'
 import Headphone from './scenes/headphone/Headphone'
 import { Perf } from "r3f-perf";
 import * as THREE from 'three'
+import ConfiguratorInterface from "./ui/ConfiguratorInterface";
 
 export default function HeadphoneConfiguratorApp () {
 
     return (
-        <>
+        <span className="headphone-configurator-app">
             <Canvas 
             gl={{ toneMapping: THREE.ACESFilmicToneMapping }}
                     camera={{
@@ -27,6 +29,7 @@ export default function HeadphoneConfiguratorApp () {
                     <Headphone />
                 </Center>
             </Canvas>
-        </>
+            <ConfiguratorInterface />:
+        </span>
     )
 }
