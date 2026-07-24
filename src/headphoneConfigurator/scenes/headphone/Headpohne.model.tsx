@@ -1,0 +1,111 @@
+import { useGLTF } from "@react-three/drei"
+
+export default function HeadphoneModel () {
+
+  const { nodes } : {nodes: any} = useGLTF('/headphone/headphone.glb')
+
+  return (
+    <group dispose={null}>
+      <mesh
+        name="bolts_L"
+        castShadow
+        receiveShadow
+        geometry={nodes.bolts_L.geometry}
+        material={nodes.bolts_L.material}
+      />
+      <mesh
+        name="bolts_R"
+        castShadow
+        receiveShadow
+        geometry={nodes.bolts_R.geometry}
+        material={nodes.bolts_R.material}
+      />
+      <mesh
+        name="cup_L"
+        castShadow
+        receiveShadow
+        geometry={nodes.cup_L.geometry}
+        material={nodes.cup_L.material}
+      />
+      <mesh
+        name="cup_R"
+        castShadow
+        receiveShadow
+        geometry={nodes.cup_R.geometry}
+        material={nodes.cup_R.material}
+      />
+      <mesh
+        name="cushion_L"
+        castShadow
+        receiveShadow
+        geometry={nodes.cushion_L.geometry}
+        material={nodes.cushion_L.material}
+      />
+      <mesh
+        name="cushion_R"
+        castShadow
+        receiveShadow
+        geometry={nodes.cushion_R.geometry}
+        material={nodes.cushion_R.material}
+      />
+      <mesh
+        name="frame_L"
+        castShadow
+        receiveShadow
+        geometry={nodes.frame_L.geometry}
+        material={nodes.frame_L.material}
+      />
+      <mesh
+        name="frame_R"
+        castShadow
+        receiveShadow
+        geometry={nodes.frame_R.geometry}
+        material={nodes.frame_R.material}
+      />
+      <mesh
+        name="grille_L"
+        castShadow
+        receiveShadow
+        geometry={nodes.grille_L.geometry}
+        material={nodes.grille_L.material}
+      />
+      <mesh
+        name="grille_R"
+        castShadow
+        receiveShadow
+        geometry={nodes.grille_R.geometry}
+        material={nodes.grille_R.material}
+      />
+      <mesh
+        name="headband_pad"
+        castShadow
+        receiveShadow
+        geometry={nodes.headband_pad.geometry}
+        material={nodes.headband_pad.material}
+      />
+      <mesh
+        name="stitching"
+        castShadow
+        receiveShadow
+        geometry={nodes.stitching.geometry}
+        material={nodes.stitching.material}
+      />
+      <mesh
+        name="trime_L"
+        castShadow
+        receiveShadow
+        geometry={nodes.trime_L.geometry}
+        material={nodes.trime_L.material}
+      />
+      <mesh
+        name="trime_R"
+        castShadow
+        receiveShadow
+        geometry={nodes.trime_R.geometry}
+        material={nodes.trime_R.material}
+      />
+    </group>
+  )
+}
+
+useGLTF.preload('/headphone.glb')
