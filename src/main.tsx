@@ -5,7 +5,7 @@ import './index.css'
 import BedroomApp from './bedroom/BedroomApp.tsx'
 import { Analytics } from "@vercel/analytics/react"
 import { Leva } from 'leva'
-import HeadphoneConfigurator from './headphoneConfigurator/HeadphoneConfigurator.tsx'
+import HeadphoneConfiguratorApp from './headphoneConfigurator/HeadphoneConfiguratorApp.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <Routes>
           <Route path="/" element={<BedroomApp />} />
-          <Route path="/headphone-configurator" element={<HeadphoneConfigurator />} />
+          <Route path="/headphone-configurator" element={<HeadphoneConfiguratorApp />} />
         </Routes>
       </BrowserRouter>
   </StrictMode>,

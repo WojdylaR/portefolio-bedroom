@@ -3,17 +3,17 @@ import { Canvas } from '@react-three/fiber'
 import Headphone from './scenes/headphone/Headphone'
 import { Perf } from "r3f-perf";
 
-export default function HeadphoneConfigurator () {
+export default function HeadphoneConfiguratorApp () {
 
     return (
         <>
             <Canvas 
-                camera={ {
-                    fov: 45,
-                    near: 0.1,
-                    far: 200,
-                    position: [ 2.5, 4, 60 ]
-                } }
+                    camera={{
+                        fov: 45,
+                        near: 0.01,
+                        far: 100,
+                        position: [0, 1, 50]
+                    }}
                 >
                     
                 <Perf position="top-left"/>

@@ -1,8 +1,30 @@
 import { useGLTF } from "@react-three/drei"
+import * as THREE from 'three'
+import { type GLTF } from 'three-stdlib'
+
+type GLTFResult = GLTF & {
+  nodes: {
+    bolts_L: THREE.Mesh
+    bolts_R: THREE.Mesh
+    cup_L: THREE.Mesh
+    cup_R: THREE.Mesh
+    cushion_L: THREE.Mesh
+    cushion_R: THREE.Mesh
+    frame_L: THREE.Mesh
+    frame_R: THREE.Mesh
+    grille_L: THREE.Mesh
+    grille_R: THREE.Mesh
+    headband_pad: THREE.Mesh
+    stitching: THREE.Mesh
+    trim_L: THREE.Mesh
+    trim_R: THREE.Mesh
+  }
+}
+
 
 export default function HeadphoneModel () {
 
-  const { nodes } : {nodes: any} = useGLTF('/headphone/headphone.glb')
+  const { nodes } = useGLTF('/headphone/headphone.glb') as unknown as GLTFResult
 
   return (
     <group dispose={null}>
@@ -91,21 +113,19 @@ export default function HeadphoneModel () {
         material={nodes.stitching.material}
       />
       <mesh
-        name="trime_L"
+        name="trim_L"
         castShadow
         receiveShadow
-        geometry={nodes.trime_L.geometry}
-        material={nodes.trime_L.material}
+        geometry={nodes.trim_L.geometry}
+        material={nodes.trim_L.material}
       />
       <mesh
-        name="trime_R"
+        name="trim_R"
         castShadow
         receiveShadow
-        geometry={nodes.trime_R.geometry}
-        material={nodes.trime_R.material}
+        geometry={nodes.trim_R.geometry}
+        material={nodes.trim_R.material}
       />
     </group>
   )
 }
-
-useGLTF.preload('/headphone.glb')
