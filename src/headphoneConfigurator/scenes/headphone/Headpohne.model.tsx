@@ -33,99 +33,113 @@ export default function HeadphoneModel () {
         castShadow
         receiveShadow
         geometry={nodes.bolts_L.geometry}
-        material={nodes.bolts_L.material}
-      />
+      >
+          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+      </mesh>
       <mesh
         name="bolts_R"
         castShadow
         receiveShadow
         geometry={nodes.bolts_R.geometry}
-        material={nodes.bolts_R.material}
-      />
+      >
+          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+      </mesh>
       <mesh
         name="cup_L"
         castShadow
         receiveShadow
         geometry={nodes.cup_L.geometry}
-        material={nodes.cup_L.material}
-      />
+      >
+          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+      </mesh>
       <mesh
         name="cup_R"
         castShadow
         receiveShadow
         geometry={nodes.cup_R.geometry}
-        material={nodes.cup_R.material}
-      />
+      >
+          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+      </mesh>
       <mesh
         name="cushion_L"
         castShadow
         receiveShadow
         geometry={nodes.cushion_L.geometry}
-        material={nodes.cushion_L.material}
-      />
+      >
+          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+      </mesh>
       <mesh
         name="cushion_R"
         castShadow
         receiveShadow
         geometry={nodes.cushion_R.geometry}
-        material={nodes.cushion_R.material}
-      />
+      >
+          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+      </mesh>
       <mesh
         name="frame_L"
         castShadow
         receiveShadow
         geometry={nodes.frame_L.geometry}
-        material={nodes.frame_L.material}
-      />
+      >
+          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+      </mesh>
       <mesh
         name="frame_R"
         castShadow
         receiveShadow
         geometry={nodes.frame_R.geometry}
-        material={nodes.frame_R.material}
-      />
+      >
+          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+      </mesh>
       <mesh
         name="grille_L"
         castShadow
         receiveShadow
         geometry={nodes.grille_L.geometry}
-        material={nodes.grille_L.material}
-      />
+      >
+          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+      </mesh>
       <mesh
         name="grille_R"
         castShadow
         receiveShadow
         geometry={nodes.grille_R.geometry}
-        material={nodes.grille_R.material}
-      />
+      >
+          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+      </mesh>
       <mesh
         name="headband_pad"
         castShadow
         receiveShadow
         geometry={nodes.headband_pad.geometry}
-        material={nodes.headband_pad.material}
-      />
+      >
+          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+      </mesh>
       <mesh
         name="stitching"
         castShadow
         receiveShadow
         geometry={nodes.stitching.geometry}
-        material={nodes.stitching.material}
-      />
+      >
+          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+      </mesh>
       <mesh
         name="trim_L"
         castShadow
         receiveShadow
         geometry={nodes.trim_L.geometry}
-        material={nodes.trim_L.material}
-      />
+      >
+          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+      </mesh>
       <mesh
         name="trim_R"
         castShadow
         receiveShadow
         geometry={nodes.trim_R.geometry}
-        material={nodes.trim_R.material}
-      />
+      >
+          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+      </mesh>
     </group>
   )
 }
