@@ -11,7 +11,7 @@ import { useRef, Suspense } from 'react'
 import LoadingPage from './ui/Loading/LoadingPage'
 import LoadTracker from './scenes/utils/LoadTracker'
 import { SCENE } from './config/scene'
-import { Perf } from 'r3f-perf' 
+// import { Perf } from 'r3f-perf' 
 
   function BedroomApp() {
     
@@ -36,7 +36,7 @@ import { Perf } from 'r3f-perf'
               <PostProcessing />
               <OrbitControls ref={ orbitControlRef } makeDefault enabled={!isAnimating && isControls} enablePan={true}/>
 
-              <Perf position="top-left" />
+              {/* <Perf position="top-left" /> */}
               <Center>
 
               
