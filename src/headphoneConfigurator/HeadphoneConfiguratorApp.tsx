@@ -4,7 +4,7 @@ import { Canvas } from '@react-three/fiber'
 import Headphone from './scenes/headphone/Headphone'
 import { Perf } from "r3f-perf";
 import * as THREE from 'three'
-import ConfiguratorInterface from "./ui/ConfiguratorInterface";
+import Interface from "./ui/Interface";
 
 export default function HeadphoneConfiguratorApp () {
 
@@ -24,12 +24,12 @@ export default function HeadphoneConfiguratorApp () {
                     
                 <OrbitControls  makeDefault />
                 <Environment preset="studio" background={ false } />
-                <color attach={'background'} args={ [ '#3a3a3a']} />
+                <color attach={'background'} args={ [ '#1a1a1d']} />
                 <Center>
                     <Headphone />
                 </Center>
             </Canvas>
-            <ConfiguratorInterface />:
+            <Interface />:
         </span>
     )
 }

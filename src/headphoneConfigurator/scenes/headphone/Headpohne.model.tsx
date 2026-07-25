@@ -1,6 +1,8 @@
 import { useGLTF } from "@react-three/drei"
 import * as THREE from 'three'
 import { type GLTF } from 'three-stdlib'
+import HeadphoneMaterials from "../../shaders/HeadphoneMaterials"
+import { useConfigurator } from "../../store/configurator"
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -26,6 +28,8 @@ export default function HeadphoneModel () {
 
   const { nodes } = useGLTF('/headphone/headphone.glb') as unknown as GLTFResult
 
+  const zones = useConfigurator(state => state.zones)
+
   return (
     <group dispose={null}>
       <mesh
@@ -50,7 +54,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.cup_L.geometry}
       >
-          <meshStandardMaterial color="#451919" roughness={0.4} metalness={0.1} />
+          <HeadphoneMaterials material={zones.earpads.material} color={zones.earpads.color}/>
       </mesh>
       <mesh
         name="cup_R"
@@ -58,7 +62,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.cup_R.geometry}
       >
-          <meshStandardMaterial color="#451919" roughness={0.4} metalness={0.1} />
+          <HeadphoneMaterials material={zones.earpads.material} color={zones.earpads.color}/> 
       </mesh>
       <mesh
         name="cushion_L"
@@ -66,7 +70,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.cushion_L.geometry}
       >
-          <meshStandardMaterial color="#451919" roughness={0.4} metalness={0.1} />
+          <HeadphoneMaterials material={zones.shells.material} color={zones.shells.color}/> 
       </mesh>
       <mesh
         name="cushion_R"
@@ -74,7 +78,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.cushion_R.geometry}
       >
-          <meshStandardMaterial color="#451919" roughness={0.4} metalness={0.1} />
+          <HeadphoneMaterials material={zones.shells.material} color={zones.shells.color}/> 
       </mesh>
       <mesh
         name="frame_L"
@@ -114,7 +118,8 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.headband_pad.geometry}
       >
-          <meshStandardMaterial color="#451919" roughness={0.4} metalness={0.1} />
+        
+          <HeadphoneMaterials material={zones.headbandPad.material} color={zones.headbandPad.color}/> 
       </mesh>
       <mesh
         name="stitching"
