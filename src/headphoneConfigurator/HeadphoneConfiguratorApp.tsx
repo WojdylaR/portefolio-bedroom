@@ -24,7 +24,7 @@ export default function HeadphoneConfiguratorApp () {
                     
                 <OrbitControls  makeDefault />
                 <Environment preset="studio" background={ false } />
-                <color attach={'background'} args={ [ '#1a1a1d']} />
+                {/* <color attach={'background'} args={ [ '#1a1a1d']} /> */}
                 <Center>
                     <Headphone />
                 </Center>

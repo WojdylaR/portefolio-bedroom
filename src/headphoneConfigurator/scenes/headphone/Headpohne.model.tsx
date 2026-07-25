@@ -54,7 +54,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.cup_L.geometry}
       >
-          <HeadphoneMaterials material={zones.earpads.material} color={zones.earpads.color}/>
+          <HeadphoneMaterials material={zones.shells.material} color={zones.shells.color}/>
       </mesh>
       <mesh
         name="cup_R"
@@ -62,7 +62,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.cup_R.geometry}
       >
-          <HeadphoneMaterials material={zones.earpads.material} color={zones.earpads.color}/> 
+          <HeadphoneMaterials material={zones.shells.material} color={zones.shells.color}/> 
       </mesh>
       <mesh
         name="cushion_L"
@@ -70,7 +70,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.cushion_L.geometry}
       >
-          <HeadphoneMaterials material={zones.shells.material} color={zones.shells.color}/> 
+          <HeadphoneMaterials material={zones.earpads.material} color={zones.earpads.color}/> 
       </mesh>
       <mesh
         name="cushion_R"
@@ -78,7 +78,7 @@ export default function HeadphoneModel () {
         receiveShadow
         geometry={nodes.cushion_R.geometry}
       >
-          <HeadphoneMaterials material={zones.shells.material} color={zones.shells.color}/> 
+          <HeadphoneMaterials material={zones.earpads.material} color={zones.earpads.color}/> 
       </mesh>
       <mesh
         name="frame_L"
