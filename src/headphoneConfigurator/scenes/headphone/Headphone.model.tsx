@@ -1,6 +1,8 @@
 import { useGLTF } from "@react-three/drei"
 import * as THREE from 'three'
 import { type GLTF } from 'three-stdlib'
+import HeadphoneMaterials from "../../shaders/HeadphoneMaterials"
+import { useConfigurator } from "../../store/configurator"
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -26,119 +28,96 @@ export default function HeadphoneModel () {
 
   const { nodes } = useGLTF('/headphone/headphone.glb') as unknown as GLTFResult
 
+  const zones = useConfigurator(state => state.zones)
+
   return (
-    <group dispose={null}>
+    <group  scale={0.1} dispose={null}>
       <mesh
         name="bolts_L"
-        castShadow
-        receiveShadow
         geometry={nodes.bolts_L.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#8a8a90" roughness={0.4} metalness={1} />
       </mesh>
       <mesh
         name="bolts_R"
-        castShadow
-        receiveShadow
         geometry={nodes.bolts_R.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#8a8a90" roughness={0.4} metalness={1} />
       </mesh>
       <mesh
         name="cup_L"
-        castShadow
-        receiveShadow
         geometry={nodes.cup_L.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <HeadphoneMaterials material={zones.shells.material} color={zones.shells.color}/>
       </mesh>
       <mesh
         name="cup_R"
-        castShadow
-        receiveShadow
         geometry={nodes.cup_R.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <HeadphoneMaterials material={zones.shells.material} color={zones.shells.color}/> 
       </mesh>
       <mesh
         name="cushion_L"
-        castShadow
-        receiveShadow
         geometry={nodes.cushion_L.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <HeadphoneMaterials material={zones.earpads.material} color={zones.earpads.color}/> 
       </mesh>
       <mesh
         name="cushion_R"
-        castShadow
-        receiveShadow
         geometry={nodes.cushion_R.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <HeadphoneMaterials material={zones.earpads.material} color={zones.earpads.color}/> 
       </mesh>
       <mesh
         name="frame_L"
-        castShadow
-        receiveShadow
         geometry={nodes.frame_L.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#c0c0c4" roughness={0.45} metalness={1} />
       </mesh>
       <mesh
         name="frame_R"
-        castShadow
-        receiveShadow
         geometry={nodes.frame_R.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#c0c0c4" roughness={0.45} metalness={1} />
       </mesh>
       <mesh
         name="grille_L"
-        castShadow
-        receiveShadow
+         position-x={.01}
         geometry={nodes.grille_L.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial  color="#0f0f11" roughness={0.95} metalness={0} />
       </mesh>
       <mesh
         name="grille_R"
-        castShadow
-        receiveShadow
+         position-x={- .01}
         geometry={nodes.grille_R.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial position-x={0.1} color="#0f0f11" roughness={0.95} metalness={0} />
       </mesh>
       <mesh
         name="headband_pad"
-        castShadow
-        receiveShadow
         geometry={nodes.headband_pad.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+        
+          <HeadphoneMaterials material={zones.headbandPad.material} color={zones.headbandPad.color}/> 
       </mesh>
       <mesh
         name="stitching"
-        castShadow
-        receiveShadow
         geometry={nodes.stitching.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#8a8a90" roughness={0.4} metalness={1} />
       </mesh>
       <mesh
         name="trim_L"
-        castShadow
-        receiveShadow
         geometry={nodes.trim_L.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#1e1e1e" roughness={0.25} metalness={0} />
       </mesh>
       <mesh
         name="trim_R"
-        castShadow
-        receiveShadow
         geometry={nodes.trim_R.geometry}
       >
-          <meshStandardMaterial color="#999" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#1e1e1e" roughness={0.25} metalness={0} />
       </mesh>
     </group>
   )
