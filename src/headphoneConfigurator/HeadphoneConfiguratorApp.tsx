@@ -20,11 +20,10 @@ export default function HeadphoneConfiguratorApp () {
                     }}
                 >
                     
-                <Perf position="top-left"/>
+                {/* <Perf position="top-left"/> */}
                     
                 <OrbitControls  makeDefault />
                 <Environment preset="studio" background={ false } />
-                {/* <color attach={'background'} args={ [ '#1a1a1d']} /> */}
                 <Center>
                     <Headphone />
                 </Center>

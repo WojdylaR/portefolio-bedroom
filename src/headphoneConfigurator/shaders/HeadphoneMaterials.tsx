@@ -6,27 +6,37 @@ import type CustomShaderMaterialImpl from 'three-custom-shader-material/vanilla'
 import type { MaterialId } from '../store/configurator'
 import materialVertexShader from './material/vertex.glsl'
 import materialFragmentShader from './material/fragment.glsl'
-import { MATERIALS } from '../materials/definitions.type'
+import { MATERIAL_ID } from '../materials/definitions.type'
 import gsap from 'gsap'
+
+import { useControls } from 'leva'
+
+
 
 type HeadphoneUniforms = {
   uTime: THREE.IUniform<number>
-  uRoughness: THREE.IUniform<number>
-  uMetalness: THREE.IUniform<number>
+  uMaterialFrom: THREE.IUniform<number>
+  uMaterialTo: THREE.IUniform<number>
   uColor: THREE.IUniform<THREE.Color>
+  uProgress: THREE.IUniform<number>
 }
 
 export default function HeadphoneMaterials ( { material, color } : { material: MaterialId, color: string }) {
 
-    const materialRef = useRef<CustomShaderMaterialImpl & { uniforms: HeadphoneUniforms }>(null)
+    const materialSelected = MATERIAL_ID[material]
 
-    const target = MATERIALS[material]
+
+
+    const isFirstRun = useRef(true)
+
+    const materialRef = useRef<CustomShaderMaterialImpl & { uniforms: HeadphoneUniforms }>(null)
 
     const uniforms = useMemo<HeadphoneUniforms>(() => ({
         uTime: new THREE.Uniform(0),
-        uRoughness: new THREE.Uniform(0.1),
-        uMetalness: new THREE.Uniform(0.1),
-        uColor: new THREE.Uniform(new THREE.Color( '#392323'))
+        uMaterialFrom: new THREE.Uniform(materialSelected),
+        uMaterialTo: new THREE.Uniform(materialSelected),
+        uColor: new THREE.Uniform(new THREE.Color( color )),
+        uProgress: new THREE.Uniform( 0 ),
     }), [])
 
     useFrame((state) => {
@@ -38,23 +48,39 @@ export default function HeadphoneMaterials ( { material, color } : { material: M
 
         const targetColor = new THREE.Color(color)
 
+            if (isFirstRun.current) {
+                isFirstRun.current = false
+            return
+        }
+
         if (materialRef.current) {
-            gsap.to(materialRef.current.uniforms.uRoughness, {
-                value: target.roughness,
-                duration: 1,
-                ease: 'power2.out'
-            })
-            gsap.to(materialRef.current.uniforms.uMetalness, {
-                value: target.metalness,
-                duration: 1 ,
-                ease: 'power2.out'
-            })
+
+             gsap.killTweensOf(materialRef.current.uniforms.uProgress)
+            gsap.killTweensOf(materialRef.current.uniforms.uColor.value)
+
+             materialRef.current.uniforms.uMaterialFrom.value = materialRef.current.uniforms.uMaterialTo.value
+            materialRef.current.uniforms.uProgress.value = 0
+        materialRef.current.uniforms.uMaterialTo.value = materialSelected
+
+
+            materialRef.current.uniforms.uMaterialTo.value = materialSelected
             gsap.to(materialRef.current.uniforms.uColor.value, {
                 r: targetColor.r,
                 g: targetColor.g,
                 b: targetColor.b,
                 duration: 1 ,
                 ease: 'power2.out'
+            })
+            gsap.to(materialRef.current.uniforms.uProgress, {
+                value: 1,
+                duration: 1,
+                ease: 'power2.out',
+                onComplete : () => {
+                    if (materialRef.current) {
+                        materialRef.current.uniforms.uMaterialFrom.value = materialSelected
+                        materialRef.current.uniforms.uProgress.value = 0
+                    }
+                }
             })
         }
     }, [material, color])

@@ -44,8 +44,8 @@ export default function Interface() {
                     <h3 className="title">Color</h3>
                     <div className="buttons">
                         <button className={zones.shells.color === '#1a1a1c' ? 'select' : ''}  onClick={() => setColor('shells', '#1a1a1c')}>Black</button>
-                        <button className={zones.shells.color === '#6b5d52' ? 'select' : ''}   onClick={() => setColor('shells', '#6b5d52')}>Taupe</button>
-                        <button className={zones.shells.color === '#2a3642' ? 'select' : ''}   onClick={() => setColor('shells', '#2a3642')}>Blue</button>
+                        <button className={zones.shells.color === '#a89078' ? 'select' : ''}   onClick={() => setColor('shells', '#a89078')}>Taupe</button>
+                        <button className={zones.shells.color === '#3d5a7a' ? 'select' : ''}   onClick={() => setColor('shells', '#3d5a7a')}>Blue</button>
                     </div>
                 </div>
             </div>
