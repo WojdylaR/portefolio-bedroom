@@ -9,8 +9,6 @@ import materialFragmentShader from './material/fragment.glsl'
 import { MATERIAL_ID } from '../materials/definitions.type'
 import gsap from 'gsap'
 
-import { useControls } from 'leva'
-
 
 
 type HeadphoneUniforms = {

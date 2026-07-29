@@ -2,7 +2,6 @@ import "./HeadphoneConfiguratorApp.css"
 import { Center, Environment, OrbitControls } from "@react-three/drei";
 import { Canvas } from '@react-three/fiber'
 import Headphone from './scenes/headphone/Headphone'
-import { Perf } from "r3f-perf";
 import * as THREE from 'three'
 import Interface from "./ui/Interface";
 

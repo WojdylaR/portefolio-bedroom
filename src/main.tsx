@@ -11,7 +11,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
 
     <Analytics />
-    {/* <Leva  hidden/> */}
+    <Leva  hidden/>
 
     <BrowserRouter>
       <Routes>
