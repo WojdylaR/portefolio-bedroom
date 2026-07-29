@@ -23,7 +23,7 @@ const Card = ({ zone, index } : { zone: ZoneConfig, index: number}) => {
                 {COLORS_BY_MATERIAL[zones[id].material].map(color =>
                      <button className={zones[id].color === color.hex ? 'active button' : 'button'} key={color.label} onClick={() => setColor(id, color.hex)}>
                         <div style={{background: color.hex}} className="color-circle"></div>
-                        <div>{color.label}</div>
+                        <div className="label">{color.label}</div>
                     </button>)}
             </div>
         </div>
