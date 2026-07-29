@@ -15,7 +15,7 @@ export default function HeadphoneConfiguratorApp () {
                         fov: 45,
                         near: 0.01,
                         far: 10,
-                        position: [0, 1.5, 4]
+                        position: [0, 1.57, 4]
                     }}
                     shadows
                 >
