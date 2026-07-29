@@ -3,11 +3,12 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import CustomShaderMaterial from 'three-custom-shader-material'
 import type CustomShaderMaterialImpl from 'three-custom-shader-material/vanilla'
-import type { MaterialId } from '../store/configurator'
+import type { MaterialId } from '../materials/definitions.type'
 import materialVertexShader from './material/vertex.glsl'
 import materialFragmentShader from './material/fragment.glsl'
 import { MATERIAL_ID } from '../materials/definitions.type'
 import gsap from 'gsap'
+
 
 
 

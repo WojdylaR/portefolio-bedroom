@@ -1,4 +1,4 @@
-import HeadphoneModel from "./Headpohne.model";
+import HeadphoneModel from "./Headphone.model";
 
 export default function Headphone() {
 

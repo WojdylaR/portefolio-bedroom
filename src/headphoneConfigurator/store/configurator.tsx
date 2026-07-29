@@ -1,7 +1,6 @@
 import { create } from 'zustand'
-
-export type ZoneId = 'shells' | 'earpads' | 'headbandPad'
-export type MaterialId = 'leather' | 'brushedMetal' | 'softTouch'
+import type { MaterialId, ZoneId } from '../materials/definitions.type'
+import  { COLORS_BY_MATERIAL, ZONES_CONFIG } from '../materials/definitions.type'
 
 type ZoneConfig = {
   material: MaterialId
@@ -19,15 +18,28 @@ type ConfiguratorState = {
 
 export const useConfigurator = create<ConfiguratorState>((set) => ({
   zones: {
-    shells:      { material: 'softTouch',    color: '#1a1a1a' },
-    earpads:     { material: 'leather',      color: '#1a1a1a' },
-    headbandPad: { material: 'leather',      color: '#1a1a1a' },
+    headbandPad: { material: ZONES_CONFIG[0].materials[0],      color: COLORS_BY_MATERIAL[ZONES_CONFIG[0].materials[0]][0].hex },
+    shells:      {  material: ZONES_CONFIG[1].materials[0],    color: COLORS_BY_MATERIAL[ZONES_CONFIG[1].materials[0]][0].hex  },
+    earpads:     {  material: ZONES_CONFIG[2].materials[0],      color: COLORS_BY_MATERIAL[ZONES_CONFIG[2].materials[0]][0].hex  },
   },
   activeZone: null,
 
   setMaterial: (zone, material) =>
-    set((s) => ({ zones: { ...s.zones, [zone]: { ...s.zones[zone], material } } })),
+    set((s) => {
+      const currentColor = s.zones[zone].color
+      const validColors = COLORS_BY_MATERIAL[material]
+      const isStillValid = validColors.some(c => c.hex === currentColor)
 
+      return {
+        zones: {
+          ...s.zones,
+          [zone]: {
+            material,
+            color: isStillValid ? currentColor : validColors[0].hex,
+          },
+        },
+      }
+    }),
   setColor: (zone, color) =>
     set((s) => ({ zones: { ...s.zones, [zone]: { ...s.zones[zone], color } } })),
 

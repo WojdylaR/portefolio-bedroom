@@ -1,71 +1,41 @@
 import { useConfigurator } from "../store/configurator"
+import { COLORS_BY_MATERIAL, MATERIAL_LABELS, ZONES_CONFIG, type ZoneConfig } from '../materials/definitions.type'
 
-export default function Interface() {
+const Card = ({ zone, index } : { zone: ZoneConfig, index: number}) => {
 
+    const { title, id, materials } = zone;
+    
     const setMaterial = useConfigurator(state => state.setMaterial)
     const setColor = useConfigurator(state => state.setColor)
 
     const zones = useConfigurator(state => state.zones)
 
+    return ( <div className="card">
+        <div className="title"><span className="index">{index + 1}</span> - {title}</div>
+            <div>MATERIAL</div>
+            <div className="materials">
+                {materials.map(material => <button className={zones[id].material === material ? 'active button' : 'button'} key={material} onClick={() => setMaterial(id, material)}>
+                    {MATERIAL_LABELS[material]}
+                </button>)}
+            </div>
+            <div>COLOR</div>
+            <div className="colors">
+                {COLORS_BY_MATERIAL[zones[id].material].map(color =>
+                     <button className={zones[id].color === color.hex ? 'active button' : 'button'} key={color.label} onClick={() => setColor(id, color.hex)}>
+                        <div style={{background: color.hex}} className="color-circle"></div>
+                        <div>{color.label}</div>
+                    </button>)}
+            </div>
+        </div>
+    )
+}
+
+export default function Interface() {
+
+
     return (
         <div className="configurator">
-            <div className="header border">
-                <h1 className="title">
-                    Configurator
-                </h1>
-            </div>
-
-            <div className="part border" >
-                <h2 className="title">Headband</h2>
-                <div className="choices">
-                    <h3 className="title">Material</h3>
-                    <div className="buttons">
-                        <button className={zones.headbandPad.material === 'leather' ? 'select' : ''} onClick={() => setMaterial('headbandPad', 'leather')}>Leather</button>
-                        <button className={zones.headbandPad.material === 'brushedMetal' ? 'select' : ''} onClick={() => setMaterial('headbandPad', 'brushedMetal')}>Metal</button>
-                        <button className={zones.headbandPad.material === 'softTouch' ? 'select' : ''} onClick={() => setMaterial('headbandPad', 'softTouch')}>Soft-touch</button>
-                    </div>
-                    <h3 className="title">Color</h3>
-                    <div className="buttons">
-                        <button className={zones.headbandPad.color === '#1a1a1c' ? 'select' : ''}  onClick={() => setColor('headbandPad', '#1a1a1c')}>Black</button>
-                        <button className={zones.headbandPad.color === '#6b5d52' ? 'select' : ''}   onClick={() => setColor('headbandPad', '#6b5d52')}>Taupe</button>
-                        <button className={zones.headbandPad.color === '#2a3642' ? 'select' : ''}   onClick={() => setColor('headbandPad', '#2a3642')}>Blue</button>
-                    </div>
-                </div>
-            </div>  
-            <div className="part border" >
-                <h2 className="title">Ear cups</h2>
-                <div className="choices">
-                    <h3 className="title">Material</h3>
-                    <div className="buttons">
-                        <button className={zones.shells.material === 'leather' ? 'select' : ''} onClick={() => setMaterial('shells', 'leather')}>Leather</button>
-                        <button className={zones.shells.material === 'brushedMetal' ? 'select' : ''} onClick={() => setMaterial('shells', 'brushedMetal')}>Metal</button>
-                        <button className={zones.shells.material === 'softTouch' ? 'select' : ''} onClick={() => setMaterial('shells', 'softTouch')}>Soft-touch</button>
-                    </div>
-                    <h3 className="title">Color</h3>
-                    <div className="buttons">
-                        <button className={zones.shells.color === '#1a1a1c' ? 'select' : ''}  onClick={() => setColor('shells', '#1a1a1c')}>Black</button>
-                        <button className={zones.shells.color === '#a89078' ? 'select' : ''}   onClick={() => setColor('shells', '#a89078')}>Taupe</button>
-                        <button className={zones.shells.color === '#3d5a7a' ? 'select' : ''}   onClick={() => setColor('shells', '#3d5a7a')}>Blue</button>
-                    </div>
-                </div>
-            </div>
-            <div className="part border" >
-                <h2 className="title">Ear pads</h2>
-                <div className="choices">
-                    <h3 className="title">Material</h3>
-                    <div className="buttons">
-                        <button className={zones.earpads.material === 'leather' ? 'select' : ''} onClick={() => setMaterial('earpads', 'leather')}>Leather</button>
-                        <button className={zones.earpads.material === 'brushedMetal' ? 'select' : ''} onClick={() => setMaterial('earpads', 'brushedMetal')}>Metal</button>
-                        <button className={zones.earpads.material === 'softTouch' ? 'select' : ''} onClick={() => setMaterial('earpads', 'softTouch')}>Soft-touch</button>
-                    </div>
-                    <h3 className="title">Color</h3>
-                    <div className="buttons">
-                        <button className={zones.earpads.color === '#1a1a1c' ? 'select' : ''}  onClick={() => setColor('earpads', '#1a1a1c')}>Black</button>
-                        <button className={zones.earpads.color === '#6b5d52' ? 'select' : ''}   onClick={() => setColor('earpads', '#6b5d52')}>Taupe</button>
-                        <button className={zones.earpads.color === '#2a3642' ? 'select' : ''}   onClick={() => setColor('earpads', '#2a3642')}>Blue</button>
-                    </div>
-                </div>
-            </div>
+            { ZONES_CONFIG.map((zone, index) => <Card key={zone.id} zone={zone} index={index}/>)}
         </div>
     )
 }   
