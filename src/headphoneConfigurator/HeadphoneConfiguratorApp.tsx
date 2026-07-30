@@ -9,6 +9,8 @@ export default function HeadphoneConfiguratorApp () {
 
     return (
         <span className="headphone-configurator-app">
+
+            <span className="canvas-wrapper">
             <Canvas 
             gl={{ toneMapping: THREE.ACESFilmicToneMapping }}
                     camera={{
@@ -34,8 +36,9 @@ export default function HeadphoneConfiguratorApp () {
                 </Center>
                 
             </Canvas>
+            </span>
             
-            <Interface />:
+            <Interface />
         </span>
     )
 }
