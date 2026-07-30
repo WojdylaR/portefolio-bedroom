@@ -16,19 +16,19 @@ export default function HeadphoneConfiguratorApp () {
                     camera={{
                         fov: 45,
                         near: 0.01,
-                        far: 10,
+                        far: 100,
                         position: [0, 1.57, 4]
                     }}
                     shadows
                 >
-                <OrbitControls  makeDefault enablePan={false} />
+                <OrbitControls minDistance={2} maxDistance={15}  makeDefault enablePan={false} />
                 <Environment environmentIntensity={0.75} preset="studio" background={ false } />
                 <Center>
                     <Headphone />
                     <ContactShadows
                         position={[0, -0.3, 0]}
                         scale={6}
-                        far={3}
+                        far={100}
                         blur={2.5}
                         opacity={0.4}
                         resolution={512}
