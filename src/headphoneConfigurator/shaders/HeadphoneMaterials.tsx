@@ -24,8 +24,6 @@ export default function HeadphoneMaterials ( { material, color } : { material: M
 
     const materialSelected = MATERIAL_ID[material]
 
-
-
     const isFirstRun = useRef(true)
 
     const materialRef = useRef<CustomShaderMaterialImpl & { uniforms: HeadphoneUniforms }>(null)

@@ -1,12 +1,13 @@
 export const MATERIAL_ID: Record<MaterialId, number> = {
   leather: 0,
   brushedMetal: 1,
-  softTouch: 2,
+  wood: 2,
+  softTouch: 3,
 }
 
 
 export type ZoneId = 'shells' | 'earpads' | 'headbandPad'
-export type MaterialId = 'leather' | 'brushedMetal' | 'softTouch'
+export type MaterialId = 'leather' | 'brushedMetal' | 'softTouch' | 'wood'
 
 type ColorOption = { label: string; hex: string }
 
@@ -29,12 +30,19 @@ export const COLORS_BY_MATERIAL: Record<MaterialId, ColorOption[]> = {
     { label: 'Sand', hex: '#af9b7a' },
     { label: 'Forest', hex: '#3a4a3f' },
   ],
+  wood: [
+  { label: 'Classic Oak', hex: '#8B6B4C' },
+  { label: 'Deep Mahogany', hex: '#4A1C16' },
+  { label: 'Charcoal Oak', hex: '#2B2B2B' },
+
+  ],
 }
 
 export const MATERIAL_LABELS: Record<MaterialId, string> = {
   leather: 'Leather',
   brushedMetal: 'Brushed metal',
   softTouch: 'Soft-touch',
+  wood: 'Wood',
 }
 
 export type ZoneConfig = {
@@ -45,6 +53,6 @@ export type ZoneConfig = {
 
 export const ZONES_CONFIG: ZoneConfig[] = [
   { id: 'headbandPad', title: 'Headband', materials: ['softTouch', 'leather'] },
-  { id: 'shells',      title: 'Ear cups',  materials: ['brushedMetal', 'softTouch'] },
+  { id: 'shells',      title: 'Ear cups',  materials: ['brushedMetal', 'wood', 'softTouch'] },
   { id: 'earpads',     title: 'Ear pads',  materials: ['softTouch', 'leather'] },
 ]
