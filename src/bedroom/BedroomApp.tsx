@@ -11,6 +11,8 @@ import { useRef, Suspense } from 'react'
 import LoadingPage from './ui/Loading/LoadingPage'
 import LoadTracker from './scenes/utils/LoadTracker'
 import { SCENE } from './config/scene'
+import { Perf } from 'r3f-perf'
+import ArtGallery from './scenes/artGalerry/ArtGallery'
 // import { Perf } from 'r3f-perf' 
 
   function BedroomApp() {
@@ -32,8 +34,8 @@ import { SCENE } from './config/scene'
             <Suspense fallback={null}>
 
               <LoadTracker />
-
-              <PostProcessing />
+              <Perf position='top-left'/>
+              {/* <PostProcessing /> */}
               <OrbitControls ref={ orbitControlRef } makeDefault enabled={!isAnimating && isControls} enablePan={true}/>
 
               {/* <Perf position="top-left" /> */}
@@ -44,7 +46,9 @@ import { SCENE } from './config/scene'
                 <CameraRig orbitControlRef={orbitControlRef}/>
 
 
-                <Bedroom />
+                {/* <Bedroom /> */}
+
+                <ArtGallery />  
               </Center>
 
         </Suspense>
