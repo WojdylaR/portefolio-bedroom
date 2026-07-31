@@ -26,7 +26,7 @@ export default function LoadingPage() {
     if (!visible)
         return null
 
-    return <div ref={pageRef} className='loading-page'>
+    return <div ref={pageRef} className='loading-page-headphone'>
         <img className="logo" src="/headphone/headphoneLogo.webp" alt="logo" />
         <div className='text'>Chargement ...</div>
         <div className='loading-bar-container'>

@@ -14,7 +14,7 @@ canvas { touch-action: none; }
     background: radial-gradient(circle at 50% 40%, #2a2a30 0%, #141416 75%);
 
     .configurator {
-        
+        overflow: auto;
         font-family: "Space Grotesk", sans-serif;
         position: relative;
         width: 30%;

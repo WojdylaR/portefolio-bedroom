@@ -27,7 +27,7 @@ export default function LoadingPage() {
     if (!visible)
         return null
 
-    return <div ref={pageRef} className='loading-page' style={{background: SCENE.background}}>
+    return <div ref={pageRef} className='loading-page-bedroom' style={{background: SCENE.background}}>
         <img className="logo" src="/logo.png" alt="logo" />
         <div className='text'>Chargement ...</div>
         <div className='loading-bar-container'>
