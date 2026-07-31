@@ -8,8 +8,14 @@ type ZoneConfig = {
 }
 
 type ConfiguratorState = {
+
+
+  state: 'loading' | 'ready'
+
   zones: Record<ZoneId, ZoneConfig>
   activeZone: ZoneId | null
+
+  setLoaded: () => void
 
   setMaterial: (zone: ZoneId, material: MaterialId) => void
   setColor: (zone: ZoneId, color: string) => void
@@ -17,12 +23,17 @@ type ConfiguratorState = {
 }
 
 export const useConfigurator = create<ConfiguratorState>((set) => ({
+  
+  state:'loading',
+
   zones: {
     headbandPad: { material: ZONES_CONFIG[0].materials[0],      color: COLORS_BY_MATERIAL[ZONES_CONFIG[0].materials[0]][0].hex },
     shells:      {  material: ZONES_CONFIG[1].materials[0],    color: COLORS_BY_MATERIAL[ZONES_CONFIG[1].materials[0]][0].hex  },
     earpads:     {  material: ZONES_CONFIG[2].materials[0],      color: COLORS_BY_MATERIAL[ZONES_CONFIG[2].materials[0]][0].hex  },
   },
   activeZone: null,
+
+  setLoaded: () => set(() => ({state: 'ready'})),
 
   setMaterial: (zone, material) =>
     set((s) => {

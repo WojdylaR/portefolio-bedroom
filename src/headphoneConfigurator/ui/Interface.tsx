@@ -1,5 +1,8 @@
 import { useConfigurator } from "../store/configurator"
 import { COLORS_BY_MATERIAL, MATERIAL_LABELS, ZONES_CONFIG, type ZoneConfig } from '../materials/definitions.type'
+import { useEffect } from "react";
+import gsap from "gsap";
+import { TRANSITION } from "../config/animation";
 
 const Card = ({ zone, index } : { zone: ZoneConfig, index: number}) => {
 
@@ -31,6 +34,19 @@ const Card = ({ zone, index } : { zone: ZoneConfig, index: number}) => {
 }
 
 export default function Interface() {
+
+    const state = useConfigurator(state => state.state)
+
+    useEffect(() => {
+
+        if (state === 'ready'){
+            gsap.to('.configurator', {
+                right: 0,
+                delay: TRANSITION.fadeDuration / 2,
+                duration: TRANSITION.appearDelay,
+                ease: 'power2.inOut',
+        })}
+    }, [state])
 
 
     return (

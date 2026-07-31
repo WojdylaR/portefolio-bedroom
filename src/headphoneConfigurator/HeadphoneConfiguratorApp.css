@@ -20,7 +20,7 @@ canvas { touch-action: none; }
         width: 30%;
         min-width: 375px;
         max-width: 420px;
-        right: 0;
+        right: -500px;
         height: 100%;
         background-color: rgb(35, 38, 41);
         color: white;
