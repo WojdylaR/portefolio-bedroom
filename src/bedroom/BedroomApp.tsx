@@ -35,7 +35,7 @@ import ArtGallery from './scenes/artGalerry/ArtGallery'
 
               <LoadTracker />
               <Perf position='top-left'/>
-              {/* <PostProcessing /> */}
+              <PostProcessing />
               <OrbitControls ref={ orbitControlRef } makeDefault enabled={!isAnimating && isControls} enablePan={true}/>
 
               {/* <Perf position="top-left" /> */}
@@ -46,7 +46,7 @@ import ArtGallery from './scenes/artGalerry/ArtGallery'
                 <CameraRig orbitControlRef={orbitControlRef}/>
 
 
-                {/* <Bedroom /> */}
+                <Bedroom />
 
                 <ArtGallery />  
               </Center>

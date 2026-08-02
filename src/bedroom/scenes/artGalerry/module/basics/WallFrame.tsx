@@ -12,27 +12,27 @@ export default function WallFrame ( { position, rotationY = 0 } : {position: THR
     return ( 
     <group position={position} rotation-y={rotationY}>
 
-        {/* Frame + Shader */}
-        <mesh
-            receiveShadow
-            geometry={nodes.frame.geometry}
-            position={[-0.1, 1.1, -1.2]}
-        >
-            <CustomShaderMaterial
-                    baseMaterial={ THREE.MeshStandardMaterial }
-                    vertexShader={ woodVertexShader }
-                    fragmentShader={ woodFragmentShader }
-            />
-        </mesh>
 
-        {/* WALL */}
-        <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes['wall-frame'].geometry}
-            material={materials['wall.001_Material.001']}
-            position={[0, 0, 0.1]}
-        />
+            <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['frame-w'].geometry}
+                material={materials['frame.001_Material']}
+                position={[0, 1.3, 0.01]}
+            >
+                <CustomShaderMaterial
+                        baseMaterial={ THREE.MeshStandardMaterial }
+                        vertexShader={ woodVertexShader }
+                        fragmentShader={ woodFragmentShader }
+                />
+            </mesh>
+            <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['wall-frame'].geometry}
+                material={materials['wall-frame_Material']}
+            />
+        
     </group>
     )
 }
