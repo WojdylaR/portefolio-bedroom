@@ -2,7 +2,7 @@ import { useGLTF } from "@react-three/drei"
 import type { TileProps } from "../../artGalery.type"
 
 
-export default function Wall (  { position, rotation,  } : TileProps) {
+export default function MiniWall (  { position, rotation,  } : TileProps) {
 
     const { nodes, materials } : { nodes: any, materials : any }= useGLTF('/bedroom/artGallery/wall.glb')
 
@@ -14,6 +14,7 @@ export default function Wall (  { position, rotation,  } : TileProps) {
                 receiveShadow
                 geometry={nodes.wall.geometry}
                 material={materials.wall_1_Material}
+                position-z={0.9}
             />
 
             

@@ -1,16 +1,18 @@
 import { useGLTF } from "@react-three/drei"
 import * as THREE from 'three'
 import CustomShaderMaterial from "three-custom-shader-material"
-import woodVertexShader from '../../shaders/wood/vertex.glsl'
-import woodFragmentShader from '../../shaders/wood/fragment.glsl'
+import type { TileProps } from "../../artGalery.type"
+import { useShaderUniforms } from "../useShadersUniforms"
 
 
-export default function FloorFrame ( { position, rotationY = 0 } : {position: THREE.Vector3, rotationY?: number}) {
+export default function FloorFrame (   { position, rotation, art  } : TileProps) {
 
     const { nodes, materials } : { nodes: any, materials : any }= useGLTF('/bedroom/artGallery/floor-frame.glb')
+    
+        const uniforms = useShaderUniforms(art)
 
     return ( 
-    <group position={position} rotation-y={rotationY}>
+    <group position={position} rotation-y={ rotation }>
 
 
             <mesh
@@ -23,14 +25,18 @@ export default function FloorFrame ( { position, rotationY = 0 } : {position: TH
                 castShadow
                 receiveShadow
                 geometry={nodes['frame-f'].geometry}
-                material={materials.frame_Material}
                 position={[0, 0.9, 0]}
+                // rotation-x={- Math.PI / 2}
             >
-            <CustomShaderMaterial
-                    baseMaterial={ THREE.MeshStandardMaterial }
-                    vertexShader={ woodVertexShader }
-                    fragmentShader={ woodFragmentShader }
-            /></mesh>
+                {/* <planeGeometry args={ [2.8, 2.8, 50, 50] } /> */}
+            { art && <CustomShaderMaterial
+                        baseMaterial={ THREE.MeshStandardMaterial }
+                        vertexShader={ art.vertexShader }
+                        fragmentShader={ art.fragmentShader }
+                        uniforms={uniforms}
+                />
+                }
+                </mesh>
         
     </group>
     )

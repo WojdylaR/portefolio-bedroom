@@ -1,15 +1,13 @@
 import { useGLTF } from "@react-three/drei"
-import * as THREE from 'three'
+import type { TileProps } from "../../artGalery.type"
 
 
-export default function FloorStraight ( { position, rotationY = 0 } : {position: THREE.Vector3, rotationY?: number}) {
+export default function FloorStraight ( { position, rotation,  } : TileProps) {
 
     const { nodes, materials } : { nodes: any, materials : any }= useGLTF('/bedroom/artGallery/floor-straight.glb')
 
     return ( 
-        <group position={position} rotation-y={rotationY}>
-
-
+        <group position={ position } rotation-y={ rotation }>
             <mesh
                 castShadow
                 receiveShadow

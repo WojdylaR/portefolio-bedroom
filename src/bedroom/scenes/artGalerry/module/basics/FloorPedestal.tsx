@@ -1,50 +1,47 @@
 import { useGLTF } from "@react-three/drei"
 import * as THREE from 'three'
 import CustomShaderMaterial from "three-custom-shader-material"
-import wobblySphereVertexShader from '../../shaders/wobblySphere/vertex.glsl'
-import wobblySphereFragmentShader from '../../shaders/wobblySphere/fragment.glsl'
 import type CustomShaderMaterialImpl from 'three-custom-shader-material/vanilla'
 import { useFrame } from "@react-three/fiber"
-import { useMemo, useRef } from "react"
+import {  useRef } from "react"
+import type { TileProps } from "../../artGalery.type"
+import { useShaderUniforms } from "../useShadersUniforms"
 
 type MaterialUniforms = {
   uTime: THREE.IUniform<number>
 }
 
-export default function FloorPedestral ( { position, rotationY = 0 } : {position: THREE.Vector3, rotationY?: number}) {
+export default function FloorPedestal (  { position, rotation, art  } : TileProps) {
 
-    const { nodes, materials } : { nodes: any, materials : any }= useGLTF('/bedroom/artGallery/floor-pedestral.glb')
+    const { nodes, materials } : { nodes: any, materials : any }= useGLTF('/bedroom/artGallery/floor-pedestal.glb')
 
     const materialRef = useRef<CustomShaderMaterialImpl & { uniforms: MaterialUniforms }>(null)
 
-    const uniforms = useMemo<MaterialUniforms>(() => ({
-            uTime: new THREE.Uniform(0),
-        }), [])
-
     useFrame((state) => {
-        console.log(materialRef.current?.uniforms)
+        
         if (materialRef.current)
             materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime()
     })
 
+    const uniforms = useShaderUniforms(art)
 
     return ( 
-        <group position={position} rotation-y={rotationY}>
+        <group position={position} rotation-y={ rotation }>
 
 
             <mesh
                 castShadow
                 receiveShadow
-                position={[0, 2.6, 0]}
+                position={[0, 3., 0]}
             >
                 <icosahedronGeometry args={[0.5, 10]} />
-                <CustomShaderMaterial
-                        ref={materialRef}
+                { art && <CustomShaderMaterial
                         baseMaterial={ THREE.MeshStandardMaterial }
-                        vertexShader={ wobblySphereVertexShader }
-                        fragmentShader={ wobblySphereFragmentShader }
+                        vertexShader={ art.vertexShader }
+                        fragmentShader={ art.fragmentShader }
                         uniforms={uniforms}
                 />
+                }
             </mesh>
             <mesh
                 castShadow
