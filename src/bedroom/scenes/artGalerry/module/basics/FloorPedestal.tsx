@@ -6,6 +6,7 @@ import { useFrame } from "@react-three/fiber"
 import {  useRef } from "react"
 import type { TileProps } from "../../artGalery.type"
 import { useShaderUniforms } from "../useShadersUniforms"
+import { MAT } from "../materials"
 
 type MaterialUniforms = {
   uTime: THREE.IUniform<number>
@@ -13,7 +14,7 @@ type MaterialUniforms = {
 
 export default function FloorPedestal (  { position, rotation, art  } : TileProps) {
 
-    const { nodes, materials } : { nodes: any, materials : any }= useGLTF('/bedroom/artGallery/floor-pedestal.glb')
+    const { nodes } : { nodes: any }= useGLTF('/bedroom/artGallery/floor-pedestal.glb')
 
     const materialRef = useRef<CustomShaderMaterialImpl & { uniforms: MaterialUniforms }>(null)
 
@@ -27,14 +28,26 @@ export default function FloorPedestal (  { position, rotation, art  } : TileProp
 
     return ( 
         <group position={position} rotation-y={ rotation }>
-
-
             <mesh
                 castShadow
                 receiveShadow
-                position={[0, 3., 0]}
+                geometry={nodes.decoration.geometry}
+                material={MAT.black}
+                position={[0, 0.2, 0]}
+            />
+            <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes['floor-pedestal'].geometry}
+                material={MAT.white}
+            />
+            <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.object.geometry}
+                position={[0, 3.5, 0]}
             >
-                <icosahedronGeometry args={[0.5, 10]} />
+                <icosahedronGeometry args={[0.8, 10]} />
                 { art && <CustomShaderMaterial
                         baseMaterial={ THREE.MeshStandardMaterial }
                         vertexShader={ art.vertexShader }
@@ -43,13 +56,6 @@ export default function FloorPedestal (  { position, rotation, art  } : TileProp
                 />
                 }
             </mesh>
-            <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes['floor-pedestal'].geometry}
-                material={materials['floor-pedestal_Material']}
-            />
-            
         </group>
     )
 }

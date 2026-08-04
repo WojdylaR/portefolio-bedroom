@@ -1,5 +1,6 @@
 import { useGLTF } from "@react-three/drei"
 import type { TileProps } from "../../artGalery.type"
+import { MAT } from "../materials"
 
 
 export default function FloorStraight ( { position, rotation,  } : TileProps) {
@@ -11,10 +12,23 @@ export default function FloorStraight ( { position, rotation,  } : TileProps) {
             <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['floor-straight'].geometry}
-                material={materials['floor-straight_3_Material']}
+                geometry={nodes.floor003.geometry}
+                material={MAT.white}
             />
-                
+            <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.post003.geometry}
+                position={[0, 0.2, 0]}
+                material={MAT.black}
+            />
+            <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.rope003.geometry}
+                position={[0, 1, 0]}
+                material={MAT.red}
+            />
         </group>
     )
 }

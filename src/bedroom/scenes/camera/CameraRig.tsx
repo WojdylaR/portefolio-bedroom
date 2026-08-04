@@ -1,5 +1,5 @@
 import useScene from "../../state/store/useScene";
-import { useEffect, useMemo, useRef, type RefObject } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, type RefObject } from "react";
 import { useThree } from "@react-three/fiber";
 import gsap from "gsap";
 import { OrthographicCamera as OrthographicCameraImpl } from 'three'
@@ -153,6 +153,13 @@ export default function CameraRig({ orbitControlRef } : { orbitControlRef: RefOb
             onUpdate: () => ref.current?.updateProjectionMatrix(),
         })
     }, [screenZoom, idleZoom])
+
+    useLayoutEffect(() => {
+        if (ref.current){
+            ref.current.layers.enable(1)
+            ref.current.layers.enable(2)
+        }
+    }, [ref])
 
     return <OrthographicCamera
         ref={ref}

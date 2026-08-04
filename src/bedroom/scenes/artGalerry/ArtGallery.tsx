@@ -6,6 +6,7 @@ export default function ArtGallery () {
 
     const tiles: Tile[] = CELLS.flatMap(moduleConstructor)
 
+
     return ( <group position={[2.85, -2.3,  - 6.7] } rotation-y={ Math.PI / 2}>
         
                 {tiles.map((module, index) => {

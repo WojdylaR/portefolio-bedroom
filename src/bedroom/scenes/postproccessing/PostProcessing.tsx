@@ -15,6 +15,7 @@ export default function PostProcessing () {
         <EffectComposer>
             <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
             <Bloom
+                resolutionScale={0.25} 
                 luminanceThreshold={threshold}
                 intensity={intensity}
                 mipmapBlur

@@ -9,9 +9,7 @@ export default function Paint({ geometry, texture }: { geometry: THREE.BufferGeo
 
         const box = geometry.boundingBox!.clone()
         box.applyMatrix4(new Matrix4().makeRotationX(Math.PI / 2))
-
-        console.log(box.getSize(new Vector3()))
-
+        
         return {
             position: box.getCenter(new Vector3()),
             size: box.getSize(new Vector3()),

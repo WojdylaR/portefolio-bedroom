@@ -1,18 +1,33 @@
 import { useGLTF } from "@react-three/drei"
 import type { TileProps } from "../../artGalery.type"
+import { MAT } from "../materials"
 
 
 export default function FloorAngle ( { position, rotation,  } : TileProps) {
 
-    const { nodes, materials } : { nodes: any, materials : any }= useGLTF('/bedroom/artGallery/floor-angle.glb')
+    const { nodes } : { nodes: any }= useGLTF('/bedroom/artGallery/floor-angle.glb')
 
     return ( 
         <group position={ position } rotation-y={ rotation }>
             <mesh
                 castShadow
                 receiveShadow
-                geometry={nodes['floor-angle'].geometry}
-                material={materials['floor-angle_Material']}
+                geometry={nodes.floor005.geometry}
+                material={MAT.white}
+            />
+            <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.post005.geometry}
+                material={MAT.black}
+                position={[0, 0.2, 0]}
+            />
+            <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.rope005.geometry}
+                material={MAT.red}
+                position={[0, 1.1, 0]}
             />
         </group>
     )

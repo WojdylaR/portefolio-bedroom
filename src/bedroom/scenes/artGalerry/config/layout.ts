@@ -22,10 +22,10 @@ export const CELLS: DirectionType[]= [
 
 
     { floor: {type: 'floor-t'}, floorRotation: - Math.PI / 2,position: { x: 3, z: 0 }, east:{type: 'wall-frame', art: SHADERS.wood}},
-    { floor: {type: 'floor-end'},position: { x: 3, z: -1 }, east:{type: 'wall-frame', art: SHADERS.wood}},
+    { floor: {type: 'floor-end'},position: { x: 3, z: -1 }, east:{type: 'wall-frame', art: SHADERS.leather}},
     { floor: {type: 'floor-pedestal', art: SHADERS.wobbly},position: { x: 3, z: -2 }, east:{type: 'wall'}, north:{type: 'wall'}},
 
 
-    { floor: {type: 'floor-end'}, floorRotation: Math.PI,position: { x: 3, z: 1 }, east:{type: 'wall-frame', art: SHADERS.wood}},
+    { floor: {type: 'floor-end'}, floorRotation: Math.PI,position: { x: 3, z: 1 }, east:{type: 'wall-frame', art: SHADERS.brushedMetal}},
     { floor: {type: 'floor-frame',  art: SHADERS.wood}, floorRotation: -Math.PI / 2,position: { x: 3, z: 2 }, east:{type: 'wall',}},
 ]
