@@ -15,6 +15,15 @@ import { Perf } from 'r3f-perf'
 import ArtGallery from './scenes/artGalerry/ArtGallery'
 // import { Perf } from 'r3f-perf' 
 
+import * as THREE from 'three'
+import { FLAT_TILES, GALLERY_TRANSFORM } from './scenes/artGalerry/config/layout'
+import { SIZEMODULE } from './scenes/artGalerry/module/moduleConstructor'
+
+const AXIS_Y = new THREE.Vector3(0, 1, 0)
+const FRAME_OFFSET: [number, number, number] = [0, 2.55, -SIZEMODULE / 2 + 0.3]
+
+
+
   function BedroomApp() {
     
     const isAnimating = useScene(state => state.isAnimating)
@@ -50,7 +59,7 @@ import ArtGallery from './scenes/artGalerry/ArtGallery'
  
               </Center>
 
-                <ArtGallery /> 
+                <ArtGallery />
         </Suspense>
           </Canvas>
           <Interface />

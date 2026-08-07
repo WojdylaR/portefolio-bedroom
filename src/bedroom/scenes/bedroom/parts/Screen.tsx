@@ -7,7 +7,7 @@ import useScene from '../../../state/store/useScene'
 
 export default function Screen ( {geometry}: {geometry: THREE.BufferGeometry}) {
 
-    const focusScreen = useScene(state => state.focusScreen)
+    const setFocus = useScene(state => state.setFocus)
     const focusReset = useScene(state => state.focusReset)
 
     const focus = useScene(state => state.focus)
@@ -39,7 +39,7 @@ export default function Screen ( {geometry}: {geometry: THREE.BufferGeometry}) {
                 onPointerEnter={() => document.body.style.cursor = 'pointer'}
                 onPointerLeave={() => document.body.style.cursor = 'default'} 
                 name="screen"
-                onClick={focusScreen}
+                onClick={() => setFocus('screen')}
                 onPointerMissed={focusReset}
             >
                 <meshBasicMaterial color='black' />

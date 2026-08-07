@@ -4,20 +4,16 @@ import { useThree } from "@react-three/fiber";
 import gsap from "gsap";
 import { OrthographicCamera as OrthographicCameraImpl } from 'three'
 import { OrthographicCamera } from "@react-three/drei";
-import { IDLE_VIEW, SCREE_VIEW, type CameraView } from './Camera.type'
+import { type CameraView } from './Camera.type'
+import { IDLE_VIEW, VIEW } from './view'
 import { Vector3 } from "three";
 import type { OrbitControls } from "three/examples/jsm/Addons.js";
 import { TRANSITION } from "../../config/animation";
 
 const FILL = 0.92
-const SCREEN_W = 1.3
-const SCREEN_H = 0.8
-
-const ROOM_W = 12
-const ROOM_H = 8
 
 
-export default function CameraRig({ orbitControlRef } : { orbitControlRef: RefObject<OrbitControls | null> }) {
+export default function CameraRig({ orbitControlRef }: { orbitControlRef: RefObject<OrbitControls | null> }) {
 
     const size = useThree(state => state.size)
     const focus = useScene(state => state.focus)
@@ -34,20 +30,19 @@ export default function CameraRig({ orbitControlRef } : { orbitControlRef: RefOb
     const state = useScene(state => state.state)
     const hasIntroPlayed = useRef(false)
 
-    const screenZoom = useMemo(() => Math.min(
-        (size.width * FILL) / SCREEN_W,
-        (size.height * FILL) / SCREEN_H,
-    ), [size])
-
-    
     const idleZoom = useMemo(() => Math.min(
-        (size.width * 0.9) / ROOM_W,
-        (size.height * 0.9) / ROOM_H,
-    ), [size])
+        (size.width * FILL) / IDLE_VIEW.width,
+        (size.height * FILL) / IDLE_VIEW.height,
+    ), [size.width, size.height])
 
-    function animateToView(view: CameraView, zoom: number) {
+    function animateToView(view: CameraView) {
 
         if (!ref.current || isFirstFocus) return
+
+        const zoomValue = Math.min(
+            (size.width * FILL) / view.width,
+            (size.height * FILL) / view.height,
+        )
 
         if (!view.orbitEnabled && orbitControlRef.current) {
             lookAtRef.current.copy(orbitControlRef.current.target)
@@ -93,14 +88,21 @@ export default function CameraRig({ orbitControlRef } : { orbitControlRef: RefOb
             ease: 'power2.inOut',
         })
 
-        gsap.to(ref.current, {
-            zoom: zoom,
+        const logFrom = Math.log(ref.current.zoom)
+        const logTo = Math.log(zoomValue)
+        const proxy = { t: 0, near: ref.current.near }
+
+        gsap.to(proxy, {
+            t: 1,
             near: view.near,
             duration: view.animationDuration,
             ease: 'power2.inOut',
             onUpdate: () => {
-                ref.current?.lookAt(lookAtRef.current)
-                ref.current?.updateProjectionMatrix()
+                if (!ref.current) return
+                ref.current.zoom = Math.exp(logFrom + (logTo - logFrom) * proxy.t)
+                ref.current.near = proxy.near
+                ref.current.lookAt(lookAtRef.current)
+                ref.current.updateProjectionMatrix()
             },
         })
     }
@@ -112,15 +114,24 @@ export default function CameraRig({ orbitControlRef } : { orbitControlRef: RefOb
         setIsAnimating(true)
         setIsControls(false)
 
-        ref.current.zoom = idleZoom * 0.04
+        const startZoom = idleZoom * 0.04
+        ref.current.zoom = startZoom
         ref.current.updateProjectionMatrix()
 
-        gsap.to(ref.current, {
-            zoom: idleZoom,
-            duration:  TRANSITION.fadeDuration,
-            delay: TRANSITION.fadeDuration * 0.5  ,
+        const logFrom = Math.log(startZoom)
+        const logTo = Math.log(idleZoom)
+        const proxy = { t: 0 }
+
+        gsap.to(proxy, {
+            t: 1,
+            duration: TRANSITION.fadeDuration,
+            delay: TRANSITION.fadeDuration * 0.5,
             ease: 'power2.out',
-            onUpdate: () => ref.current?.updateProjectionMatrix(),
+            onUpdate: () => {
+                if (!ref.current) return
+                ref.current.zoom = Math.exp(logFrom + (logTo - logFrom) * proxy.t)
+                ref.current.updateProjectionMatrix()
+            },
             onComplete: () => {
                 setIsAnimating(false)
                 setIsControls(true)
@@ -133,29 +144,29 @@ export default function CameraRig({ orbitControlRef } : { orbitControlRef: RefOb
     }, [state])
 
     useEffect(() => {
-        if (focus === 'screen') {
-            animateToView(SCREE_VIEW, screenZoom)
+        if (focus && VIEW[focus]) {
+            animateToView(VIEW[focus])
         } else {
             animateToView({
                 ...IDLE_VIEW,
                 position: [savedViewRef.current.position.x, savedViewRef.current.position.y, savedViewRef.current.position.z],
                 target: [savedViewRef.current.target.x, savedViewRef.current.target.y, savedViewRef.current.target.z]
-            }, idleZoom)
+            })
         }
     }, [focus])
 
     useEffect(() => {
-        if (!ref.current  || !hasIntroPlayed.current) return
-        gsap.to(ref.current, {
-            zoom: focus === 'screen' ? screenZoom : idleZoom,
-            duration: 0.1,
-            ease: 'power2.out',
-            onUpdate: () => ref.current?.updateProjectionMatrix(),
-        })
-    }, [screenZoom, idleZoom])
+        if (!ref.current || !hasIntroPlayed.current) return
+        const view = (focus && VIEW[focus]) ? VIEW[focus] : IDLE_VIEW
+        ref.current.zoom = Math.min(
+            (size.width * FILL) / view.width,
+            (size.height * FILL) / view.height,
+        )
+        ref.current.updateProjectionMatrix()
+    }, [size.width, size.height])
 
     useLayoutEffect(() => {
-        if (ref.current){
+        if (ref.current) {
             ref.current.layers.enable(1)
             ref.current.layers.enable(2)
         }
@@ -163,7 +174,8 @@ export default function CameraRig({ orbitControlRef } : { orbitControlRef: RefOb
 
     return <OrthographicCamera
         ref={ref}
-        {...IDLE_VIEW}
+        position={IDLE_VIEW.position}
+        near={IDLE_VIEW.near}
         makeDefault
         far={200}
     />

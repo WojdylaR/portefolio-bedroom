@@ -4,13 +4,16 @@ import CustomShaderMaterial from "three-custom-shader-material"
 import type { TileProps } from "../../artGalery.type"
 import { useShaderUniforms } from "../useShadersUniforms"
 import { MAT } from "../materials"
+import useScene from "../../../../state/store/useScene"
 
 
-export default function WallFrame (  { position, rotation, art  } : TileProps) {
+export default function WallFrame (  { position, rotation, art, id = null  } : TileProps) {
 
     const { nodes } : { nodes: any }= useGLTF('/bedroom/artGallery/wall-frame.glb')
 
     const uniforms = useShaderUniforms(art)
+
+    const setFocus = useScene(state => state.setFocus)
 
     return ( 
         <group position={position} rotation-y={ rotation }>
@@ -19,7 +22,13 @@ export default function WallFrame (  { position, rotation, art  } : TileProps) {
                 castShadow
                 receiveShadow
                 geometry={nodes.frame.geometry}
+
+                onPointerEnter={() => document.body.style.cursor = 'pointer'}
+                onPointerLeave={() => document.body.style.cursor = 'default'} 
+
+
                 position={[0, 1.3, 0]}
+                onClick={() => setFocus(id)}
              >
                 { art && <CustomShaderMaterial
                         baseMaterial={ THREE.MeshStandardMaterial }

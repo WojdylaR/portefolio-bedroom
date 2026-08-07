@@ -6,12 +6,12 @@ export interface IScene {
     state: 'loading' | 'loaded'
 
     isFirstFocus: boolean
-    focus: 'idle' |  'screen'
+    focus: string | null
     isAnimating: boolean
     isControls: boolean
 
     setLoaded: () => void
-    focusScreen: () => void
+    setFocus: (target: string | null) => void
     focusReset: () => void
     setIsControls: (value: boolean) => void
     setIsAnimating: (value: boolean) => void
@@ -23,7 +23,7 @@ export default create<IScene>()(subscribeWithSelector((set) => {
 
         state: 'loading',
         isFirstFocus: true,
-        focus: 'idle',
+        focus: null,
         isAnimating: false,
         isControls: true,
 
@@ -33,15 +33,15 @@ export default create<IScene>()(subscribeWithSelector((set) => {
             })
         },
 
-        focusScreen: () => {
-            set(() => {
-                return {focus: 'screen', isFirstFocus: false}
+        setFocus: (target: string | null )  => {
+            set( () => {
+                return {focus: target, isFirstFocus: false}
             })
         },
 
         focusReset: () => {
             set(() => {
-                return {focus: 'idle', isFirstFocus: false}
+                return {focus: null, isFirstFocus: false}
             })
         },
 

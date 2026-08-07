@@ -36,8 +36,9 @@ export type TileType =
 
 export type TileProps = {
   position: [number, number, number]
-  rotation: number          // radians, axe Y
+  rotation: number  
   art?: ShaderModule
+  id?: string | null
 }
 
 export type Tile = TileProps & {
@@ -71,4 +72,4 @@ export const TILES: Record<TileType, FC<TileProps>> = {
   'wall': Wall,
   'mini-wall': MiniWall,
   'wall-frame': WallFrame,
-}   
+}

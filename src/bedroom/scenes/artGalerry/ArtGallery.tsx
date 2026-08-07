@@ -1,19 +1,16 @@
-import { TILES, type Tile } from './artGalery.type'
-import moduleConstructor from './module/moduleConstructor'
-import { CELLS } from './config/layout'
+import { TILES } from './artGalery.type'
+import { FLAT_TILES, GALLERY_TRANSFORM } from './config/layout'
+
 
 export default function ArtGallery () {
 
-    const tiles: Tile[] = CELLS.flatMap(moduleConstructor)
-
-
-    return ( <group position={[2.85, -2.3,  - 6.7] } rotation-y={ Math.PI / 2}>
+    return ( <group position={ GALLERY_TRANSFORM.position } rotation-y={ GALLERY_TRANSFORM.rotationY }>
         
-                {tiles.map((module, index) => {
+                {FLAT_TILES.map((module, index) => {
 
                     const M = TILES[module.type]
 
-                    return <M key={index} position={ module.position } rotation={ module.rotation } art={ module.art } />
+                    return <M key={index} position={ module.position } rotation={ module.rotation } art={ module.art } id={module.id} />
 
                 })}
         </group>
