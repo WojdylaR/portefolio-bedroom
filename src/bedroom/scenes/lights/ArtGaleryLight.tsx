@@ -33,5 +33,6 @@ export default function ArtGaleryLight() {
                 position={[5.2, 3.9, -19]}
             />
         </>
+
     )
 }

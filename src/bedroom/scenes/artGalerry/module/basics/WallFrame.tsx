@@ -7,13 +7,16 @@ import { MAT } from "../materials"
 import useScene from "../../../../state/store/useScene"
 
 
-export default function WallFrame (  { position, rotation, art, id = null  } : TileProps) {
+export default function WallFrame (  { position, rotation, art, id = null } : TileProps) {
 
     const { nodes } : { nodes: any }= useGLTF('/bedroom/artGallery/wall-frame.glb')
 
     const uniforms = useShaderUniforms(art)
 
     const setFocus = useScene(state => state.setFocus)
+
+    nodes.frame.geometry.computeBoundingBox()
+    console.log(nodes.frame.geometry.boundingBox)
 
     return ( 
         <group position={position} rotation-y={ rotation }>
@@ -25,7 +28,6 @@ export default function WallFrame (  { position, rotation, art, id = null  } : T
 
                 onPointerEnter={() => document.body.style.cursor = 'pointer'}
                 onPointerLeave={() => document.body.style.cursor = 'default'} 
-
 
                 position={[0, 1.3, 0]}
                 onClick={() => setFocus(id)}

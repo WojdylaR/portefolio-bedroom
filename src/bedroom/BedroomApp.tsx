@@ -15,12 +15,9 @@ import { Perf } from 'r3f-perf'
 import ArtGallery from './scenes/artGalerry/ArtGallery'
 // import { Perf } from 'r3f-perf' 
 
-import * as THREE from 'three'
-import { FLAT_TILES, GALLERY_TRANSFORM } from './scenes/artGalerry/config/layout'
-import { SIZEMODULE } from './scenes/artGalerry/module/moduleConstructor'
+import ShadersInterface from './ui/Interface/ShadersInterface'
+import { Leva } from 'leva'
 
-const AXIS_Y = new THREE.Vector3(0, 1, 0)
-const FRAME_OFFSET: [number, number, number] = [0, 2.55, -SIZEMODULE / 2 + 0.3]
 
 
 
@@ -43,11 +40,11 @@ const FRAME_OFFSET: [number, number, number] = [0, 2.55, -SIZEMODULE / 2 + 0.3]
             <Suspense fallback={null}>
 
               <LoadTracker />
-              <Perf position='top-left'/>
+              {/* <Perf position='top-left'/> */}
               <PostProcessing />
               <OrbitControls ref={ orbitControlRef } makeDefault enabled={!isAnimating && isControls} enablePan={true}/>
 
-              {/* <Perf position="top-left" /> */}
+              <Leva hidden />
               <Center>
 
               
@@ -63,6 +60,7 @@ const FRAME_OFFSET: [number, number, number] = [0, 2.55, -SIZEMODULE / 2 + 0.3]
         </Suspense>
           </Canvas>
           <Interface />
+          <ShadersInterface />
         </>
     )
   }

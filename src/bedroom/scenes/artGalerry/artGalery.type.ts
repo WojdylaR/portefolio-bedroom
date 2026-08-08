@@ -13,12 +13,21 @@ import MiniFloorStraight from "./module/basics/MiniFloorStraight"
 import MiniWall from "./module/basics/MiniWall"
 
 
+  
+export type ShaderMeta = {
+  title: string
+  description: string
+  href?: string | null
+}
+
+
 export type ShaderModule = {
   id: string
   fragmentShader: string
   vertexShader: string
   uniforms?: () => Record<string, THREE.IUniform>  // ← objet, pas fonction
-  resolution?: number       // taille du render target, défaut décidé côté rendu
+  resolution?: number 
+  meta: ShaderMeta      // taille du render target, défaut décidé côté rendu
 }
 
 export type TileType =
@@ -34,6 +43,7 @@ export type TileType =
   | 'mini-wall'
   | 'wall-frame'
 
+
 export type TileProps = {
   position: [number, number, number]
   rotation: number  
@@ -46,6 +56,7 @@ export type Tile = TileProps & {
 }
 
 export type SideEntry = { type: TileType; art?: ShaderModule }
+
 
 export type DirectionType = {
     north?: SideEntry

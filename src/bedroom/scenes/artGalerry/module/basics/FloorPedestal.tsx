@@ -7,16 +7,19 @@ import {  useRef } from "react"
 import type { TileProps } from "../../artGalery.type"
 import { useShaderUniforms } from "../useShadersUniforms"
 import { MAT } from "../materials"
+import useScene from "../../../../state/store/useScene"
 
 type MaterialUniforms = {
   uTime: THREE.IUniform<number>
 }
 
-export default function FloorPedestal (  { position, rotation, art  } : TileProps) {
+export default function FloorPedestal (  { position, rotation, art, id = null   } : TileProps) {
 
     const { nodes } : { nodes: any }= useGLTF('/bedroom/artGallery/floor-pedestal.glb')
 
     const materialRef = useRef<CustomShaderMaterialImpl & { uniforms: MaterialUniforms }>(null)
+
+    const setFocus = useScene(state => state.setFocus)
 
     useFrame((state) => {
         
@@ -34,6 +37,10 @@ export default function FloorPedestal (  { position, rotation, art  } : TileProp
                 geometry={nodes.decoration.geometry}
                 material={MAT.black}
                 position={[0, 0.2, 0]}
+                
+                onPointerEnter={() => document.body.style.cursor = 'pointer'}
+                onPointerLeave={() => document.body.style.cursor = 'default'} 
+                onClick={() => setFocus(id)}
             />
             <mesh
                 castShadow
@@ -46,8 +53,13 @@ export default function FloorPedestal (  { position, rotation, art  } : TileProp
                 receiveShadow
                 geometry={nodes.object.geometry}
                 position={[0, 3.5, 0]}
+                
+                onPointerEnter={() => document.body.style.cursor = 'pointer'}
+                onPointerLeave={() => document.body.style.cursor = 'default'} 
+                onClick={() => setFocus(id)}
+
             >
-                <icosahedronGeometry args={[0.8, 10]} />
+                <icosahedronGeometry args={[0.6, 10]} />
                 { art && <CustomShaderMaterial
                         baseMaterial={ THREE.MeshStandardMaterial }
                         vertexShader={ art.vertexShader }
