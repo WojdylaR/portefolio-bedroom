@@ -61,16 +61,35 @@
     border: none;
     border-radius: 4px;
     background-color: black;
-}
+  }
 
-.shaders-interface {
-  position: fixed;
-  right: 0;
-  top: 0;
-  padding: 32px;
-  pointer-events: none;
-  max-width: 380px;
-}
+  .shaders-interface {
+    position: fixed;
+    right: 0;
+    top: 0;
+    padding: 32px;
+    pointer-events: none;
+    max-width: 380px;
+  }
+
+  .shaders-interface .view-interface-toggle {
+    
+    pointer-events: auto;
+    right: 20px;
+    top: 20px;
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    font-family: "Geist Pixel", sans-serif;
+    font-size: 16px;
+    border: 1px solid #111;
+    transition-duration: 0.1s;
+
+    &:hover {
+      scale: 1.15;
+      cursor: pointer;
+    }
+  }
 
 .shaders-interface .meta {
   background: #fff;
@@ -125,5 +144,12 @@
     border-left: none;
     border: 2px solid #111;
     padding: 20px 24px;
+  }
+
+  .shaders-interface .view-interface-toggle {
+
+    top: auto;
+    bottom: 10px;
+    right:  12px;
   }
 }

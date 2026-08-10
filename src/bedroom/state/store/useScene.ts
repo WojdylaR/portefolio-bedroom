@@ -10,6 +10,9 @@ export interface IScene {
     isAnimating: boolean
     isControls: boolean
 
+    viewShaderInterace: boolean
+    toggleViewShaderInterface: () => void
+
     setLoaded: () => void
     setFocus: (target: string | null) => void
     focusReset: () => void
@@ -26,6 +29,14 @@ export default create<IScene>()(subscribeWithSelector((set) => {
         focus: null,
         isAnimating: false,
         isControls: true,
+
+        viewShaderInterace: true,
+
+        toggleViewShaderInterface:() => {
+            set((state) => {
+                return {viewShaderInterace: !state.viewShaderInterace}
+            })
+        },
 
         setLoaded: () => {
             set(() => {
