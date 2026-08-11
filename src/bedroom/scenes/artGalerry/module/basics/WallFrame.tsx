@@ -14,13 +14,12 @@ export default function WallFrame (  { position, rotation, art, id = null } : Ti
     const uniforms = useShaderUniforms(art)
 
     const setFocus = useScene(state => state.setFocus)
+    const focus = useScene(state => state.focus)
 
     nodes.frame.geometry.computeBoundingBox()
-    console.log(nodes.frame.geometry.boundingBox)
 
     return ( 
         <group position={position} rotation-y={ rotation }>
-
         <mesh
                 castShadow
                 receiveShadow
@@ -30,7 +29,7 @@ export default function WallFrame (  { position, rotation, art, id = null } : Ti
                 onPointerLeave={() => document.body.style.cursor = 'default'} 
 
                 position={[0, 1.3, 0]}
-                onClick={() => setFocus(id)}
+                onClick={() => focus !== id ? setFocus(id) : setFocus(null)}
              >
                 { art && <CustomShaderMaterial
                         baseMaterial={ THREE.MeshStandardMaterial }

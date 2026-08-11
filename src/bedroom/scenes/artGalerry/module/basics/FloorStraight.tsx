@@ -5,7 +5,7 @@ import { MAT } from "../materials"
 
 export default function FloorStraight ( { position, rotation,  } : TileProps) {
 
-    const { nodes, materials } : { nodes: any, materials : any }= useGLTF('/bedroom/artGallery/floor-straight.glb')
+    const { nodes } : { nodes: any }= useGLTF('/bedroom/artGallery/floor-straight.glb')
 
     return ( 
         <group position={ position } rotation-y={ rotation }>

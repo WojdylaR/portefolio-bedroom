@@ -32,6 +32,11 @@ export const SHADERS = {
     description: 'Relief procédural généré par bruit simplex, la couleur des strates dérivant de l\'altitude. Exercice du cours Three.js Journey de Bruno Simon.',
     href: null,
   } },
+  terrain02: { id: 'terrain', vertexShader: terrainVertex, fragmentShader: terrainFragment, meta: {
+    title: 'Terrain',
+    description: 'Relief procédural généré par bruit simplex, la couleur des strates dérivant de l\'altitude. Exercice du cours Three.js Journey de Bruno Simon.',
+    href: null,
+  } },
   leather: { id: 'leather', vertexShader: leatherVertex, fragmentShader: leatherFragment, meta: {
     title: 'Cuir',
     description: 'FBM sur six octaves, élevé au carré pour resserrer le grain, puis mixé entre deux tons proches. La rugosité varie avec le grain, ce qui donne au matériau sa réponse mate à la lumière. Finition cuir du configurateur de casque.',

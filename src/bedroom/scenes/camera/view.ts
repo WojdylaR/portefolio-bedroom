@@ -13,7 +13,7 @@ export const IDLE_VIEW: CameraView = {
     animationDuration: 2,
     orbitEnabled: true,
     width: 12,
-    height: 8,
+    height: 9,
 }
 
 export const SCREE_VIEW: CameraView = {
@@ -28,7 +28,7 @@ export const SCREE_VIEW: CameraView = {
 
 export const ART_NEAR: Record<string, number> = {
     'wall-frame': 1.5,
-    'floor-pedestal': 2.5,
+    'floor-pedestal': 2.8,
     'floor-frame': 2.3,
 }
 

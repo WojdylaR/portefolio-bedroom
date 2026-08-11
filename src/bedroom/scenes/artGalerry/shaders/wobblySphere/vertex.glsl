@@ -1,4 +1,5 @@
 uniform float uTime;
+uniform float uOffset;
 varying float vWobble;
 
 #include ../tools
@@ -9,12 +10,12 @@ float getWobble(vec3 position) {
 
     warpedPosition += simplexNoise4d(vec4(
         position * .5,
-        uTime * 0.4
+        uTime * 0.2 * uOffset
     )) * 1.7;
 
     return simplexNoise4d(vec4(
         warpedPosition * .6 ,
-        uTime * .7
+        uTime * .4 * uOffset
     )) * .3;
 }
 

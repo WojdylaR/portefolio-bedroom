@@ -13,8 +13,6 @@ import LoadTracker from './scenes/utils/LoadTracker'
 import { SCENE } from './config/scene'
 import { Perf } from 'r3f-perf'
 import ArtGallery from './scenes/artGalerry/ArtGallery'
-// import { Perf } from 'r3f-perf' 
-
 import ShadersInterface from './ui/Interface/ShadersInterface'
 import { Leva } from 'leva'
 
@@ -40,7 +38,7 @@ import { Leva } from 'leva'
             <Suspense fallback={null}>
 
               <LoadTracker />
-              {/* <Perf position='top-left'/> */}
+              <Perf position='top-left'/>
               <PostProcessing />
               <OrbitControls ref={ orbitControlRef } makeDefault enabled={!isAnimating && isControls} enablePan={true}/>
 

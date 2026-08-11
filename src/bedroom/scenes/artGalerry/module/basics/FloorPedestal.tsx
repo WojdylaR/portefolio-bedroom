@@ -20,6 +20,7 @@ export default function FloorPedestal (  { position, rotation, art, id = null   
     const materialRef = useRef<CustomShaderMaterialImpl & { uniforms: MaterialUniforms }>(null)
 
     const setFocus = useScene(state => state.setFocus)
+    const focus = useScene(state => state.focus)
 
     useFrame((state) => {
         
@@ -56,7 +57,7 @@ export default function FloorPedestal (  { position, rotation, art, id = null   
                 
                 onPointerEnter={() => document.body.style.cursor = 'pointer'}
                 onPointerLeave={() => document.body.style.cursor = 'default'} 
-                onClick={() => setFocus(id)}
+                onClick={() => focus !== id ? setFocus(id) : setFocus(null)}
 
             >
                 <icosahedronGeometry args={[0.6, 10]} />

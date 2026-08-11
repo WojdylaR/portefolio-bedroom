@@ -4,7 +4,6 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import BedroomApp from './bedroom/BedroomApp.tsx'
 import { Analytics } from "@vercel/analytics/react"
-import { Leva } from 'leva'
 import HeadphoneConfiguratorApp from './headphoneConfigurator/HeadphoneConfiguratorApp.tsx'
 
 createRoot(document.getElementById('root')!).render(
