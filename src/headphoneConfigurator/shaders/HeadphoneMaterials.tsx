@@ -88,7 +88,7 @@ export default function HeadphoneMaterials ( { material, color } : { material: M
         baseMaterial={ THREE.MeshStandardMaterial }
         uniforms={ uniforms }
         color={ color }
-            vertexShader={ materialVertexShader }
-            fragmentShader={ materialFragmentShader }
+        vertexShader={ materialVertexShader }
+        fragmentShader={ materialFragmentShader }
     />
 }

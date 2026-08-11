@@ -14,7 +14,6 @@ export default function LoadingPage() {
     const state = useConfigurator(state => state.state)
 
     useEffect(() => {
-        console.log(pageRef.current)
         state === 'ready' && gsap.to(pageRef.current, {
             opacity: 0,
             duration: TRANSITION.fadeDuration,

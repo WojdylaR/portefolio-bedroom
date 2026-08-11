@@ -37,7 +37,7 @@ export default function BedroomModel() {
 
 
   return (
-    <group >
+    <group  >
 
       <mesh
         name="room"
@@ -75,5 +75,3 @@ export default function BedroomModel() {
     </group>
   )
 }
-
-

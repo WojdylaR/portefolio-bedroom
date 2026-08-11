@@ -11,7 +11,14 @@ import { useRef, Suspense } from 'react'
 import LoadingPage from './ui/Loading/LoadingPage'
 import LoadTracker from './scenes/utils/LoadTracker'
 import { SCENE } from './config/scene'
-// import { Perf } from 'r3f-perf' 
+// import { Perf } from 'r3f-perf'
+import ArtGallery from './scenes/artGalerry/ArtGallery'
+import ShadersInterface from './ui/Interface/ShadersInterface'
+import { Leva } from 'leva'
+import { TOUCH } from 'three'
+
+
+
 
   function BedroomApp() {
     
@@ -32,11 +39,11 @@ import { SCENE } from './config/scene'
             <Suspense fallback={null}>
 
               <LoadTracker />
-
+              {/* <Perf position='top-left'/> */}
               <PostProcessing />
-              <OrbitControls ref={ orbitControlRef } makeDefault enabled={!isAnimating && isControls} enablePan={true}/>
+              <OrbitControls touches={{ ONE: TOUCH.PAN, TWO: TOUCH.DOLLY_PAN }} enableRotate={false} ref={ orbitControlRef } makeDefault enabled={!isAnimating && isControls} enablePan={true}/>
 
-              {/* <Perf position="top-left" /> */}
+              <Leva hidden />
               <Center>
 
               
@@ -45,11 +52,14 @@ import { SCENE } from './config/scene'
 
 
                 <Bedroom />
+ 
               </Center>
 
+                <ArtGallery />
         </Suspense>
           </Canvas>
           <Interface />
+          <ShadersInterface />
         </>
     )
   }

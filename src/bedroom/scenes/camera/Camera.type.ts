@@ -4,20 +4,8 @@ export type CameraView = {
     near: number
     animationDuration: number
     orbitEnabled : boolean
+    width: number
+    height: number
 }
 
-export const IDLE_VIEW: CameraView = {
-    position: [20, 15, 13],
-    target: [0, 0, 0],
-    near: 0.1,
-    animationDuration: 2,
-    orbitEnabled : true
-}
-
-export const SCREE_VIEW: CameraView = {
-    position:  [1, 2.6, -15],
-    target: [-1.7  , 0.13, 2.3],
-    near: 15, 
-    animationDuration: 1,
-    orbitEnabled : false
-}
+export type ViewRegistry = Record<string, CameraView>
