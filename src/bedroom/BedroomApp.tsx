@@ -15,6 +15,7 @@ import { Perf } from 'r3f-perf'
 import ArtGallery from './scenes/artGalerry/ArtGallery'
 import ShadersInterface from './ui/Interface/ShadersInterface'
 import { Leva } from 'leva'
+import { TOUCH } from 'three'
 
 
 
@@ -40,7 +41,7 @@ import { Leva } from 'leva'
               <LoadTracker />
               <Perf position='top-left'/>
               <PostProcessing />
-              <OrbitControls ref={ orbitControlRef } makeDefault enabled={!isAnimating && isControls} enablePan={true}/>
+              <OrbitControls touches={{ ONE: TOUCH.PAN, TWO: TOUCH.DOLLY_PAN }} ref={ orbitControlRef } makeDefault enabled={!isAnimating && isControls} enablePan={true}/>
 
               <Leva hidden />
               <Center>
