@@ -10,11 +10,11 @@ export default function Interface() {
         <div className="interface">
             <div className='buttons'>
                 {focus === null
-                    ? <div onClick={() => setFocus('screen')} className="button"><img src='./screenButton.png'/></div>
-                    : <div onClick={focusReset} className="button"><img src='./returnButton.png'/></div>
+                    ? <div onClick={() => setFocus('screen')} className="button"><img src='./bedroom/screenButton.png'/></div>
+                    : <div onClick={focusReset} className="button"><img src='./bedroom/returnButton.png'/></div>
                 }
                 <a href='https://www.linkedin.com/in/ronan-wojdyla-07aa3920a/' className="button">
-                    <img src='./linkedinButton.png'/>
+                    <img src='./bedroom/linkedinButton.png'/>
                 </a>
             </div>
         </div>

@@ -56,7 +56,7 @@ export default function Screen ( {geometry}: {geometry: THREE.BufferGeometry}) {
                     wrapperClass='htmlScreen'
                     distanceFactor={ 0.5 }
                 >
-                    <iframe src='./ecran-projets.html' />
+                    <iframe src='./bedroom/ecran-projets.html' />
                 </Html>  : <>
                     <planeGeometry />
                     <meshStandardMaterial emissive={ '#ffffff'  } emissiveIntensity={ 0.88 } toneMapped={false}/>

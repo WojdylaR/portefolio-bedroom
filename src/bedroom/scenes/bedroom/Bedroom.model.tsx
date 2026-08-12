@@ -8,8 +8,8 @@ export default function BedroomModel() {
 
   const { nodes, materials } : {nodes: any, materials: any} = useGLTF('/bedroom/bedroom.glb')
 
-  const planetTexture = useTexture('./planet.png')
-  const galaxyTexture = useTexture('./galaxy.jpg')
+  const planetTexture = useTexture('./bedroom/planet.png')
+  const galaxyTexture = useTexture('./bedroom/galaxy.jpg')
 
   const bakedRoom = useTexture('./bedroom/baked4096LessAO.png')
   bakedRoom.flipY = false
