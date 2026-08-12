@@ -17,10 +17,10 @@ export default function SeatPickerApp() {
                 }}
             shadows
         >
-            <color args={['black']} attach={'background'} />
+            <color args={['#807b7b']} attach={'background'} />
             <OrbitControls />
-            <ambientLight color={"#726b6b"} />
-            <pointLight position={[ 0, 2, 2]} intensity={ 10 } color={"#92b29f"}/>
+            <ambientLight color={"#797070"} />
+            <directionalLight position={[ 0, 2, 5]} intensity={ 5 } color={"#9e9e9e"}/>
             <Center>
                 <Auditoriom />
             </Center>
