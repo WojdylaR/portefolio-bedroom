@@ -1,19 +1,20 @@
+import Room from "./mesh/Room"
+import Scene from "./mesh/Scene"
 import Seat from "./mesh/Seat"
 
 const ROWS = 10
 const SEATS_PER_ROW = 10
 
-const SEAT_SPACING = 0.9   // largeur siège + jeu
-const ROW_DEPTH    = 1.0   // écartement avant/arrière
-const ROW_RISE     = 0.35  // hauteur de marche
-const STEP_HEIGHT  = 1.0   // épaisseur visuelle de la marche
+const SEAT_SPACING = 1 
+const ROW_DEPTH    = 1.70  
+const ROW_RISE     = 0.35 
+const STEP_HEIGHT  = 1.0 
+export const OFFSET_HEIGHT = 0.1
 
-// Source de vérité : rang + place -> position au sol.
-// Utilisée pour placer le siège ET, plus tard, la caméra.
 export const seatPosition = (row: number, i: number): [number, number, number] => [
-  (i - (SEATS_PER_ROW - 1) / 2) * SEAT_SPACING,  // x : place dans le rang, centrée
-  row * ROW_RISE,                                 // y : pente
-  row * ROW_DEPTH,                                // z : recul (scène vers -z)
+  (i - (SEATS_PER_ROW - 1) / 2) * SEAT_SPACING,
+  row * ROW_RISE,
+  row * ROW_DEPTH + ROW_DEPTH / 2 - 0.8, // Mettre le siege au fond de la ranger
 ]
 
 export default function Auditorium() {
@@ -44,5 +45,8 @@ export default function Auditorium() {
   return <>
     {steps}
     {seats}
+
+    <Scene />
+    <Room />
   </>
 }
