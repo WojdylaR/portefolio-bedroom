@@ -1,40 +1,51 @@
 import { useGLTF } from "@react-three/drei"
 import { useState } from "react"
 import useAuditoriumScene from "../../state/useAuditoriumScene"
-import { OFFSET_HEIGHT } from "../Auditorium"
-
-export default function Seat({ position } : { position: [number, number, number] }) {
+import { OFFSET_HEIGHT } from "../../config/blocks"
+export default function Seat({ position, rotation = 0 } : { position: [number, number, number], rotation?: number }) {
 
     const [ color, setColor ] = useState<null | string>(null)
 
     const { nodes } : { nodes: any} = useGLTF('./seatPicker/seat.glb')
 
     const setCameraPosition = useAuditoriumScene(state => state.setCameraPosition)
-    const setFocus = useAuditoriumScene(state => state.setFocus)
+    const setState = useAuditoriumScene(state => state.setState)
     const resetFocus = useAuditoriumScene(state => state.resetFocus)
 
     return <group
-                rotation-y={ Math.PI / 2 }
+                rotation-y={ Math.PI / 2 + rotation }
                 position={ position }
                 scale={3.5}
                 onPointerEnter={(e) => {
-                        setColor('#2ea361')
-                        e.stopPropagation()
-                        document.body.style.cursor = 'pointer'
-                    }} 
-                onPointerLeave={() =>{
-                        setColor(null)
-                        document.body.style.cursor = 'default'
+                    
+                    document.body.style.cursor = 'pointer'
+                    const { state } = useAuditoriumScene.getState()
+                    if (state === 'block-focus') {
+                            e.stopPropagation()
+                            setColor('#2ea361')
+                        }
                     }}
+                    
+                onPointerLeave={(e) =>{
+                            e.stopPropagation()
+                            setColor(null)
+                            document.body.style.cursor = 'default'
+                    }}
+
                 onClick={(e) => {
-                        e.stopPropagation()
-                        console.log(position)
-                    setFocus()
-                    setCameraPosition([position[0], position[1] + OFFSET_HEIGHT, position[2]])
+                    console.time('click')
+                    
+                    const { state } = useAuditoriumScene.getState()
+                        if (state === 'block-focus') {
+                            e.stopPropagation()
+                            setState('seat-focus')
+                            setCameraPosition([position[0], position[1] + OFFSET_HEIGHT, position[2]])
+                        }
+
                 }}
-                onPointerMissed={ () => {
+                onPointerMissed={(e) => 
                     resetFocus()
-                }}
+                }
             >
             <mesh castShadow receiveShadow geometry={nodes.seat_1.geometry}>
                 <meshStandardMaterial color={color || 'black'} />

@@ -1,11 +1,11 @@
 import { useControls } from 'leva'
 
-export default function PointLightLamp () {
+export default function PointLightLamp ( { state } : { state : boolean } ) {
 
     const { color, intensity, position } = useControls('pointLight', {
         color: '#8b4d20 ',
         intensity: {
-            value: 120,
+            value: 100,
             min: 0,
             max: 200
         },
@@ -16,7 +16,7 @@ export default function PointLightLamp () {
     })
 
     return <pointLight
-            intensity={ intensity }
+            intensity={ state ? intensity : 0 }
             color={ color }
             position={[position.x, position. y, position.z]}
         />

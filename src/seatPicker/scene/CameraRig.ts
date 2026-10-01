@@ -11,13 +11,25 @@ const DEFAULT_TARGET = new Vector3(...cameraDefault.lookAt)
 export default function CameraRig() {
   const camera = useThree((s) => s.camera)
   const cameraPosition = useAuditoriumScene((s) => s.cameraPosition)
+  const cameraTarget = useAuditoriumScene((s) => s.cameraTarget)
   const setAnimating = useAuditoriumScene((s) => s.setAnimating)
+  const state = useAuditoriumScene((s) => s.state)
 
   const target = useRef(new Vector3().copy(DEFAULT_TARGET))
 
   useEffect(() => {
+
+    console.log(cameraTarget)
+
     const dest = cameraPosition ?? cameraDefault.position
-    const look = cameraPosition ? SCENE_POSITION : DEFAULT_TARGET
+    let look: Vector3
+    if (state === 'seat-focus' ) {
+      look = SCENE_POSITION
+    } else if ( cameraTarget ) {
+      look = new Vector3(cameraTarget[0], cameraTarget[1], cameraTarget[2])
+    } else {
+      look = DEFAULT_TARGET
+    }
 
     gsap.killTweensOf([camera.position, target.current])
     setAnimating(true)
@@ -39,7 +51,7 @@ export default function CameraRig() {
       duration: 1.6,
       ease: "power2.inOut",
     })
-  }, [cameraPosition])
+  }, [cameraPosition, cameraTarget])
 
   return null
 }

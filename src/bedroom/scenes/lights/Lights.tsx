@@ -8,7 +8,6 @@ export default function Lights () {
     return <>
         <AmbiantLight />
 
-        <PointLightLamp />
         <PointLightDoor />
 
         <ArtGaleryLight />

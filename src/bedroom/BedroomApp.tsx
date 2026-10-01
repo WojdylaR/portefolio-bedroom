@@ -43,7 +43,7 @@ import { TOUCH } from 'three'
               <PostProcessing />
               <OrbitControls touches={{ ONE: TOUCH.PAN, TWO: TOUCH.DOLLY_PAN }} enableRotate={false} ref={ orbitControlRef } makeDefault enabled={!isAnimating && isControls} enablePan={true}/>
 
-              <Leva hidden />
+              {/* <Leva hidden /> */}
               <Center>
 
               
