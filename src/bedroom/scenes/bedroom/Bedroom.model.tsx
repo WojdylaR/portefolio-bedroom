@@ -5,8 +5,8 @@ import Screen from './parts/Screen'
 import Door from './parts/Door'
 import { useState } from 'react'
 import PointLightDoor from '../lights/PointLightDoor'
-import PointLightLamp from '../lights/PointLightLamp'
-
+import BedLight from './parts/BedLight'
+import DoorLight from './parts/DoorLight'
 
 export default function BedroomModel() {
 
@@ -22,15 +22,7 @@ export default function BedroomModel() {
   const [ orangeLight, setOrangeLight ] = useState(true) 
   const [ whiteLight, setWhiteLight ] = useState(false) 
 
-  const { orangeGlow } = useControls('orangeGlow' , {
-
-    orangeGlow: {
-      value: 7,
-      step: 0.1,
-      min: 0,
-      max: 100
-    }
-  })
+  
   const { whiteGlow } = useControls('whiteGlow' , {
 
     whiteGlow: {
@@ -58,35 +50,16 @@ export default function BedroomModel() {
         <Door geometry={nodes.door.geometry} />
         
         <Screen  geometry={nodes.screen.geometry}/>
-        
-        
-        <mesh
-          name="whiteLight"
-          geometry={nodes.whiteLight.geometry}
-          material={materials['palette.001']}
-          rotation={[Math.PI / 2, 0, 0]}
-          onPointerOver={() => { document.body.style.cursor = 'pointer' }}
-          onPointerOut={() => { document.body.style.cursor = 'auto' }}
-          onClick={() => setWhiteLight(value => !value)}
-        >
-          <meshStandardMaterial emissive={ '#9db8e0'  } emissiveIntensity={ whiteLight ? whiteGlow : 0 } toneMapped={false}/>
-        </mesh>
-        <mesh
-          name="orangeLight"
-          geometry={nodes.orangeLight.geometry}
-          rotation={[Math.PI / 2, 0, 0]}
-          onPointerOver={() => { document.body.style.cursor = 'pointer' }}
-          onPointerOut={() => { document.body.style.cursor = 'auto' }}
-          onClick={() => setOrangeLight(value => !value)}
-        >
-          <meshStandardMaterial color={' #ff7112'} emissive={ '#ff7112'  } emissiveIntensity={ orangeLight ? orangeGlow : 0 } toneMapped={false}/>
-        </mesh>
+
+
+        <DoorLight geometry={ nodes.whiteLight.geometry } />
+
+        <BedLight geometry={nodes.orangeLight.geometry} />
 
         <Paint geometry={nodes.right_paint.geometry} texture={galaxyTexture} />
         <Paint geometry={nodes.left_paint.geometry} texture={planetTexture} />
       </group>
-    <PointLightDoor state={whiteLight} />
-    <PointLightLamp state={orangeLight} />
+      <PointLightDoor state={whiteLight} />
     </>
   )
 }

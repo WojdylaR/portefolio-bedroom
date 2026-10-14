@@ -1,4 +1,4 @@
-import useScene from '../../state/store/useScene'
+import useScene from '../state/store/useScene'
 import { useProgress } from '@react-three/drei'
 import { useEffect } from 'react'
 

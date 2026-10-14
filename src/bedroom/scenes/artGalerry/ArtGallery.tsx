@@ -1,10 +1,15 @@
+import useLayers from '../../utils/useLayers'
+import { ART_GALLERY } from '../lights/layers'
 import { TILES } from './artGalery.type'
 import { FLAT_TILES, GALLERY_TRANSFORM } from './config/layout'
+import * as THREE from 'three'
 
 
 export default function ArtGallery () {
 
-    return ( <group position={ GALLERY_TRANSFORM.position } rotation-y={ GALLERY_TRANSFORM.rotationY }>
+    const group = useLayers<THREE.Mesh>(ART_GALLERY)
+
+    return ( <group ref={ group } position={ GALLERY_TRANSFORM.position } rotation-y={ GALLERY_TRANSFORM.rotationY }>
         
                 {FLAT_TILES.map((module, index) => {
 

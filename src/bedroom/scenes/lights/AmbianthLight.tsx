@@ -3,9 +3,9 @@ import { useControls } from "leva"
 export default function AmbiantLight () {
 
     const { color, intensity } = useControls('ambiantLight', {
-            color: '#a14d22',
+            color: '#f5e8dc',
             intensity: {
-                value: 2.5,
+                value: 0.5,
                 min: 0,
                 max: 15
             }

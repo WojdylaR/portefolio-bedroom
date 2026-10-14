@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { useTexture } from '@react-three/drei'
 import { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
+import ArtGaleryLight from '../../lights/ArtGaleryLight'
 
 const OPEN_ANGLE = Math.PI / 2.05
 
@@ -26,17 +27,20 @@ export default function Door({ geometry }: { geometry: THREE.BufferGeometry }) {
     }, [open])
 
     return (
-        <mesh
-            ref={ref}
-            name="door"
-            geometry={geometry}
-            rotation={[Math.PI / 2, 0, 0]}
-            position={[3.5, 0.2, -5.3]} 
-            onClick={() => setOpen(value => !value)}
-            onPointerOver={() => { document.body.style.cursor = 'pointer' }}
-            onPointerOut={() => { document.body.style.cursor = 'auto' }}
-        >
-            <meshStandardMaterial map={bakedDoor} />
-        </mesh>
+        <>
+            <mesh
+                ref={ref}
+                name="door"
+                geometry={geometry}
+                rotation={[Math.PI / 2, 0, 0]}
+                position={[3.5, 0.2, -5.3]} 
+                onClick={() => setOpen(value => !value)}
+                onPointerOver={() => { document.body.style.cursor = 'pointer' }}
+                onPointerOut={() => { document.body.style.cursor = 'auto' }}
+            >
+                <meshStandardMaterial map={bakedDoor} />
+            </mesh>
+            <ArtGaleryLight state={open} />
+        </>
     )
 }

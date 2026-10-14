@@ -1,11 +1,11 @@
 import { useControls } from 'leva'
 
-export default function PointLightLamp ( { state } : { state : boolean } ) {
+export default function PointLightBed ( { state } : { state : boolean } ) {
 
     const { color, intensity, position } = useControls('pointLight', {
-        color: '#8b4d20 ',
+        color: '#ff9100 ',
         intensity: {
-            value: 100,
+            value: 17,
             min: 0,
             max: 200
         },

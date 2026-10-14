@@ -9,7 +9,7 @@ import useScene from './state/store/useScene'
 import Interface from './ui/Interface/Interface'
 import { useRef, Suspense } from 'react'
 import LoadingPage from './ui/Loading/LoadingPage'
-import LoadTracker from './scenes/utils/LoadTracker'
+import LoadTracker from './utils/LoadTracker'
 import { SCENE } from './config/scene'
 // import { Perf } from 'r3f-perf'
 import ArtGallery from './scenes/artGalerry/ArtGallery'
@@ -54,8 +54,7 @@ import { TOUCH } from 'three'
                 <Bedroom />
  
               </Center>
-
-                <ArtGallery />
+              <ArtGallery />
         </Suspense>
           </Canvas>
           <Interface />

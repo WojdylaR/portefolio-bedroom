@@ -1,16 +1,17 @@
-// import { useHelper } from '@react-three/drei'
 import { useControls } from 'leva'
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js'
-// import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper.js'
+import useLayers from '../../utils/useLayers'
+import { mergeRefs } from '../../utils/mergeRefs'
+import { ART_GALLERY } from './layers'
 
 RectAreaLightUniformsLib.init()
 
-export default function ArtGaleryLight() {
+export default function ArtGaleryLight({ state }: { state: boolean }) {
     const ref = useRef<THREE.RectAreaLight>(null!)
-
-    // useHelper( ref, RectAreaLightHelper )
+    const layersRef = useLayers(ART_GALLERY)
+    const mergedRef = useMemo(() => mergeRefs(ref, layersRef), [layersRef])
 
     const { color, intensity, position, size, targetPos } = useControls('rectArt', {
         color: '#c4ccdc',
@@ -26,10 +27,10 @@ export default function ArtGaleryLight() {
 
     return (
         <rectAreaLight
-            ref={ref}
-            width={ 20}
+            ref={mergedRef}
+            width={size.x}
             height={size.y}
-            intensity={intensity}
+            intensity={state ? intensity : 0}
             color={color}
             position={[position.x, position.y, position.z]}
         />
