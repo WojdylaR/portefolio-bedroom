@@ -1,0 +1,1 @@
+export const ART_GALLERY = 1

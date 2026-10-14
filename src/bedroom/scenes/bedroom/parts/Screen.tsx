@@ -1,68 +1,85 @@
-
 import { useMemo, useRef } from 'react'
 import { Vector3, Matrix4 } from 'three'
 import * as THREE from 'three'
 import { Html } from '@react-three/drei'
+import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js'
 import useScene from '../../../state/store/useScene'
 
-export default function Screen ( {geometry}: {geometry: THREE.BufferGeometry}) {
+RectAreaLightUniformsLib.init()
+
+const GLOW_INTENSITY = 25
+
+export default function Screen({ geometry }: { geometry: THREE.BufferGeometry }) {
 
     const setFocus = useScene(state => state.setFocus)
     const focusReset = useScene(state => state.focusReset)
-
     const focus = useScene(state => state.focus)
 
     const refScreen = useRef<THREE.Mesh>(null!)
 
-
     const { position, size } = useMemo(() => {
-            if (!geometry.boundingBox) geometry.computeBoundingBox()
-    
-            const box = geometry.boundingBox!.clone()
-            box.applyMatrix4(new Matrix4().makeRotationX(Math.PI / 2))
-    
-            return {
-                position: box.getCenter(new Vector3()),
-                size: box.getSize(new Vector3()),
-            }
-        }, [geometry])
+        if (!geometry.boundingBox) geometry.computeBoundingBox()
+
+        const box = geometry.boundingBox!.clone()
+        box.applyMatrix4(new Matrix4().makeRotationX(Math.PI / 2))
+
+        return {
+            position: box.getCenter(new Vector3()),
+            size: box.getSize(new Vector3()),
+        }
+    }, [geometry])
 
     return (
-       <>
+        <>
             <mesh
                 castShadow
                 receiveShadow
                 geometry={geometry}
                 rotation={[Math.PI / 2, 0, 0]}
                 ref={refScreen}
-
                 onPointerEnter={() => document.body.style.cursor = 'pointer'}
-                onPointerLeave={() => document.body.style.cursor = 'default'} 
+                onPointerLeave={() => document.body.style.cursor = 'default'}
                 name="screen"
                 onClick={() => setFocus('screen')}
                 onPointerMissed={focusReset}
             >
-                <meshBasicMaterial color='black' />
-                </mesh>
+                <meshBasicMaterial color="black" />
+            </mesh>
+
             <mesh
                 scale={[size.x, size.y, 1]}
-                position={[position.x  + 0.02, position.y, position.z - 0.11 ]}
-                rotation={ [0, Math.PI, 0]}
-            
+                position={[position.x + 0.02, position.y, position.z - 0.11]}
+                rotation={[0, Math.PI, 0]}
             >
-                {focus === 'screen' ? <Html
-                    transform
-                    occlude={[refScreen]}
-                    wrapperClass='htmlScreen'
-                    distanceFactor={ 0.5 }
-                >
-                    <iframe src='./ecran-projets.html' />
-                </Html>  : <>
-                    <planeGeometry />
-                    <meshStandardMaterial emissive={ '#ffffff'  } emissiveIntensity={ 0.88 } toneMapped={false}/>
-                </>
-            }
+                {focus === 'screen' ? (
+                    <Html
+                        transform
+                        occlude={[refScreen]}
+                        wrapperClass="htmlScreen"
+                        distanceFactor={0.5}
+                    >
+                        <iframe src="./bedroom/ecran-projets.html" />
+                    </Html>
+                ) : (
+                    <>
+                        <planeGeometry />
+                        <meshStandardMaterial
+                            color="#9db8e0"
+                            emissive="#ffffff"
+                            emissiveIntensity={20}
+                            toneMapped={false}
+                        />
+                    </>
+                )}
             </mesh>
+
+            <rectAreaLight
+                position={[position.x + 0.02, position.y, position.z - 0.12]}
+                width={size.x}
+                height={size.y}
+                color="#8fb4ff"
+                intensity={GLOW_INTENSITY}
+            />
         </>
     )
 }

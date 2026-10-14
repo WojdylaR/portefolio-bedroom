@@ -5,6 +5,7 @@ import './index.css'
 import BedroomApp from './bedroom/BedroomApp.tsx'
 import { Analytics } from "@vercel/analytics/react"
 import HeadphoneConfiguratorApp from './headphoneConfigurator/HeadphoneConfiguratorApp.tsx'
+import SeatPickerApp from './seatPicker/SeatPickerApp.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -16,6 +17,7 @@ createRoot(document.getElementById('root')!).render(
       <Routes>
           <Route path="/" element={<BedroomApp />} />
           <Route path="/headphone-configurator" element={<HeadphoneConfiguratorApp />} />
+          <Route path="/seat-picker" element={<SeatPickerApp />} />
         </Routes>
       </BrowserRouter>
   </StrictMode>,

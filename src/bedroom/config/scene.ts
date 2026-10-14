@@ -1,3 +1,3 @@
 export const SCENE = {
-    background: '#424242'
+    background: '#00030e'
 }

@@ -10,6 +10,7 @@ export default function Headphone() {
     const camera = useThree(scene => scene.camera)
     const state = useConfigurator(state => state.state)
 
+
     useEffect(() => {
         gsap.to(camera.position, {
             x: 0, 
