@@ -18,8 +18,6 @@ import { Leva } from 'leva'
 import { TOUCH } from 'three'
 
 
-
-
   function BedroomApp() {
     
     const isAnimating = useScene(state => state.isAnimating)

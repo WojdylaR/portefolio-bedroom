@@ -1,3 +1,24 @@
+.interface .buttons::-webkit-scrollbar {
+    width: 4px;
+}
+
+.interface .buttons::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 12px 0;
+}
+
+.interface .buttons::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 4px;
+}
+
+.interface .buttons::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.interface .buttons::-webkit-scrollbar-button {
+    display: none;
+}
 .interface  {
   position: fixed;
   display: flex;
@@ -10,7 +31,7 @@
     height: 2px;
     margin: 4px 0;
     background: rgba(255, 255, 255, 0.12);
-}
+  }
 
   .buttons {
     display: flex;
@@ -19,9 +40,8 @@
     background-color: rgba(30, 34, 65, 0.65);
     border-radius: 10px;
     pointer-events: auto;
+    max-height: 95%;
   }
-
-
 
     .button {
       position: relative;
@@ -31,7 +51,7 @@
         cursor: pointer;
         scale: 1.2;
       }
-      
+
       img{
         width: 85px;
     }
@@ -47,10 +67,49 @@
         cursor: pointer;
         scale: 1.2;
       }
-      
+
       img{
         width: 70px;
     }
+    }
+}
+
+@media (orientation: landscape) {
+    .interface {
+      height: 100%;
+      left: 10px;
+      top: 0;
+      .buttons {
+        flex-direction: column;
+      }
+    }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+    .interface .buttons {
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+}
+
+@media (orientation: portrait) {
+    .interface {
+      bottom: 20px;
+      width: 100%;
+
+      .separator {
+        width: 2px;
+        height: 40px;
+        margin: 4px 0;
+      }
+
+      .buttons {
+        flex-direction: row;
+      }
+
+      .doorButton {
+        padding: 0;
+      }
     }
 }
 @media (orientation: landscape) {
