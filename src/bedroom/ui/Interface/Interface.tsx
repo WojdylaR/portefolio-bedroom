@@ -12,6 +12,7 @@ export default function Interface() {
     const toggleNeon= useScene(state => state.toggleNeon)
     const toggleLamp = useScene(state => state.toggleLamp)
     const toggleDoor = useScene(state => state.toggleDoor)
+    const focus = useScene(state => state.focus)
 
     return (
         <div className="interface">
