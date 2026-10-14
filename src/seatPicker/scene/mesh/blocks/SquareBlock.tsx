@@ -15,10 +15,10 @@ export const seatPosition = (row: number, i: number): [number, number, number] =
   row * ROW_DEPTH + ROW_DEPTH / 2 - 0.8,
 ]
 
-export default function SquareBlock ( { position, rotation, id }: IBlockProps ) {
+export default function SquareBlock ( { position, rotation }: IBlockProps ) {
 
     const state = useAuditoriumScene(state => state.state)
-    const setCameraPosition = useAuditoriumScene(state => state.setCameraPosition)
+    // const setCameraPosition = useAuditoriumScene(state => state.setCameraPosition)
     const setState = useAuditoriumScene(state => state.setState)
     const setCameraTarget = useAuditoriumScene(state => state.setCameraTarget)
 

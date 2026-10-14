@@ -2,6 +2,8 @@ import { useGLTF } from "@react-three/drei"
 import { useState } from "react"
 import useAuditoriumScene from "../../state/useAuditoriumScene"
 import { OFFSET_HEIGHT } from "../../config/blocks"
+
+
 export default function Seat({ position, rotation = 0 } : { position: [number, number, number], rotation?: number }) {
 
     const [ color, setColor ] = useState<null | string>(null)
@@ -10,7 +12,7 @@ export default function Seat({ position, rotation = 0 } : { position: [number, n
 
     const setCameraPosition = useAuditoriumScene(state => state.setCameraPosition)
     const setState = useAuditoriumScene(state => state.setState)
-    const resetFocus = useAuditoriumScene(state => state.resetFocus)
+    // const resetFocus = useAuditoriumScene(state => state.resetFocus)
 
     return <group
                 rotation-y={ Math.PI / 2 + rotation }
@@ -43,9 +45,9 @@ export default function Seat({ position, rotation = 0 } : { position: [number, n
                         }
 
                 }}
-                onPointerMissed={(e) => 
-                    resetFocus()
-                }
+                // onPointerMissed={(e) => 
+                //     resetFocus()
+                // }
             >
             <mesh castShadow receiveShadow geometry={nodes.seat_1.geometry}>
                 <meshStandardMaterial color={color || 'black'} />

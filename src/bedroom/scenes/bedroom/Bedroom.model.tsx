@@ -1,16 +1,13 @@
 import { useGLTF, useTexture } from '@react-three/drei'
 import Paint from './parts/Paint'
-import { useControls } from 'leva'
 import Screen from './parts/Screen'
 import Door from './parts/Door'
-import { useState } from 'react'
-import PointLightDoor from '../lights/PointLightDoor'
 import BedLight from './parts/BedLight'
 import DoorLight from './parts/DoorLight'
 
 export default function BedroomModel() {
 
-  const { nodes, materials } : {nodes: any, materials: any} = useGLTF('/bedroom/bedroom.glb')
+  const { nodes } : {nodes: any} = useGLTF('/bedroom/bedroom.glb')
 
   const planetTexture = useTexture('./bedroom/planet.png')
   const galaxyTexture = useTexture('./bedroom/galaxy.jpg')
@@ -18,22 +15,7 @@ export default function BedroomModel() {
   const bakedRoom = useTexture('./bedroom/bakedv3.webp')
   bakedRoom.flipY = false
   bakedRoom.anisotropy = 16
-
-  const [ orangeLight, setOrangeLight ] = useState(true) 
-  const [ whiteLight, setWhiteLight ] = useState(false) 
-
   
-  const { whiteGlow } = useControls('whiteGlow' , {
-
-    whiteGlow: {
-      value: 20,
-      step: 0.1,
-      min: 0,
-      max: 100
-    }
-  })
-
-
   return (<>
       <group  >
           
@@ -59,7 +41,6 @@ export default function BedroomModel() {
         <Paint geometry={nodes.right_paint.geometry} texture={galaxyTexture} />
         <Paint geometry={nodes.left_paint.geometry} texture={planetTexture} />
       </group>
-      <PointLightDoor state={whiteLight} />
     </>
   )
 }

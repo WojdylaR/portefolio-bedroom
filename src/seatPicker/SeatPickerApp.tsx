@@ -1,4 +1,4 @@
-import { Center, OrbitControls } from '@react-three/drei'
+import { Center } from '@react-three/drei'
 import './SeatPickerApp.css'
 
 import { Canvas } from '@react-three/fiber'

@@ -1,12 +1,14 @@
 import * as THREE from 'three'
 import { useControls } from 'leva'
-import { useState, } from 'react'
 import PointLightDoor from '../../lights/PointLightDoor'
+import useScene from '../../../state/store/useScene'
 
 
 export default function DoorLight({ geometry }: { geometry: THREE.BufferGeometry }) {
 
-    const [ lightOn, setLightOn ] = useState(false)
+    const setNeon = useScene(state => state.setNeon)
+        
+    const toggleNeon = useScene(state => state.toggleNeon)
 
     const { lightGlow } = useControls('DoorGlow' , {
     
@@ -23,13 +25,13 @@ export default function DoorLight({ geometry }: { geometry: THREE.BufferGeometry
                 name="doorLight"
                 geometry={geometry}
                 rotation={[Math.PI / 2, 0, 0]}
-                onClick={() => setLightOn(value => !value)}
+                onClick={() => setNeon(!toggleNeon)}
                 onPointerOver={() => { document.body.style.cursor = 'pointer' }}
                 onPointerOut={() => { document.body.style.cursor = 'auto' }}
             >
-                <meshStandardMaterial color={ '#9db8e0' } emissive= { '#9db8e0' } emissiveIntensity={ lightOn ? lightGlow : 0 } toneMapped={false}/>
+                <meshStandardMaterial color={ '#9db8e0' } emissive= { '#9db8e0' } emissiveIntensity={ toggleNeon ? lightGlow : 0 } toneMapped={false}/>
             </mesh>
-            <PointLightDoor state={ lightOn } />
+            <PointLightDoor state={ toggleNeon } />
         </>
     )
 }

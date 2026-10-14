@@ -1,12 +1,15 @@
 import * as THREE from 'three'
 import { useControls } from 'leva'
-import { useState, } from 'react'
 import PointLightBed from '../../lights/PointLightBed'
+import useScene from '../../../state/store/useScene'
 
 
 export default function BedLight({ geometry }: { geometry: THREE.BufferGeometry }) {
 
-    const [ lightOn, setLightOn ] = useState(true)
+    
+    const setLamp = useScene(state => state.setLamp)
+    
+    const toggleLamp = useScene(state => state.toggleLamp)
 
     const { lightGlow } = useControls('orangeGlow' , {
     
@@ -23,16 +26,16 @@ export default function BedLight({ geometry }: { geometry: THREE.BufferGeometry 
                 name="bedLight"
                 geometry={geometry}
                 rotation={[Math.PI / 2, 0, 0]}
-                onClick={() => setLightOn(value => !value)}
+                onClick={() => setLamp(!toggleLamp)}
                 onPointerOver={() => { document.body.style.cursor = 'pointer' }}
                 onPointerOut={() => { document.body.style.cursor = 'auto' }}
             >
-                {lightOn
+                {toggleLamp
                     ? <meshStandardMaterial color={"#e98c53"} emissive={"#e98c53"} emissiveIntensity={lightGlow} toneMapped={false} />
                     : <meshStandardMaterial color="#583d20" roughness={1} />
                 }
             </mesh>
-            <PointLightBed state={ lightOn } />
+            <PointLightBed state={ toggleLamp } />
         </>
     )
 }

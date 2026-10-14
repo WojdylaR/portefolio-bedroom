@@ -1,5 +1,3 @@
-import { SCENE_POSITION } from "../scene/mesh/Scene"
-
 export interface ICamera {
     position: [number, number, number]
     lookAt: [number, number, number]
