@@ -1,221 +1,437 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Projets — Ronan Wojdyla</title>
+<title>Projects — Ronan Wojdyla</title>
 <style>
-  /* Palette claire blanc/bleuté — écran lumineux au milieu de la scène */
+  /* Palette claire blanc/bleuté — écran lumineux au milieu de la scène.
+     3 modes, même fichier :
+     - écran   : dans l'iframe du <Html> (layout fixe, pas de scroll)
+     - overlay : ?mode=full dans l'iframe plein écran (bouton Fermer)
+     - direct  : ouvert seul dans un onglet (lien vers la scène 3D) */
   :root {
-    --bg: #eef2f8;
-    --panel: #e2e9f4;
-    --panel-open: #f7faff;
-    --warm: #4a7dd6;
-    --cool: #7aa3e8;
-    --text: #2b3a52;
-    --muted: #7d8ba3;
+    --bg: #f3f6fb;
+    --panel: #e6ecf6;
+    --card: #ffffff;
+    --line: #d3dcea;
+    --text: #24324a;
+    --muted: #6f7d96;
+    --accent: #c46f1e;
+    --mono: ui-monospace, "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --ease: cubic-bezier(0.33, 1, 0.68, 1);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html, body { height: 100%; }
-
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: ui-monospace, "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
-    overflow: hidden;
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
   }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  a { color: inherit; text-decoration: none; }
+  ul, ol { list-style: none; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-  .shutters {
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-  }
+  /* ---------- Structure ---------- */
+  .app { height: 100%; display: flex; flex-direction: column; }
 
-  .shutter {
-    flex: 1;
-    min-width: 56px;
-    position: relative;
+  .bar {
+    flex-shrink: 0;
+    display: flex; align-items: center; gap: 16px;
+    height: 52px; padding: 0 20px;
+    border-bottom: 1px solid var(--line);
     background: var(--panel);
-    border-right: 1px solid #c9d5e8;
-    cursor: pointer;
-    overflow: hidden;
-    transition: flex-grow 0.55s var(--ease), background-color 0.55s var(--ease);
+    font-family: var(--mono); font-size: 13px; color: var(--muted);
   }
-  .shutter:last-child { border-right: none; }
+  .dots { display: flex; gap: 7px; }
+  .dots i { width: 11px; height: 11px; border-radius: 50%; background: #cfd8e7; }
+  .dots i:first-child { background: var(--accent); transition: background .3s; }
+  .path { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-action {
+    margin-left: auto;
+    display: inline-flex; align-items: center; gap: 8px;
+    height: 34px; padding: 0 14px;
+    border-radius: 8px; border: 1px solid var(--line);
+    background: var(--card); color: var(--text);
+    font-family: var(--sans); font-size: 13px; font-weight: 600; white-space: nowrap;
+    transition: border-color .2s;
+  }
+  .bar-action:hover { border-color: var(--accent); }
+  .bar-action kbd {
+    font-family: var(--mono); font-size: 11px;
+    padding: 1px 6px; border-radius: 4px;
+    background: var(--panel); color: var(--muted);
+  }
 
-  .shutter.open {
-    flex-grow: 7;
-    background: var(--panel-open);
-    cursor: default;
-  }
+  .layout { flex: 1; min-height: 0; display: grid; grid-template-columns: 280px 1fr; }
 
-  /* Étiquette verticale (état fermé) */
-  .label {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    padding-bottom: 24px;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    font-size: 13px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    transition: opacity 0.3s var(--ease);
-    user-select: none;
+  /* ---------- Onglets ---------- */
+  .tabs {
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 24px 16px;
+    border-right: 1px solid var(--line);
+    background: var(--panel);
   }
-  .label::before {
+  .tab {
+    position: relative;
+    display: grid; gap: 5px;
+    text-align: left;
+    padding: 16px 18px;
+    border-radius: 12px; border: 1px solid transparent;
+    transition: background .2s, border-color .2s, box-shadow .2s;
+  }
+  .tab:hover { background: rgba(255, 255, 255, .55); }
+  .tab[aria-current="true"] {
+    background: var(--card);
+    border-color: var(--line);
+    box-shadow: 0 8px 24px -16px rgba(36, 50, 74, .35);
+  }
+  .tab[aria-current="true"]::before {
     content: "";
-    width: 2px;
-    height: 28px;
-    margin-bottom: 14px;
-    background: var(--accent, var(--warm));
+    position: absolute; left: -1px; top: 16px; bottom: 16px;
+    width: 3px; border-radius: 3px;
+    background: var(--tab-accent);
   }
-  .shutter.open .label { opacity: 0; }
-  .shutter:not(.open):hover .label { color: var(--text); }
+  .tab-index { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; color: var(--tab-accent); }
+  .tab-title { font-size: 19px; font-weight: 700; line-height: 1.2; }
+  .tab-kicker { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
 
-  /* Contenu (état ouvert) — largeur fixe pour éviter le reflow pendant la transition */
-  .content {
-    position: absolute;
-    inset: 0;
-    width: 640px;
-    max-width: 82vw;
-    padding: 40px 36px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    opacity: 0;
-    transform: translateX(14px);
-    transition: opacity 0.35s var(--ease), transform 0.45s var(--ease);
-    pointer-events: none;
+  /* ---------- Contenu commun ---------- */
+  .body { min-height: 0; animation: in .45s var(--ease) both; }
+  @keyframes in { from { opacity: 0; transform: translateY(8px); } }
+
+  .kicker {
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 10px;
   }
-  .shutter.open .content {
-    opacity: 1;
-    transform: translateX(0);
-    transition-delay: 0.18s;
-    pointer-events: auto;
+  .title { font-family: var(--mono); font-size: 46px; line-height: 1.05; letter-spacing: -.01em; }
+  .pitch { margin-top: 14px; font-size: 17px; line-height: 1.55; color: #4a5a75; max-width: 52ch; }
+
+  .hero {
+    aspect-ratio: 16 / 10;
+    border-radius: 14px; overflow: hidden;
+    background: linear-gradient(135deg, var(--panel), #dbe3f0);
+    border: 1px solid var(--line);
+    box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--accent) 55%, transparent);
+  }
+  .hero img, .hero video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .highlights { display: grid; gap: 14px; }
+  .hl { display: grid; grid-template-columns: auto 1fr; gap: 12px; }
+  .hl-n { font-family: var(--mono); font-size: 12px; color: var(--accent); padding-top: 3px; }
+  .hl h3 { font-size: 15.5px; font-weight: 650; margin-bottom: 2px; }
+  .hl p { font-size: 14px; line-height: 1.5; color: var(--muted); }
+
+  .stack { display: flex; flex-wrap: wrap; gap: 7px; }
+  .stack li {
+    font-family: var(--mono); font-size: 11.5px;
+    padding: 5px 10px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--card); color: var(--muted);
   }
 
-  .content .tag {
-    font-size: 11px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--accent, var(--warm));
+  .actions { display: flex; align-items: center; gap: 12px; padding-top: 22px; border-top: 1px solid var(--line); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 44px; padding: 0 20px; border-radius: 10px;
+    font-weight: 600; font-size: 14.5px;
+    transition: transform .15s, border-color .2s;
   }
-  .content h2 {
-    font-size: clamp(22px, 4vw, 34px);
-    font-weight: 600;
-    line-height: 1.1;
-  }
-  .content p {
-    font-size: 14px;
-    line-height: 1.6;
-    color: var(--muted);
-    max-width: 46ch;
-  }
-  .content .stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: auto;
-  }
-  .content .stack span {
-    font-size: 11px;
-    padding: 4px 10px;
-    border: 1px solid #c3d0e6;
-    border-radius: 3px;
-    color: var(--muted);
-  }
-  .content a.visit {
-    align-self: flex-start;
-    margin-top: 6px;
-    font-size: 13px;
-    color: var(--accent, var(--warm));
-    text-decoration: none;
-    border-bottom: 1px solid currentColor;
-    padding-bottom: 2px;
-  }
-  .content a.visit:hover { color: var(--text); }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-ghost { border: 1px solid var(--line); background: var(--card); }
+  .btn-ghost:hover { border-color: var(--accent); }
 
-  /* Accents alternés chaud / froid, comme l'éclairage de la chambre */
-  .shutter:nth-child(odd)  { --accent: var(--warm); }
-  .shutter:nth-child(even) { --accent: var(--cool); }
+  .section-title {
+    font-family: var(--mono); font-size: 12px;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 18px;
+  }
+  .pipeline { display: flex; flex-wrap: wrap; gap: 10px; counter-reset: s; }
+  .pipeline li {
+    flex: 1; min-width: 150px;
+    display: grid; gap: 4px;
+    padding: 14px 16px; border-radius: 12px;
+    background: var(--card); border: 1px solid var(--line);
+    counter-increment: s;
+  }
+  .pipeline span { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+  .pipeline span::before { content: counter(s, decimal-leading-zero) " · "; color: var(--accent); }
+  .pipeline strong { font-size: 15px; }
 
-  .shutter:focus-visible {
-    outline: 2px solid var(--accent, var(--warm));
-    outline-offset: -2px;
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .gallery figure { display: grid; gap: 8px; }
+  .gallery img {
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;
+    border-radius: 12px; border: 1px solid var(--line); background: var(--panel);
+  }
+  .gallery figcaption { font-size: 13.5px; color: var(--muted); }
+
+  /* ---------- Mode écran (iframe dans le moniteur) ---------- */
+  .is-screen body { overflow: hidden; user-select: none; }
+  /* Scène de 1280px de large, mise à l'échelle par JS pour remplir l'iframe : jamais de scroll */
+  .is-screen .app { position: absolute; top: 0; left: 0; width: 1280px; height: 800px; transform-origin: 0 0; }
+  .is-screen .pitch { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .is-screen .body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr auto;
+    grid-template-areas: "content hero" "actions actions";
+    gap: 28px 40px;
+    padding: 40px 44px 32px;
+  }
+  .is-screen .content { grid-area: content; display: flex; flex-direction: column; gap: 24px; min-height: 0; overflow: hidden; }
+  .is-screen .hero { grid-area: hero; align-self: center; }
+  .is-screen .actions { grid-area: actions; }
+
+  /* ---------- Mode plein écran ---------- */
+  .is-full .app { height: auto; min-height: 100%; }
+  .is-full .bar { position: sticky; top: 0; z-index: 3; }
+  .is-full .layout { display: block; }
+  .is-full .tabs {
+    position: sticky; top: 52px; z-index: 2;
+    flex-direction: row; gap: 4px;
+    padding: 10px 20px;
+    border-right: 0; border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--panel) 88%, transparent);
+    backdrop-filter: blur(12px);
+    overflow-x: auto;
+  }
+  .is-full .tab { display: flex; align-items: baseline; gap: 10px; padding: 9px 14px; white-space: nowrap; }
+  .is-full .tab[aria-current="true"]::before { top: auto; bottom: -11px; left: 14px; right: 14px; width: auto; height: 2px; }
+  .is-full .tab-title { font-size: 15px; }
+  .is-full .tab-kicker { display: none; }
+  .is-full .body { max-width: 1120px; margin: 0 auto; padding: 40px 32px 96px; display: grid; gap: 44px; }
+  .is-full .hero { aspect-ratio: 16 / 9; }
+  .is-full .content { display: grid; gap: 52px; }
+  .is-full .title { font-size: clamp(36px, 6vw, 72px); }
+  .is-full .pitch { font-size: clamp(16px, 1.6vw, 20px); max-width: 62ch; }
+  .is-full .highlights { grid-template-columns: repeat(2, 1fr); gap: 28px 44px; }
+  .is-full .hl h3 { font-size: 17px; }
+  .is-full .hl p { font-size: 15.5px; }
+  .is-full .actions { border-top: 0; padding-top: 0; }
+
+  @media (max-width: 720px) {
+    .path { display: none; }
+    .is-full .body { padding: 24px 16px 64px; gap: 32px; }
+    .is-full .highlights { grid-template-columns: 1fr; }
+    .is-full .actions { flex-direction: column; align-items: stretch; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .shutter, .content, .label { transition: none; }
+    .body { animation: none; }
+    .btn:hover { transform: none; }
   }
 </style>
 </head>
 <body>
 
-<main class="shutters" id="shutters">
-
-  <section class="shutter open" tabindex="0">
-    <div class="label">Chambre voxel</div>
-    <div class="content">
-      <span class="tag">Scène interactive — R3F</span>
-      <h2>Chambre voxel</h2>
-      <p>Scène 3D temps réel : pipeline MagicaVoxel → Blender → React Three Fiber, caméra orthographique animée, éclairage deux points chaud/froid.</p>
-      <div class="stack">
-        <span>React Three Fiber</span><span>GSAP</span><span>Zustand</span><span>MagicaVoxel</span>
-      </div>
-      <a class="visit" href="#" target="_blank" rel="noopener">Voir le projet →</a>
-    </div>
-  </section>
-
-  <section class="shutter" tabindex="1">
-    <div class="label">Configurateur</div>
-    <div class="content">
-      <span class="tag">Produit 3D — Headphone</span>
-      <h2>Configurateur produit</h2>
-      <p>Configurateur temps réel avec changement de matériaux et shaders personnalisés. Pensé pour l'e-commerce et le luxe digital.</p>
-      <div class="stack">
-        <span>Three.js</span><span>GLSL</span><span>React</span>
-      </div>
-      <a class="visit" href="/headphone-configurator" target="_blank" rel="noopener">Voir le projet →</a>
-    </div>
-  </section>
-
-  <section class="shutter" tabindex="2">
-    <div class="label">Simulateur de réservation — Auditorium</div>
-    <div class="content">
-      <span class="tag">Démo produit — 3D temps réel</span>
-      <h2>Simulateur de place</h2>
-      <p>Choisissez votre siège dans un auditorium et prévisualisez la vue réelle depuis cette place. Sélection au clic sur plusieurs centaines de sièges, transition caméra jusqu'à hauteur d'yeux assise.</p>
-      <div class="stack">
-        <span>R3F</span><span>InstancedMesh</span><span>GSAP</span><span>Blender</span>
-      </div>
-      <a class="visit" href="/seat-picker" target="_blank" rel="noopener">Voir le projet →</a>
-    </div>
-  </section>
-
-</main>
+<div class="app">
+  <header class="bar">
+    <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="path" id="path"></span>
+    <span id="bar-action"></span>
+  </header>
+  <div class="layout">
+    <nav class="tabs" id="tabs" aria-label="Projects"></nav>
+    <main class="body" id="body"></main>
+  </div>
+</div>
 
 <script>
-  // Un seul écouteur (délégation) — coût quasi nul pour la page hôte
-  const root = document.getElementById('shutters');
-  function openShutter(el) {
-    if (!el || el.classList.contains('open')) return;
-    root.querySelector('.open')?.classList.remove('open');
-    el.classList.add('open');
+  // ---------------------------------------------------------------------------
+  // Contenu — médias relatifs à ce fichier (/bedroom/projets/…)
+  // ---------------------------------------------------------------------------
+  const PROJECTS = [
+    {
+      id: "chambre-voxel",
+      index: "01",
+      kicker: "Interactive scene — R3F",
+      title: "Voxel bedroom",
+      accent: "#c46f1e",
+      pitch: "The portfolio you’re browsing: an isometric voxel bedroom that opens onto a gallery showcasing my GLSL shaders.",
+      cover: "./projets/chambre-voxel.webp",
+      video: "./projets/chambre-voxel.mp4",
+      highlights: [
+        ["Optimized 3D pipeline", "Modeled in MagicaVoxel, cleaned up with VoxCleaner, Cycles-baked into a 4K atlas. The whole scene fits in ~2k triangles."],
+        ["Animated orthographic camera", "GSAP transitions between the overview and the screen, with dedicated framing on mobile."],
+        ["Shader gallery", "Every painting in the gallery is a hand-written GLSL shader, rendered in real time."],
+        ["Real-time warm / cool lighting", "The lamp and the neon light are computed in Three.js, not baked, so the mood stays alive."],
+      ],
+      pipeline: [
+        ["Modeling", "MagicaVoxel"],
+        ["Optimisation", "VoxCleaner"],
+        ["Bake", "Blender"],
+        ["Integration", "React Three Fiber"],
+        ["Staging", "GSAP"],
+      ],
+      gallery: [
+        ["./projets/chambre-voxel-room.webp", "The bedroom — warm lamp, cool neon"],
+        ["./projets/chambre-voxel-galerie.webp", "The gallery and its shader paintings"],
+      ],
+      stack: ["React Three Fiber", "Three.js", "GLSL", "GSAP", "Zustand", "TypeScript", "MagicaVoxel", "Blender"],
+      link: { label: "ronan-wojdyla.dev", href: "https://ronan-wojdyla.dev" },
+    },
+    {
+      id: "configurateur-casque",
+      index: "02",
+      kicker: "Product configurator — R3F",
+      title: "Headphone configurator",
+      accent: "#3f72cc",
+      pitch: "Headphones you can customize part by part — headband, ear cups, ear pads. The materials (wood, leather, brushed metal, soft-touch) use textures I made myself.",
+      cover: "./projets/configurateur-casque.webp",
+      video: "",
+      highlights: [
+        ["Three independent zones", "Headband, ear cups and ear pads each have their own material and named colors."],
+        ["Real material changes", "Switching leather → wood → metal happens in the shader, by interpolating uniforms. Not just a color swap."],
+        ["Anisotropic brushed metal", "The stretched highlight of the brushed metal holds across every finish, from Silver to Rose Copper."],
+        ["Handmade textures", "Wood, leather and finishes created by me, to keep full control over the look."],
+      ],
+      gallery: [
+      ],
+      stack: ["React Three Fiber", "Three.js", "GLSL", "TypeScript"],
+      link: { label: "Open the configurator", href: "/headphone-configurator" },
+    },
+  ];
+
+  // ---------------------------------------------------------------------------
+  // Mode
+  // ---------------------------------------------------------------------------
+  const embedded = window.parent !== window;
+  const full = !embedded || new URLSearchParams(location.search).get("mode") === "full";
+  document.documentElement.classList.add(full ? "is-full" : "is-screen");
+
+  // Pont vers la scène (même origine)
+  const post = (msg) => embedded && window.parent.postMessage(msg, location.origin);
+
+  const fromHash = location.hash.slice(1);
+  let active = PROJECTS.some((p) => p.id === fromHash) ? fromHash : PROJECTS[0].id;
+
+  const tabsEl = document.getElementById("tabs");
+  const bodyEl = document.getElementById("body");
+  const pathEl = document.getElementById("path");
+  const actionEl = document.getElementById("bar-action");
+
+  if (!full) actionEl.remove();
+  else if (embedded) actionEl.outerHTML = `<button type="button" class="bar-action" data-action="close">Close <kbd>Esc</kbd></button>`;
+  else actionEl.outerHTML = `<a class="bar-action" href="/">← Explore the 3D scene</a>`;
+
+  // ---------------------------------------------------------------------------
+  // Rendu
+  // ---------------------------------------------------------------------------
+  tabsEl.innerHTML = PROJECTS.map((p) => `
+    <button type="button" class="tab" data-id="${p.id}" style="--tab-accent:${p.accent}">
+      <span class="tab-index">${p.index}</span>
+      <span class="tab-title">${p.title}</span>
+      <span class="tab-kicker">${p.kicker}</span>
+    </button>`).join("");
+
+  function bodyHTML(p) {
+    const highlights = full ? p.highlights : p.highlights.slice(0, 2);
+    const media = full && p.video
+      ? `<video src="${p.video}" poster="${p.cover}" autoplay muted loop playsinline></video>`
+      : `<img src="${p.cover}" alt="" decoding="async" onerror="this.remove()">`;
+
+    return `
+      <figure class="hero">${media}</figure>
+      <div class="content">
+        <header>
+          <p class="kicker">${p.kicker}</p>
+          <h1 class="title">${p.title}</h1>
+          <p class="pitch">${p.pitch}</p>
+        </header>
+        <ul class="highlights">
+          ${highlights.map(([t, x], i) => `
+            <li class="hl">
+              <span class="hl-n">${String(i + 1).padStart(2, "0")}</span>
+              <div><h3>${t}</h3><p>${x}</p></div>
+            </li>`).join("")}
+        </ul>
+        ${full && p.pipeline ? `
+          <section>
+            <h2 class="section-title">Pipeline</h2>
+            <ol class="pipeline">${p.pipeline.map(([s, tool]) => `<li><span>${s}</span><strong>${tool}</strong></li>`).join("")}</ol>
+          </section>` : ""}
+        ${full && p.gallery.length ? `
+          <section>
+            <h2 class="section-title">Gallery</h2>
+            <div class="gallery">${p.gallery.map(([src, cap]) => `
+              <figure><img src="${src}" alt="${cap}" loading="lazy" decoding="async" onerror="this.parentElement.remove()"><figcaption>${cap}</figcaption></figure>`).join("")}
+            </div>
+          </section>` : ""}
+        <ul class="stack">${p.stack.map((s) => `<li>${s}</li>`).join("")}</ul>
+      </div>
+      <div class="actions">
+        ${!full ? `<a class="btn btn-primary" href="./ecran-projets.html#${p.id}" target="_top">Expand <span aria-hidden="true">⤢</span></a>` : ""}
+        <a class="btn ${full ? "btn-primary" : "btn-ghost"}" href="${p.link.href}" target="_blank" rel="noopener">${p.link.label} <span aria-hidden="true">→</span></a>
+      </div>`;
   }
-  root.addEventListener('click', e => openShutter(e.target.closest('.shutter')));
-  root.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      openShutter(e.target.closest('.shutter'));
-    }
+
+  function render() {
+    const p = PROJECTS.find((x) => x.id === active);
+    document.documentElement.style.setProperty("--accent", p.accent);
+    document.title = `${p.title} — Ronan Wojdyla`;
+    pathEl.textContent = `~/ronan/projects/${p.id}`;
+    tabsEl.querySelectorAll(".tab").forEach((t) => t.setAttribute("aria-current", String(t.dataset.id === active)));
+    bodyEl.innerHTML = bodyHTML(p);
+    // relance l'animation d'entrée
+    bodyEl.style.animation = "none";
+    void bodyEl.offsetWidth;
+    bodyEl.style.animation = "";
+  }
+
+  function select(id) {
+    if (id === active) return;
+    active = id;
+    history.replaceState(null, "", "#" + id);
+    render();
+    if (full) window.scrollTo({ top: 0 });
+    post({ type: "projects:select", project: id });
+  }
+
+  // ---------------------------------------------------------------------------
+  // Events (délégation)
+  // ---------------------------------------------------------------------------
+  document.addEventListener("click", (e) => {
+    const tab = e.target.closest(".tab");
+    if (tab) return select(tab.dataset.id);
+    const action = e.target.closest("[data-action]")?.dataset.action;
+    if (action === "expand") post({ type: "projects:expand", project: active });
+    if (action === "close") post({ type: "projects:close" });
   });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && full && embedded) post({ type: "projects:close" });
+  });
+
+  render();
+
+  // ---------------------------------------------------------------------------
+  // Mode écran : on dessine sur 1280px de large et on réduit pour tenir dans
+  // l'iframe, quelle que soit sa taille. Hauteur mini 720px pour que tout rentre.
+  // ---------------------------------------------------------------------------
+  if (!full) {
+    const app = document.querySelector(".app");
+    const fit = () => {
+      const iw = window.innerWidth;
+      const ih = window.innerHeight;
+      let w = 1280;
+      let h = (w * ih) / iw;
+      if (h < 720) {
+        h = 720;
+        w = (h * iw) / ih;
+      }
+      app.style.width = w + "px";
+      app.style.height = h + "px";
+      app.style.transform = `scale(${iw / w})`;
+    };
+    fit();
+    window.addEventListener("resize", fit);
+  }
 </script>
 
 </body>

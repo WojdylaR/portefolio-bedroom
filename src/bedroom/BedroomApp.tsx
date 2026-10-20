@@ -15,7 +15,7 @@ import { SCENE } from './config/scene'
 import ArtGallery from './scenes/artGalerry/ArtGallery'
 import ShadersInterface from './ui/Interface/ShadersInterface'
 import { Leva } from 'leva'
-import { TOUCH } from 'three'
+import { TOUCH , MOUSE} from 'three'
 
 
   function BedroomApp() {
@@ -39,7 +39,15 @@ import { TOUCH } from 'three'
               <LoadTracker />
               {/* <Perf position='top-left'/> */}
               <PostProcessing />
-              <OrbitControls touches={{ ONE: TOUCH.PAN, TWO: TOUCH.DOLLY_PAN }} enableRotate={false} ref={ orbitControlRef } makeDefault enabled={!isAnimating && isControls} enablePan={true}/>
+              <OrbitControls
+                ref={orbitControlRef}
+                makeDefault
+                enabled={!isAnimating && isControls}
+                enableRotate={false}
+                enablePan
+                touches={{ ONE: TOUCH.PAN, TWO: TOUCH.DOLLY_PAN }}
+                mouseButtons={{ LEFT: MOUSE.PAN, MIDDLE: MOUSE.DOLLY, RIGHT: MOUSE.PAN }}
+              />
 
               <Leva hidden />
               <Center>

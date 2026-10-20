@@ -21,7 +21,10 @@ export default function Interface() {
                 <div onClick={() => setLamp(!toggleLamp)} className="bigButton"><img src='./bedroom/lampButton.png'/></div>
                 <div onClick={() => setNeon(!toggleNeon)} className="bigButton"><img src='./bedroom/neonButton.png'/></div>
                 {focus === null
-                    ? <div onClick={() => setFocus('screen')} className="button"><img src='./bedroom/screenButton.png'/></div>
+                    ? <div onClick={() => setFocus('screen')} className="button">
+                        <div><img src='./bedroom/screenButton.png'/></div>
+                        <div className={'label'}>Projects</div>
+                    </div>
                     : <div onClick={focusReset} className="button"><img src='./bedroom/returnButton.png'/></div>
                 }
 

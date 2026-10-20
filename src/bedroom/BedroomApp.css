@@ -57,8 +57,19 @@
       
       img{
         width: 85px;
+      }
+
+      .label {
+        font-family: "Geist Pixel", sans-serif;
+        color: white;
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 14px;
+        font-weight: 700;
+      }
+      
     }
-    }
+
     .doorButton {
       padding: 20px 0;
     }
