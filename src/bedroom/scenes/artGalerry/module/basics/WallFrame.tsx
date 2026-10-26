@@ -5,6 +5,7 @@ import type { TileProps } from "../../artGalery.type"
 import { useShaderUniforms } from "../useShadersUniforms"
 import { MAT } from "../materials"
 import useScene from "../../../../state/store/useScene"
+import type { ThreeEvent } from "@react-three/fiber"
 
 
 export default function WallFrame (  { position, rotation, art, id = null } : TileProps) {
@@ -15,8 +16,15 @@ export default function WallFrame (  { position, rotation, art, id = null } : Ti
 
     const setFocus = useScene(state => state.setFocus)
     const focus = useScene(state => state.focus)
+    const isAnimating = useScene(state => state.isAnimating)
 
     nodes.frame.geometry.computeBoundingBox()
+
+    const handleClick = (e: ThreeEvent<MouseEvent>) => {
+            e.stopPropagation()
+            if (isAnimating) return
+            setFocus(focus === null ? id : null)
+        }
 
     return ( 
         <group position={position} rotation-y={ rotation }>
@@ -29,7 +37,7 @@ export default function WallFrame (  { position, rotation, art, id = null } : Ti
                 onPointerLeave={() => document.body.style.cursor = 'default'} 
 
                 position={[0, 1.3, 0]}
-                onClick={() => focus !== id ? setFocus(id) : setFocus(null)}
+                onClick={handleClick}
              >
                 { art && <CustomShaderMaterial
                         baseMaterial={ THREE.MeshStandardMaterial }

@@ -2,7 +2,7 @@ import { useGLTF } from "@react-three/drei"
 import * as THREE from 'three'
 import CustomShaderMaterial from "three-custom-shader-material"
 import type CustomShaderMaterialImpl from 'three-custom-shader-material/vanilla'
-import { useFrame } from "@react-three/fiber"
+import { useFrame, type ThreeEvent } from "@react-three/fiber"
 import {  useRef } from "react"
 import type { TileProps } from "../../artGalery.type"
 import { useShaderUniforms } from "../useShadersUniforms"
@@ -21,12 +21,19 @@ export default function FloorPedestal (  { position, rotation, art, id = null   
 
     const setFocus = useScene(state => state.setFocus)
     const focus = useScene(state => state.focus)
+    const isAnimating = useScene(state => state.isAnimating)
 
     useFrame((state) => {
         
         if (materialRef.current)
             materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime()
     })
+
+    const handleClick = (e: ThreeEvent<MouseEvent>) => {
+        e.stopPropagation()
+        if (isAnimating) return
+        setFocus(focus === null ? id : null)
+    }
 
     const uniforms = useShaderUniforms(art)
 
@@ -41,7 +48,7 @@ export default function FloorPedestal (  { position, rotation, art, id = null   
                 
                 onPointerEnter={() => document.body.style.cursor = 'pointer'}
                 onPointerLeave={() => document.body.style.cursor = 'default'} 
-                onClick={() => setFocus(id)}
+                onClick={handleClick}
             />
             <mesh
                 castShadow
@@ -57,7 +64,7 @@ export default function FloorPedestal (  { position, rotation, art, id = null   
                 
                 onPointerEnter={() => document.body.style.cursor = 'pointer'}
                 onPointerLeave={() => document.body.style.cursor = 'default'} 
-                onClick={() => focus !== id ? setFocus(id) : setFocus(null)}
+                onClick={handleClick}
 
             >
                 <icosahedronGeometry args={[0.6, 10]} />

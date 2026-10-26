@@ -6,6 +6,7 @@ import { useShaderUniforms } from "../useShadersUniforms"
 import { MAT } from "../materials"
 import useScene from "../../../../state/store/useScene"
 import { useMemo } from "react"
+import type { ThreeEvent } from "@react-three/fiber"
 
 
 export default function FloorFrame (   { position, rotation, art, id = null } : TileProps) {
@@ -15,12 +16,19 @@ export default function FloorFrame (   { position, rotation, art, id = null } : 
     const uniforms = useShaderUniforms(art)
     const setFocus = useScene(state => state.setFocus)
     const focus = useScene(state => state.focus)
+    const isAnimating = useScene(state => state.isAnimating)
 
     const geometry = useMemo(() => {
         const g = new THREE.PlaneGeometry(2.8, 2.8, 150, 150)
         g.rotateX(-Math.PI / 2)
         return g
     }, [])
+
+    const handleClick = (e: ThreeEvent<MouseEvent>) => {
+        e.stopPropagation()
+        if (isAnimating) return
+        setFocus(focus === null ? id : null)
+    }
 
     return ( 
     <group position={position} rotation-y={ rotation }>
@@ -42,7 +50,7 @@ export default function FloorFrame (   { position, rotation, art, id = null } : 
             onPointerEnter={() => document.body.style.cursor = 'pointer'}
             onPointerLeave={() => document.body.style.cursor = 'default'} 
 
-            onClick={() => focus !== id ? setFocus(id) : setFocus(null)}
+            onClick={handleClick}
             >
 
             { art && <>
