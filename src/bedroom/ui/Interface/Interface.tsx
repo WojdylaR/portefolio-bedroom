@@ -13,6 +13,7 @@ export default function Interface() {
     const toggleLamp = useScene(state => state.toggleLamp)
     const toggleDoor = useScene(state => state.toggleDoor)
     const focus = useScene(state => state.focus)
+    const isAnimating = useScene(state => state.isAnimating)
 
     return (
         <div className="interface">
@@ -21,7 +22,10 @@ export default function Interface() {
                 <div onClick={() => setLamp(!toggleLamp)} className="bigButton"><img src='./bedroom/lampButton.png'/></div>
                 <div onClick={() => setNeon(!toggleNeon)} className="bigButton"><img src='./bedroom/neonButton.png'/></div>
                 {focus === null
-                    ? <div onClick={() => setFocus('screen')} className="button">
+                    ? <div onClick={() => {
+                        if (isAnimating) return
+                        setFocus(focus === null ? 'screen' : null)
+                        }} className="button">
                         <div><img src='./bedroom/screenButton.png'/></div>
                         <div className={'label'}>Projects</div>
                     </div>

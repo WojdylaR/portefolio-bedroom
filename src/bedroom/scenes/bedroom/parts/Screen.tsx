@@ -4,6 +4,7 @@ import * as THREE from 'three'
 import { Html } from '@react-three/drei'
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js'
 import useScene from '../../../state/store/useScene'
+import type { ThreeEvent } from '@react-three/fiber'
 
 RectAreaLightUniformsLib.init()
 
@@ -17,6 +18,7 @@ export default function Screen({ geometry }: { geometry: THREE.BufferGeometry })
     const setFocus = useScene(state => state.setFocus)
     const focusReset = useScene(state => state.focusReset)
     const focus = useScene(state => state.focus)
+        const isAnimating = useScene(state => state.isAnimating)
 
     const refScreen = useRef<THREE.Mesh>(null!)
 
@@ -39,6 +41,11 @@ export default function Screen({ geometry }: { geometry: THREE.BufferGeometry })
     const distanceFactor = (400 * size.x) / IFRAME_WIDTH
 
     const screenPosition: [number, number, number] = [position.x + 0.02, position.y, position.z - 0.11]
+    const handleClick = (e: ThreeEvent<MouseEvent>) => {
+                e.stopPropagation()
+                if (isAnimating) return
+                setFocus(focus === null ? 'screen' : null)
+            }
 
     return (
         <>
@@ -51,7 +58,7 @@ export default function Screen({ geometry }: { geometry: THREE.BufferGeometry })
                 onPointerEnter={() => document.body.style.cursor = 'pointer'}
                 onPointerLeave={() => document.body.style.cursor = 'default'}
                 name="screen"
-                onClick={() => setFocus('screen')}
+                onClick={handleClick}
                 onPointerMissed={focusReset}
             >
                 <meshBasicMaterial color="black" />
